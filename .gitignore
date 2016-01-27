@@ -1,0 +1,32 @@
+.gradle
+/local.properties
+.idea
+build/
+*.iml
+*.iws
+*.ipr
+
+
+# build application files
+*.apk
+*.ap_
+
+# files for dex VM
+*.dex
+
+# java class files
+*.class
+
+#generated files
+bin/
+gen/
+
+# local configuration files (sdk, path,etc)
+local.properties
+
+# windows thumbnail db
+Thumbs.db
+
+# OSC files
+.DS_Store
+

@@ -1,0 +1,118 @@
+{
+  "lessons": [
+    {
+      "lessonId": 0,
+      "lessonName": "Accommodation",
+      "flashcards": "vocabulary/accommodation.txt",
+      "image": "vocabulary/accommodation.png"
+    },
+    {
+      "lessonId": 1,
+      "lessonName": "Appearance",
+      "flashcards": "vocabulary/appearance.txt",
+      "image": "vocabulary/appearance.png"
+    },
+    {
+      "lessonId": 2,
+      "lessonName": "Books and films",
+      "flashcards": "vocabulary/books and films.txt",
+      "image": "vocabulary/books and films.png"
+    },
+    {
+      "lessonId": 3,
+      "lessonName": "Business",
+      "flashcards": "vocabulary/business.txt",
+      "image": "vocabulary/business.png"
+    },
+    {
+      "lessonId": 4,
+      "lessonName": "Cities",
+      "flashcards": "vocabulary/city.txt",
+      "image": "vocabulary/city.png"
+    },
+    {
+      "lessonId": 5,
+      "lessonName": "Clothes",
+      "flashcards": "vocabulary/clothes.txt",
+      "image": "vocabulary/clothes.png"
+    },
+    {
+      "lessonId": 6,
+      "lessonName": "Education",
+      "flashcards": "vocabulary/education.txt",
+      "image": "vocabulary/education.png"
+    },
+    {
+      "lessonId": 7,
+      "lessonName": "Food",
+      "flashcards": "vocabulary/food.txt",
+      "image": "vocabulary/food.png"
+    },
+    {
+      "lessonId": 8,
+      "lessonName": "Health",
+      "flashcards": "vocabulary/health.txt",
+      "image": "vocabulary/health.png"
+    },
+    {
+      "lessonId": 9,
+      "lessonName": "Holidays",
+      "flashcards": "vocabulary/holiday.txt",
+      "image": "vocabulary/holiday.png"
+    },
+    {
+      "lessonId": 10,
+      "lessonName": "Music",
+      "flashcards": "vocabulary/music.txt",
+      "image": "vocabulary/music.png"
+    },
+    {
+      "lessonId": 11,
+      "lessonName": "Personality",
+      "flashcards": "vocabulary/personality.txt",
+      "image": "vocabulary/personality.png"
+    },
+    {
+      "lessonId": 12,
+      "lessonName": "Relationships",
+      "flashcards": "vocabulary/relationships.txt",
+      "image": "vocabulary/relationships.png"
+    },
+    {
+      "lessonId": 13,
+      "lessonName": "Sport",
+      "flashcards": "vocabulary/sports.txt",
+      "image": "vocabulary/sports.png"
+    },
+    {
+      "lessonId": 14,
+      "lessonName": "Technology",
+      "flashcards": "vocabulary/technology.txt",
+      "image": "vocabulary/technology.png"
+    },
+    {
+      "lessonId": 15,
+      "lessonName": "Weather",
+      "flashcards": "vocabulary/weather.txt",
+      "image": "vocabulary/weather.png"
+    },
+    {
+      "lessonId": 16,
+      "lessonName": "Work",
+      "flashcards": "vocabulary/work.txt",
+      "image": "vocabulary/work.png"
+    },
+    {
+      "lessonId": 17,
+      "lessonName": "Shopping",
+      "flashcards": "vocabulary/shopping.txt",
+      "image": "vocabulary/shopping.png"
+    },
+    {
+      "lessonId": 18,
+      "lessonName": "Environment",
+      "flashcards": "vocabulary/environment.txt",
+      "image": "vocabulary/environment.png"
+    }
+  ]
+}

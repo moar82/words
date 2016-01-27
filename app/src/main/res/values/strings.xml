@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">IELTS Vocabulary Flashcards</string>
+
+    <!-- Splash screen-->
+    <string name="importing_data">Importing data...</string>
+
+    <!-- LessonCatalogActivity menu -->
+    <string name="menu_rate">Rate</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_about">About</string>
+
+    <string name="title_activity_lesson_catalog">Lessons</string>
+    <string name="title_activity_cards">CardsActivity</string>
+
+    <string name="empty_list_text">Empty</string>
+    <string name="dont_know_text">DON\'T KNOW</string>
+    <string name="know_text">KNOW</string>
+    <string name="remove_button_text">REMOVE</string>
+    <string name="word_available">AVAILABLE</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_edit_card">EditCardActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_splash">Advanced English Vocabulary</string>
+    <string name="title_activity_learn_cards">LearnCardsActivity</string>
+
+    <string name="clear_progress">Clear progress</string>
+    <string name="errorText">Error</string>
+
+    <string name="noBundledLessons">No bundled lessons</string>
+    <string name="noBookmarkedLessons">No bookmarked lessons</string>
+    <string name="noUserLessons">No user lessons</string>
+    <string name="user_lesson_name">USER LESSON</string>
+
+    <!-- StudyFlashcardsActivity -->
+    <string name="flashcards_activity_title">Flashcards</string>
+    <string name="flashcards_activity_lesson_ended_title">Alert</string>
+    <string name="flashcards_activity_lesson_ended_text">Lesson ended</string>
+    <string name="flashcards_activity_words_learnt_title">Alert</string>
+    <string name="flashcards_activity_words_learnt_text">You\'ve already learnt all the flashcards in this lesson</string>
+
+</resources>

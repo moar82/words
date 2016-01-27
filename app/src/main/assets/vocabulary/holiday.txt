@@ -1,0 +1,27 @@
+(all-in package) package holiday,a holiday where you purchase the travel and accommodation together
+breathtaking view,an extremely beautiful view
+charter-flight,a cheaper form of flying than a scheduled flight
+check-in desk,the place at the airport where you register for your flight and deposit your luggage
+departure lounge,where you wait for your flight to be called
+far-off destination,somewhere a long way away
+to get away from it all,to take a holiday to escape a busy or stressful lifestyle
+guided tour,an organised group shown around a place of interest by an expert
+holiday brochure,a glossy publication with details of holiday packages
+holiday destination,where you go for a holiday
+holiday of a lifetime,a special holiday that you are unlikely to repeat
+holiday resort,a place where lots of people go for a holiday
+hordes of tourists,crowds of tourists
+local crafts,objects produced locally
+long weekend,an extended weekend holiday including Friday or Monday
+out of season,outside of the main holiday period
+picturesque village,very pretty village
+passport control,the place where your passport is checked
+places of interest,sites of interest to tourists
+wildlife safari,a holiday, often in Africa, to observe wild animals
+self-catering,a holiday where you supply your own food
+short break,a short holiday
+to go sightseeing,to look around the tourist sites
+stunning landscape,extremely beautiful countryside
+travel agent,a shop that specialises in booking holidays
+tourist trap,somewhere where too many tourists go
+youth hostel,a cheap form of accommodation
