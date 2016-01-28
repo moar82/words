@@ -13,10 +13,12 @@ Learn IELTS topic vocabulary the easy way with "IELTS Vocabulary Flashcards" app
 
 ## Screenshots
 
-![Screenshot 1](http://placehold.it/320x240)
-![Screenshot 2](http://placehold.it/320x240)
-![Screenshot 3](http://placehold.it/320x240)
-![Screenshot 4](http://placehold.it/320x240)
+<img src="/images/Screenshot_1.png" height="400px"/>
+<img src="/images/Screenshot_2.png" height="400px"/>
+<img src="/images/Screenshot_3.png" height="400px"/>
+<img src="/images/Screenshot_4.png" height="400px"/>
+<img src="/images/Screenshot_5.png" height="400px"/>
+<img src="/images/Screenshot_6.png" height="400px"/>
 
 ## Used libraries
 * [butterknife](https://github.com/JakeWharton/butterknife)
