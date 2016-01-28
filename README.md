@@ -2,7 +2,8 @@
 
 <img src="/images/app_icon.png" height="400px"/>
 
-Learn IELTS topic vocabulary the easy way with "IELTS Vocabulary Flashcards" application. Features:
+Learn IELTS topic vocabulary the easy way with "IELTS Vocabulary Flashcards" application. 
+Features:
 * Vocabulary on different topics: environment, shopping, etc.
 * Nice user-friendly interface
 * Works offline
@@ -10,6 +11,10 @@ Learn IELTS topic vocabulary the easy way with "IELTS Vocabulary Flashcards" app
 * Track your progress
 * Create your own flashcards
 * Bookmark favorite lessons
+
+## Google Play
+
+[IELTS Vocabulary Flashcards on Google Play](https://play.google.com/store/apps/details?id=com.dbychkov.words)
 
 ## Screenshots
 
