@@ -23,19 +23,23 @@ import android.view.ViewGroup;
 
 import com.dbychkov.domain.Flashcard;
 import com.dbychkov.words.R;
+import com.dbychkov.words.presentation.ViewEditFlashcardsActivityPresenter;
 import com.dbychkov.words.widgets.EditableFlashcardView;
 import com.dbychkov.words.widgets.SwitchingEditText;
+
+import javax.inject.Inject;
 
 /**
  * Adapter for displaying list of editable flashcards
  */
 public class EditFlashcardsAdapter extends BaseListAdapter<Flashcard, EditableFlashcardView> {
 
-    private EditFlashcardsAdapterCallback callback;
+    private  ViewEditFlashcardsActivityPresenter presenter;
 
-    public EditFlashcardsAdapter(Context context, EditFlashcardsAdapterCallback callback) {
+    @Inject
+    public EditFlashcardsAdapter(Context context, ViewEditFlashcardsActivityPresenter presenter) {
         super(context);
-        this.callback = callback;
+        this.presenter = presenter;
     }
 
     @Override
@@ -53,37 +57,32 @@ public class EditFlashcardsAdapter extends BaseListAdapter<Flashcard, EditableFl
                 @Override
                 public void onItemSaved(String wordFromView) {
                     flashcard.setWord(wordFromView);
-                    callback.onFlashcardModified(flashcard, holder.getAdapterPosition());
+                    presenter.flashcardModified(flashcard);
                 }
             });
             view.setOnDefinitionSavedListener(new SwitchingEditText.OnItemSavedListener() {
                 @Override
                 public void onItemSaved(String definitionFromView) {
                     flashcard.setDefinition(definitionFromView);
-                    callback.onFlashcardModified(flashcard, holder.getAdapterPosition());
+                    presenter.flashcardModified(flashcard);
                 }
             });
             view.setLearnt(flashcard.isLearnt());
             view.setSpeakerIconClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    callback.onSpeakIconClicked(flashcard.getWord());
+                    presenter.onSpeakIconClicked(flashcard.getWord());
                 }
             });
             view.setRemoveListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
-                    callback.onFlashcardRemoveClicked(flashcard, holder.getAdapterPosition());
+                    presenter.onFlashcardRemoveClicked(flashcard, holder.getAdapterPosition());
                 }
             });
         }
     }
 
-    public interface EditFlashcardsAdapterCallback {
-        void onFlashcardRemoveClicked(Flashcard flashcard, int position);
-        void onFlashcardModified(Flashcard flashcard, int position);
-        void onSpeakIconClicked(String word);
-    }
 
 }

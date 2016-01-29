@@ -18,18 +18,11 @@ package com.dbychkov.words.adapter;
 
 import android.app.Activity;
 import android.view.View;
-
 import com.dbychkov.domain.Lesson;
-import com.dbychkov.domain.repository.LessonRepository;
-import com.dbychkov.words.bus.CreateBookmarkEvent;
-import com.dbychkov.words.bus.RemoveBookmarkEvent;
-import com.dbychkov.words.bus.RxEventBus;
-
-import javax.inject.Inject;
-
 import com.dbychkov.words.presentation.BookmarkedLessonsTabFragmentPresenter;
 import com.dbychkov.words.widgets.LessonItemView;
-import rx.functions.Action1;
+
+import javax.inject.Inject;
 
 /**
  * Adapter for displaying bookmarked lessons
@@ -45,7 +38,8 @@ public class BookmarkedLessonsAdapter extends LessonsAdapter {
     }
 
     @Override
-    protected void bind(final Lesson lesson, final LessonItemView view, final BaseListAdapter.ViewHolder<LessonItemView> holder) {
+    protected void bind(final Lesson lesson, final LessonItemView view,
+            final BaseListAdapter.ViewHolder<LessonItemView> holder) {
         super.bind(lesson, view, holder);
         view.setBookmarked(lesson.isBookmarked());
         view.setBookmarkButtonListener(new View.OnClickListener() {

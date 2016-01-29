@@ -1,15 +1,14 @@
 package com.dbychkov.words.dagger.module;
 
 import android.app.Activity;
+import com.dbychkov.domain.repository.FlashcardRepository;
 import com.dbychkov.domain.repository.LessonRepository;
 import com.dbychkov.words.bus.RxEventBus;
 import com.dbychkov.words.dagger.PerActivity;
-import com.dbychkov.words.presentation.BookmarkedLessonsTabFragmentPresenter;
-import com.dbychkov.words.presentation.BundledLessonsTabFragmentPresenter;
-import com.dbychkov.words.presentation.LessonsPresenter;
-import com.dbychkov.words.presentation.UserLessonsTabFragmentPresenter;
+import com.dbychkov.words.presentation.*;
 import com.dbychkov.words.thread.PostExecutionThread;
 import com.dbychkov.words.thread.ThreadExecutor;
+import com.dbychkov.words.util.SpeechService;
 import dagger.Module;
 import dagger.Provides;
 
@@ -49,6 +48,13 @@ public class ActivityModule {
     BookmarkedLessonsTabFragmentPresenter bookmarkedLessonsTabFragmentPresenter(ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread, LessonRepository lessonRepository, RxEventBus rxEventBus){
         return new BookmarkedLessonsTabFragmentPresenter(threadExecutor, postExecutionThread, lessonRepository, rxEventBus);
+    }
+
+    @Provides
+    @PerActivity
+    ViewEditFlashcardsActivityPresenter viewEditFlashcardsActivityPresenter(ThreadExecutor threadExecutor,
+            PostExecutionThread postExecutionThread, FlashcardRepository flashcardRepository, SpeechService speechService){
+        return new ViewEditFlashcardsActivityPresenter(threadExecutor, postExecutionThread, flashcardRepository, speechService);
     }
 
 }

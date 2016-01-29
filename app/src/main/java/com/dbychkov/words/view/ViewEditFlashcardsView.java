@@ -31,4 +31,6 @@ public interface ViewEditFlashcardsView {
     void renderProgress(Integer renderProgress);
 
     void renderRemovedFlashcard(Flashcard flashcard, int position);
+
+    void renderOnRemoveSnackBar(final Flashcard flashcard, final int position);
 }

@@ -20,6 +20,7 @@ import com.dbychkov.domain.Flashcard;
 import com.dbychkov.domain.repository.FlashcardRepository;
 import com.dbychkov.words.thread.PostExecutionThread;
 import com.dbychkov.words.thread.ThreadExecutor;
+import com.dbychkov.words.util.SpeechService;
 import com.dbychkov.words.view.ViewEditFlashcardsView;
 
 import java.util.List;
@@ -34,12 +35,14 @@ public class ViewEditFlashcardsActivityPresenter extends AbstractPresenter {
     private ViewEditFlashcardsView viewEditFlashcardsView;
     private Long lessonId;
     private Boolean editable;
+    private SpeechService speechService;
 
-    @Inject
     public ViewEditFlashcardsActivityPresenter(ThreadExecutor threadExecutor,
-                                               PostExecutionThread postExecutionThread, FlashcardRepository flashcardRepository) {
+                                               PostExecutionThread postExecutionThread, FlashcardRepository flashcardRepository,
+            SpeechService speechService) {
         super(threadExecutor, postExecutionThread);
         this.flashcardRepository = flashcardRepository;
+        this.speechService = speechService;
     }
 
     public void setView(ViewEditFlashcardsView viewEditFlashcardsView) {
@@ -56,16 +59,6 @@ public class ViewEditFlashcardsActivityPresenter extends AbstractPresenter {
         execute(flashcardRepository.getFlashcardsFromLesson(lessonId), new DefaultSubscriber<List<Flashcard>>() {
 
             @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
             public void onNext(List<Flashcard> flashcards) {
                 ViewEditFlashcardsActivityPresenter.this.showFlashCards(flashcards, editable);
                 ViewEditFlashcardsActivityPresenter.this.showProgress(getProgressForWordList(flashcards));
@@ -77,18 +70,8 @@ public class ViewEditFlashcardsActivityPresenter extends AbstractPresenter {
         execute(flashcardRepository.removeFlashcard(flashcard.getId()), new DefaultSubscriber<Void>() {
 
             @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
             public void onNext(Void v) {
-                ViewEditFlashcardsActivityPresenter.this.viewEditFlashcardsView.renderRemovedFlashcard(flashcard, position);
+                viewEditFlashcardsView.renderRemovedFlashcard(flashcard, position);
             }
         });
     }
@@ -147,5 +130,13 @@ public class ViewEditFlashcardsActivityPresenter extends AbstractPresenter {
 
     public void flashcardModified(Flashcard flashcard) {
         flashcardRepository.updateFlashcard(flashcard).subscribe();
+    }
+
+    public void onSpeakIconClicked(String word) {
+            speechService.speak(word);
+    }
+
+    public void onFlashcardRemoveClicked(Flashcard flashcard, int position) {
+        viewEditFlashcardsView.renderOnRemoveSnackBar(flashcard, position);
     }
 }

@@ -61,8 +61,8 @@ import butterknife.OnClick;
 import rx.functions.Action1;
 
 public class ViewEditFlashcardsActivity extends AbstractExpandingActivity
-        implements AppBarLayout.OnOffsetChangedListener, ViewEditFlashcardsView,
-        EditFlashcardsAdapter.EditFlashcardsAdapterCallback, ViewFlashcardsAdapter.ViewFlashcardsAdapterCallback {
+        implements AppBarLayout.OnOffsetChangedListener, ViewEditFlashcardsView
+    {
 
     public static final String EXTRA_LESSON_ID = "lessonId";
     public static final String EXTRA_LESSON_NAME = "lessonName";
@@ -71,7 +71,7 @@ public class ViewEditFlashcardsActivity extends AbstractExpandingActivity
 
     boolean editableList = false;
 
-    private BaseListAdapter<Flashcard, ?> adapter;
+//    private BaseListAdapter<Flashcard, ?> adapter;
 
     @Inject
     SpeechService speechService;
@@ -219,7 +219,6 @@ public class ViewEditFlashcardsActivity extends AbstractExpandingActivity
     public void onCreateExpandingActivity(Bundle savedInstanceState) {
         setContentView(R.layout.activity_cards);
         ButterKnife.bind(this);
-        ;
         initExtra();
         initTitle();
         initHeader();
@@ -280,7 +279,7 @@ public class ViewEditFlashcardsActivity extends AbstractExpandingActivity
     }
 
     private void addToTop(Flashcard flashcard) {
-        adapter.addFirst(flashcard);
+        editFlashcardsAdapter.addFirst(flashcard);
         recyclerView.scrollToPosition(0);
     }
 
@@ -307,22 +306,29 @@ public class ViewEditFlashcardsActivity extends AbstractExpandingActivity
         testCardsButton.setLayoutParams(layoutParams);
     }
 
+
+    @Inject
+    ViewFlashcardsAdapter viewFlashcardsAdapter;
+
+    @Inject
+    EditFlashcardsAdapter editFlashcardsAdapter;
+
     @Override
     public void renderReadOnlyFlashcards(List<Flashcard> flashcardList) {
-        adapter = new ViewFlashcardsAdapter(this, this);
-        adapter.setItems(flashcardList);
-        recyclerView.setAdapter(adapter);
+        //adapter = new ViewFlashcardsAdapter(this, this);
+        viewFlashcardsAdapter.setItems(flashcardList);
+        recyclerView.setAdapter(viewFlashcardsAdapter);
     }
 
     @Override
     public void renderEditableFlashcards(List<Flashcard> flashcardList) {
-        adapter = new EditFlashcardsAdapter(this, this);
-        adapter.setItems(flashcardList);
-        recyclerView.setAdapter(adapter);
+        //adapter = new EditFlashcardsAdapter(this, this);
+        editFlashcardsAdapter.setItems(flashcardList);
+        recyclerView.setAdapter(editFlashcardsAdapter);
     }
 
     @Override
-    public void onFlashcardRemoveClicked(final Flashcard flashcard, final int position) {
+    public void renderOnRemoveSnackBar(final Flashcard flashcard, final int position) {
         Snackbar
                 .make(getRootLayout(),
                         "Remove card?",
@@ -336,19 +342,10 @@ public class ViewEditFlashcardsActivity extends AbstractExpandingActivity
                 .show();
     }
 
-    @Override
-    public void onFlashcardModified(Flashcard flashcard, int position) {
-        viewEditFlashcardsActivityPresenter.flashcardModified(flashcard);
-    }
-
-    @Override
-    public void onSpeakIconClicked(String word) {
-        speechService.speak(word);
-    }
 
     @Override
     public void renderRemovedFlashcard(Flashcard flashcard, int position) {
-        adapter.removeItem(position);
+        editFlashcardsAdapter.removeItem(position);
     }
 
 

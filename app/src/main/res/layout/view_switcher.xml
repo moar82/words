@@ -11,6 +11,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@color/black"
             android:padding="5dp"/>
 
         <Button
@@ -24,6 +25,7 @@
             android:minHeight="0dp"
             android:minWidth="0dp"
             android:padding="5dp"
+            android:textColor="@color/black"
             android:text="EDIT"/>
     </LinearLayout>
 
@@ -36,6 +38,7 @@
             android:id="@+id/edit_view"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:layout_weight="1"
             android:hint=""
             android:padding="5dp"/>
@@ -46,6 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/icon_test"
+            android:textColor="@color/black"
             android:layout_weight="0"
             android:gravity="right"
             android:minHeight="0dp"
