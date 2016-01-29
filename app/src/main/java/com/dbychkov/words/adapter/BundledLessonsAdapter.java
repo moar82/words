@@ -18,14 +18,9 @@ package com.dbychkov.words.adapter;
 
 import android.app.Activity;
 import android.view.View;
-import com.dbychkov.domain.Flashcard;
 import com.dbychkov.domain.Lesson;
-import com.dbychkov.domain.repository.LessonRepository;
-import com.dbychkov.words.bus.CreateBookmarkEvent;
-import com.dbychkov.words.bus.RxEventBus;
-import com.dbychkov.words.widgets.EditableFlashcardView;
+import com.dbychkov.words.presentation.BundledLessonsTabFragmentPresenter;
 import com.dbychkov.words.widgets.LessonItemView;
-import rx.functions.Action1;
 
 import javax.inject.Inject;
 
@@ -34,34 +29,23 @@ import javax.inject.Inject;
  */
 public class BundledLessonsAdapter extends LessonsAdapter {
 
-    private LessonRepository lessonRepository;
-
-    private RxEventBus rxEventBus;
+    private BundledLessonsTabFragmentPresenter presenter;
 
     @Inject
-    public BundledLessonsAdapter(Activity activity, LessonRepository lessonRepository,
-                                 RxEventBus rxEventBus) {
+    public BundledLessonsAdapter(Activity activity, BundledLessonsTabFragmentPresenter presenter) {
         super(activity);
-        this.lessonRepository = lessonRepository;
-        this.rxEventBus = rxEventBus;
+        this.presenter = presenter;
     }
 
     @Override
-    protected void bind(final Lesson lesson, final LessonItemView view, final BaseListAdapter.ViewHolder<LessonItemView> holder) {
+    protected void bind(final Lesson lesson, LessonItemView view,
+            final BaseListAdapter.ViewHolder<LessonItemView> holder) {
         super.bind(lesson, view, holder);
         view.setBookmarked(lesson.isBookmarked());
         view.setBookmarkButtonListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Update bookmarked state in database
-                lessonRepository.bookmarkLesson(lesson.getId()).subscribe(new Action1<Boolean>() {
-                    @Override
-                    public void call(Boolean aBoolean) {
-                        view.setBookmarked(aBoolean);
-                    }
-                });
-                // Send event to adjacent tabs
-                rxEventBus.send(new CreateBookmarkEvent());
+                presenter.bookmarkedLessonClicked(lesson.getId(), holder.getAdapterPosition());
             }
         });
     }

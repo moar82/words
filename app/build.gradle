@@ -3,7 +3,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     signingConfigs {
-        if (!System.getenv("TRAVIS")) {
+        if (System.getenv("KEYSTORE")) {
             release {
                 keyAlias System.getenv("KEY_ALIAS")
                 keyPassword System.getenv("KEY_PASSWORD")
@@ -30,7 +30,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            if (!System.getenv("TRAVIS")) {
+            if (System.getenv("KEYSTORE")) {
                 signingConfig signingConfigs.release
             }
         }

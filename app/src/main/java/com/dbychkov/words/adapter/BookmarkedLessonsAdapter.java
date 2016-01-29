@@ -18,51 +18,34 @@ package com.dbychkov.words.adapter;
 
 import android.app.Activity;
 import android.view.View;
-
 import com.dbychkov.domain.Lesson;
-import com.dbychkov.domain.repository.LessonRepository;
-import com.dbychkov.words.bus.CreateBookmarkEvent;
-import com.dbychkov.words.bus.RemoveBookmarkEvent;
-import com.dbychkov.words.bus.RxEventBus;
+import com.dbychkov.words.presentation.BookmarkedLessonsTabFragmentPresenter;
+import com.dbychkov.words.widgets.LessonItemView;
 
 import javax.inject.Inject;
-
-import com.dbychkov.words.widgets.LessonItemView;
-import rx.functions.Action1;
 
 /**
  * Adapter for displaying bookmarked lessons
  */
 public class BookmarkedLessonsAdapter extends LessonsAdapter {
 
-    private LessonRepository lessonRepository;
-
-    private RxEventBus rxEventBus;
+    private BookmarkedLessonsTabFragmentPresenter presenter;
 
     @Inject
-    public BookmarkedLessonsAdapter(Activity activity, LessonRepository lessonRepository,
-                                    RxEventBus rxEventBus) {
+    public BookmarkedLessonsAdapter(Activity activity, BookmarkedLessonsTabFragmentPresenter presenter) {
         super(activity);
-        this.lessonRepository = lessonRepository;
-        this.rxEventBus = rxEventBus;
+        this.presenter = presenter;
     }
 
     @Override
-    protected void bind(final Lesson lesson, final LessonItemView view, final BaseListAdapter.ViewHolder<LessonItemView> holder) {
+    protected void bind(final Lesson lesson, final LessonItemView view,
+            final BaseListAdapter.ViewHolder<LessonItemView> holder) {
         super.bind(lesson, view, holder);
         view.setBookmarked(lesson.isBookmarked());
         view.setBookmarkButtonListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Update bookmarked state in database
-                lessonRepository.bookmarkLesson(lesson.getId()).subscribe(new Action1<Boolean>() {
-                    @Override
-                    public void call(Boolean aBoolean) {
-                        view.setBookmarked(aBoolean);
-                    }
-                });
-                removeItem(holder.getLayoutPosition());
-                rxEventBus.send(new RemoveBookmarkEvent());
+                presenter.bookmarkedLessonClicked(lesson.getId(), holder.getAdapterPosition());
             }
         });
     }

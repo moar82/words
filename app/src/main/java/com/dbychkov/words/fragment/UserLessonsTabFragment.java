@@ -117,4 +117,14 @@ public class UserLessonsTabFragment extends LessonsTabFragment implements View.O
             }
         }, 400);
     }
+
+    @Override
+    public void renderLessonItemRemoved(int position) {
+        userLessonsAdapter.removeItem(position);
+    }
+
+    @Override
+    public void renderLessonItemBookmarked(int position, boolean bookmarked) {
+
+    }
 }

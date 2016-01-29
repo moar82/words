@@ -17,36 +17,48 @@
 package com.dbychkov.words.presentation;
 
 import com.dbychkov.domain.repository.LessonRepository;
+import com.dbychkov.words.bus.CreateBookmarkEvent;
 import com.dbychkov.words.bus.RemoveBookmarkEvent;
 import com.dbychkov.words.bus.RxEventBus;
 import com.dbychkov.words.thread.PostExecutionThread;
 import com.dbychkov.words.thread.ThreadExecutor;
-
-import rx.functions.Action1;
-
-import javax.inject.Inject;
 
 /**
  * Presenter for lessons bundled with the application
  */
 public class BundledLessonsTabFragmentPresenter extends LessonsPresenter {
 
-    @Inject
+    private LessonRepository lessonRepository;
+
     public BundledLessonsTabFragmentPresenter(ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread, LessonRepository lessonRepository, RxEventBus rxEventBus) {
         super(threadExecutor, postExecutionThread, lessonRepository.getBundledLessons(), rxEventBus);
+        this.lessonRepository = lessonRepository;
         registerBookmarkedStateChangedEventListener();
     }
 
     private void registerBookmarkedStateChangedEventListener() {
-        compositeSubscription.add(rxEventBus.toObservable().subscribe(new Action1<Object>() {
+        execute(rxEventBus.toObservable(), new DefaultSubscriber<Object>() {
+
             @Override
-            public void call(Object event) {
+            public void onNext(Object event) {
                 if (event instanceof RemoveBookmarkEvent) {
                     reloadLessonList();
                 }
             }
-        }));
+        });
     }
 
+    public void bookmarkedLessonClicked(Long lessonId, final int position) {
+        execute(lessonRepository.bookmarkLesson(lessonId), new DefaultSubscriber<Boolean>() {
+
+            @Override
+            public void onNext(Boolean bookmarked) {
+                renderLessonsView.renderLessonItemBookmarked(position, bookmarked);
+                // Send event to adjacent tabs
+                rxEventBus.send(new CreateBookmarkEvent());
+            }
+        });
+
+    }
 }

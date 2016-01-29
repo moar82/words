@@ -28,6 +28,10 @@ import com.dbychkov.words.fragment.CardContainerFragment;
 import com.dbychkov.words.fragment.CardFragment;
 import com.dbychkov.words.fragment.UserLessonsTabFragment;
 
+import com.dbychkov.words.presentation.BookmarkedLessonsTabFragmentPresenter;
+import com.dbychkov.words.presentation.BundledLessonsTabFragmentPresenter;
+import com.dbychkov.words.presentation.UserLessonsTabFragmentPresenter;
+import com.dbychkov.words.presentation.ViewEditFlashcardsActivityPresenter;
 import dagger.Component;
 
 @PerActivity
@@ -55,4 +59,12 @@ public interface ActivityComponent {
     void inject(SplashActivity splashActivity);
 
     Activity activity();
+
+    UserLessonsTabFragmentPresenter userLessonsTabFragmentPresenter();
+
+    BundledLessonsTabFragmentPresenter bundledLessonsTabFragmentPresenter();
+
+    BookmarkedLessonsTabFragmentPresenter bookmarkedLessonsTabFragmentPresenter();
+
+    ViewEditFlashcardsActivityPresenter viewEditFlashcardsActivityPresenter();
 }

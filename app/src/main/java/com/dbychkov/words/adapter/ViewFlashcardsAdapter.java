@@ -23,18 +23,22 @@ import android.view.ViewGroup;
 
 import com.dbychkov.domain.Flashcard;
 import com.dbychkov.words.R;
+import com.dbychkov.words.presentation.ViewEditFlashcardsActivityPresenter;
 import com.dbychkov.words.widgets.FlashcardView;
+
+import javax.inject.Inject;
 
 /**
  * Adapter for rendering list of flashcards
  */
 public class ViewFlashcardsAdapter extends BaseListAdapter<Flashcard, FlashcardView> {
 
-    private ViewFlashcardsAdapterCallback viewFlashcardsAdapterCallback;
+    private ViewEditFlashcardsActivityPresenter presenter;
 
-    public ViewFlashcardsAdapter(Context context, ViewFlashcardsAdapterCallback viewFlashcardsAdapterCallback) {
+    @Inject
+    public ViewFlashcardsAdapter(Context context, ViewEditFlashcardsActivityPresenter presenter) {
         super(context);
-        this.viewFlashcardsAdapterCallback = viewFlashcardsAdapterCallback;
+        this.presenter = presenter;
     }
 
     @Override
@@ -51,15 +55,8 @@ public class ViewFlashcardsAdapter extends BaseListAdapter<Flashcard, FlashcardV
         view.setSpeakerIconClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewFlashcardsAdapterCallback.onSpeakIconClicked(flashcard.getWord());
+                presenter.onSpeakIconClicked(flashcard.getWord());
             }
         });
-    }
-
-    /**
-     * Callback to notify that speaker icon has been clicked
-     */
-    public interface ViewFlashcardsAdapterCallback {
-        void onSpeakIconClicked(String word);
     }
 }
