@@ -79,6 +79,11 @@ public abstract class BaseListAdapter<T, V extends View> extends RecyclerView.Ad
         notifyDataSetChanged();
     }
 
+    public T getItem( int position){
+        return list.get(position);
+    }
+
+
     public T getFirstItem(){
         return list.get(0);
     }

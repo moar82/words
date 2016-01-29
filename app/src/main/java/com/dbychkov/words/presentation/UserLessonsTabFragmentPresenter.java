@@ -24,8 +24,6 @@ import com.dbychkov.words.thread.ThreadExecutor;
 
 import java.util.Random;
 
-import javax.inject.Inject;
-
 /**
  * Presenter for custom lessons created by users
  */
@@ -33,9 +31,8 @@ public class UserLessonsTabFragmentPresenter extends LessonsPresenter {
 
     private LessonRepository lessonRepository;
 
-    @Inject
     public UserLessonsTabFragmentPresenter(ThreadExecutor threadExecutor,
-                                           PostExecutionThread postExecutionThread, LessonRepository lessonRepository, RxEventBus rxEventBus) {
+            PostExecutionThread postExecutionThread, LessonRepository lessonRepository, RxEventBus rxEventBus) {
         super(threadExecutor, postExecutionThread, lessonRepository.getUserLessons(), rxEventBus);
         this.lessonRepository = lessonRepository;
     }
@@ -69,4 +66,14 @@ public class UserLessonsTabFragmentPresenter extends LessonsPresenter {
         return "random/random_" + unit + ".png";
     }
 
+    public void lessonItemClicked(Long lessonId, final int position) {
+        execute(lessonRepository.removeLessonById(lessonId), new DefaultSubscriber<Void>() {
+
+            @Override
+            public void onNext(Void v) {
+                renderLessonsView.renderLessonItemRemoved(position);
+            }
+        });
+
+    }
 }

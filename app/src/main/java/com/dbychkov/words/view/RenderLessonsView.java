@@ -28,4 +28,7 @@ public interface RenderLessonsView extends LoadView {
 
     void renderCreatedLesson(Lesson lesson);
 
+    void renderLessonItemRemoved(int position);
+
+    void renderLessonItemBookmarked(int position, boolean bookmarked);
 }

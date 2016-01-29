@@ -19,14 +19,11 @@ package com.dbychkov.words.adapter;
 import android.app.Activity;
 import android.view.View;
 import com.dbychkov.domain.Lesson;
-import com.dbychkov.domain.repository.LessonRepository;
 import com.dbychkov.words.activity.ViewEditFlashcardsActivity;
+import com.dbychkov.words.presentation.UserLessonsTabFragmentPresenter;
 import com.dbychkov.words.widgets.LessonItemView;
 
 import javax.inject.Inject;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * Adapter for displaying user lessons
@@ -35,12 +32,12 @@ public class UserLessonsAdapter extends LessonsAdapter {
 
     private View firstView;
 
-    private LessonRepository lessonRepository;
+    private UserLessonsTabFragmentPresenter presenter;
 
     @Inject
-    public UserLessonsAdapter(Activity activity, LessonRepository lessonRepository) {
+    public UserLessonsAdapter(Activity activity, UserLessonsTabFragmentPresenter presenter) {
         super(activity);
-        this.lessonRepository = lessonRepository;
+        this.presenter = presenter;
     }
 
     @Override
@@ -53,20 +50,9 @@ public class UserLessonsAdapter extends LessonsAdapter {
         view.setRemoveIconListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lessonRepository.removeLessonById(lesson.getId()).subscribe();
-                removeItem(holder.getAdapterPosition());
+                presenter.lessonItemClicked(lesson.getId(), holder.getAdapterPosition());
             }
         });
-    }
-
-    private List<Lesson> sortLessonsByCreationDay(List<Lesson> lessons) {
-        Collections.sort(lessons, new Comparator<Lesson>() {
-            @Override
-            public int compare(Lesson lhs, Lesson rhs) {
-                return (int) (rhs.getId() - lhs.getId());
-            }
-        });
-        return lessons;
     }
 
     public View getFirstView() {

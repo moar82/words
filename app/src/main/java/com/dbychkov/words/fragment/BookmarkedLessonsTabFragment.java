@@ -78,4 +78,14 @@ public class BookmarkedLessonsTabFragment extends LessonsTabFragment implements 
     public void renderCreatedLesson(Lesson lesson) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public void renderLessonItemRemoved(int position) {
+        throw new UnsupportedOperationException("Removing lessons is not supported for \"Bookmarked lessons\" tab");
+    }
+
+    @Override
+    public void renderLessonItemBookmarked(int position, boolean bookmarked) {
+        bookmarkedLessonsAdapter.removeItem(position);
+    }
 }

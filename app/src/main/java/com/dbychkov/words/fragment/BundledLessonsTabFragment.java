@@ -19,7 +19,6 @@ package com.dbychkov.words.fragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import butterknife.BindString;
-
 import com.dbychkov.domain.Lesson;
 import com.dbychkov.words.R;
 import com.dbychkov.words.adapter.BundledLessonsAdapter;
@@ -28,6 +27,7 @@ import com.dbychkov.words.dagger.component.ActivityComponent;
 import com.dbychkov.words.presentation.BundledLessonsTabFragmentPresenter;
 import com.dbychkov.words.presentation.LessonsPresenter;
 import com.dbychkov.words.view.RenderLessonsView;
+import com.dbychkov.words.widgets.LessonItemView;
 
 import javax.inject.Inject;
 
@@ -73,6 +73,16 @@ public class BundledLessonsTabFragment extends LessonsTabFragment implements Ren
     @Override
     public void renderCreatedLesson(Lesson lesson) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void renderLessonItemRemoved(int position) {
+        throw new UnsupportedOperationException("Removing lessons is not supported for \"Bundled lessons\" tab");
+    }
+
+    @Override
+    public void renderLessonItemBookmarked(int position, boolean bookmarked) {
+        ((LessonItemView)recyclerView.getLayoutManager().findViewByPosition(position)).setBookmarked(bookmarked);
     }
 
 }
