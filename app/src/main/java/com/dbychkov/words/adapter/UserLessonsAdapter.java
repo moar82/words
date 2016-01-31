@@ -19,7 +19,7 @@ package com.dbychkov.words.adapter;
 import android.app.Activity;
 import android.view.View;
 import com.dbychkov.domain.Lesson;
-import com.dbychkov.words.activity.ViewEditFlashcardsActivity;
+import com.dbychkov.words.activity.EditFlashcardsActivity;
 import com.dbychkov.words.presentation.UserLessonsTabFragmentPresenter;
 import com.dbychkov.words.widgets.LessonItemView;
 
@@ -61,7 +61,6 @@ public class UserLessonsAdapter extends LessonsAdapter {
 
     @Override
     public void onLessonClicked(Lesson lesson, LessonItemView lessonItemView) {
-        ViewEditFlashcardsActivity
-                .startActivity(lesson, lessonItemView, context, ViewEditFlashcardsActivity.class, true);
+        EditFlashcardsActivity.startActivity(lesson, lessonItemView, context);
     }
 }

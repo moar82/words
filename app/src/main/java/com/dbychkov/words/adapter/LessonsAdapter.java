@@ -17,15 +17,13 @@
 package com.dbychkov.words.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.dbychkov.domain.Lesson;
 import com.dbychkov.words.R;
-import com.dbychkov.words.activity.ViewEditFlashcardsActivity;
-import com.dbychkov.words.widgets.EditableFlashcardView;
+import com.dbychkov.words.activity.ViewFlashcardsActivity;
 import com.dbychkov.words.widgets.LessonItemView;
 import com.squareup.picasso.Picasso;
 
@@ -77,7 +75,7 @@ public abstract class LessonsAdapter extends BaseListAdapter<Lesson, LessonItemV
     }
 
     public void onLessonClicked(Lesson lesson, LessonItemView lessonItemView) {
-        ViewEditFlashcardsActivity.startActivity(lesson, lessonItemView, context, ViewEditFlashcardsActivity.class, false);
+        ViewFlashcardsActivity.startActivity(lesson, lessonItemView, context);
     }
 
 }

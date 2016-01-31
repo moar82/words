@@ -23,7 +23,16 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.ViewEditFlashcardsActivity"
+            android:name=".activity.ViewFlashcardsActivity"
+            android:label="@string/title_activity_learn_cards"
+            android:screenOrientation="portrait"
+            android:theme="@style/Transparent"
+            android:parentActivityName=".activity.LessonCatalogActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+        <activity
+            android:name=".activity.EditFlashcardsActivity"
             android:label="@string/title_activity_learn_cards"
             android:screenOrientation="portrait"
             android:theme="@style/Transparent"
@@ -35,8 +44,7 @@
             android:name=".activity.StudyFlashcardsActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_cards"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".activity.ViewEditFlashcardsActivity">
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

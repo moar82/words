@@ -16,8 +16,6 @@
 
 package com.dbychkov.words.activity;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -38,10 +36,8 @@ import android.widget.TextView;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.dbychkov.domain.Flashcard;
-import com.dbychkov.domain.Lesson;
 import com.dbychkov.domain.repository.FlashcardRepository;
 import com.dbychkov.words.R;
-import com.dbychkov.words.adapter.BaseListAdapter;
 import com.dbychkov.words.adapter.EditFlashcardsAdapter;
 import com.dbychkov.words.adapter.ViewFlashcardsAdapter;
 import com.dbychkov.words.dagger.component.ActivityComponent;
@@ -60,7 +56,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.functions.Action1;
 
-public class ViewEditFlashcardsActivity extends AbstractExpandingActivity
+public abstract class AbstractFlashcardsActivity extends AbstractExpandingActivity
         implements AppBarLayout.OnOffsetChangedListener, ViewEditFlashcardsView
     {
 
@@ -70,8 +66,6 @@ public class ViewEditFlashcardsActivity extends AbstractExpandingActivity
     public static final String EXTRA_EDITABLE_LESSON = "isLessonEditable";
 
     boolean editableList = false;
-
-//    private BaseListAdapter<Flashcard, ?> adapter;
 
     @Inject
     SpeechService speechService;
@@ -141,22 +135,22 @@ public class ViewEditFlashcardsActivity extends AbstractExpandingActivity
         component.inject(this);
     }
 
-    public static void startActivity(Lesson lesson, View view, Context context,
-                                     Class<? extends Activity> activityClass, boolean editableLesson) {
-        Intent intent = new Intent(context, activityClass);
-        intent.putExtra(EXTRA_LESSON_ID, lesson.getId());
-        intent.putExtra(EXTRA_LESSON_IMAGE_PATH, lesson.getImagePath());
-        intent.putExtra(EXTRA_LESSON_NAME, lesson.getLessonName());
-        intent.putExtra(EXTRA_EDITABLE_LESSON, editableLesson);
-        int[] screenLocation = new int[2];
-        view.getLocationOnScreen(screenLocation);
-        intent.putExtra(EXTRA_PROPERTY_TOP, screenLocation[1]);
-        intent.putExtra(EXTRA_PROPERTY_LEFT, screenLocation[0]);
-        intent.putExtra(EXTRA_PROPERTY_WIDTH, view.getWidth());
-        intent.putExtra(EXTRA_PROPERTY_HEIGHT, view.getHeight());
-        context.startActivity(intent);
-        ((Activity) context).overridePendingTransition(R.anim.appear, 0);
-    }
+//    public static void startActivity(Lesson lesson, View view, Context context,
+//                                     Class<? extends Activity> activityClass, boolean editableLesson) {
+//        Intent intent = new Intent(context, activityClass);
+//        intent.putExtra(EXTRA_LESSON_ID, lesson.getId());
+//        intent.putExtra(EXTRA_LESSON_IMAGE_PATH, lesson.getImagePath());
+//        intent.putExtra(EXTRA_LESSON_NAME, lesson.getLessonName());
+//        intent.putExtra(EXTRA_EDITABLE_LESSON, editableLesson);
+//        int[] screenLocation = new int[2];
+//        view.getLocationOnScreen(screenLocation);
+//        intent.putExtra(EXTRA_PROPERTY_TOP, screenLocation[1]);
+//        intent.putExtra(EXTRA_PROPERTY_LEFT, screenLocation[0]);
+//        intent.putExtra(EXTRA_PROPERTY_WIDTH, view.getWidth());
+//        intent.putExtra(EXTRA_PROPERTY_HEIGHT, view.getHeight());
+//        context.startActivity(intent);
+//        ((Activity) context).overridePendingTransition(R.anim.appear, 0);
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -189,7 +183,7 @@ public class ViewEditFlashcardsActivity extends AbstractExpandingActivity
 
     @OnClick(R.id.test_cards_button)
     void proceedToExercises() {
-        Intent intent = new Intent(ViewEditFlashcardsActivity.this, StudyFlashcardsActivity.class);
+        Intent intent = new Intent(AbstractFlashcardsActivity.this, StudyFlashcardsActivity.class);
         intent.putExtra(EXTRA_LESSON_ID, lessonId);
         intent.putExtra(EXTRA_LESSON_IMAGE_PATH, lessonImagePath);
         intent.putExtra(EXTRA_LESSON_NAME, lessonName);
@@ -315,14 +309,12 @@ public class ViewEditFlashcardsActivity extends AbstractExpandingActivity
 
     @Override
     public void renderReadOnlyFlashcards(List<Flashcard> flashcardList) {
-        //adapter = new ViewFlashcardsAdapter(this, this);
         viewFlashcardsAdapter.setItems(flashcardList);
         recyclerView.setAdapter(viewFlashcardsAdapter);
     }
 
     @Override
     public void renderEditableFlashcards(List<Flashcard> flashcardList) {
-        //adapter = new EditFlashcardsAdapter(this, this);
         editFlashcardsAdapter.setItems(flashcardList);
         recyclerView.setAdapter(editFlashcardsAdapter);
     }

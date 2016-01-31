@@ -19,7 +19,6 @@ package com.dbychkov.words.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -103,7 +102,7 @@ public class StudyFlashcardsActivity extends BaseActivity implements StudyFlashc
     }
 
     private void initExtra(){
-        lessonId = getIntent().getLongExtra(ViewEditFlashcardsActivity.EXTRA_LESSON_ID, -1L);
+        lessonId = getIntent().getLongExtra(AbstractFlashcardsActivity.EXTRA_LESSON_ID, -1L);
     }
 
     private void initPresenter(){
@@ -137,15 +136,14 @@ public class StudyFlashcardsActivity extends BaseActivity implements StudyFlashc
         dontKnowButton.setColorFilter(dontKnowButtonColor);
     }
 
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                overridePendingTransition(R.anim.slide_in_left_100, R.anim.slide_out_right_100);
+                onBackPressed();
                 return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

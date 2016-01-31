@@ -26,7 +26,7 @@ import android.view.ViewGroup;
 
 import com.dbychkov.domain.Lesson;
 import com.dbychkov.words.R;
-import com.dbychkov.words.activity.ViewEditFlashcardsActivity;
+import com.dbychkov.words.activity.EditFlashcardsActivity;
 import com.dbychkov.words.adapter.LessonsAdapter;
 import com.dbychkov.words.adapter.UserLessonsAdapter;
 import com.dbychkov.words.dagger.component.ActivityComponent;
@@ -110,10 +110,7 @@ public class UserLessonsTabFragment extends LessonsTabFragment implements View.O
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                ViewEditFlashcardsActivity
-                        .startActivity(getLessonsAdapter().getFirstItem(),
-                                ((UserLessonsAdapter) getLessonsAdapter()).getFirstView(),
-                                getActivity(), ViewEditFlashcardsActivity.class, true);
+                EditFlashcardsActivity.startActivity(getLessonsAdapter().getFirstItem(),  ((UserLessonsAdapter) getLessonsAdapter()).getFirstView(), getActivity());
             }
         }, 400);
     }
