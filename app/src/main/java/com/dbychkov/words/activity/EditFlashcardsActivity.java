@@ -23,8 +23,21 @@ import android.view.View;
 
 import com.dbychkov.domain.Lesson;
 import com.dbychkov.words.R;
+import com.dbychkov.words.dagger.component.ActivityComponent;
+import com.dbychkov.words.util.SpeechService;
+
+import javax.inject.Inject;
 
 public class EditFlashcardsActivity extends AbstractFlashcardsActivity {
+
+    @Override
+    public void injectActivity(ActivityComponent component) {
+        component.inject(this);
+    }
+
+    @Inject
+    public SpeechService speechService;
+
 
     public static void startActivity(Lesson lesson, View view, Context context) {
         Intent intent = new Intent(context, EditFlashcardsActivity.class);

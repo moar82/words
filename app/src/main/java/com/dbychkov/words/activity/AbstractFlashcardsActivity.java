@@ -40,9 +40,7 @@ import com.dbychkov.domain.repository.FlashcardRepository;
 import com.dbychkov.words.R;
 import com.dbychkov.words.adapter.EditFlashcardsAdapter;
 import com.dbychkov.words.adapter.ViewFlashcardsAdapter;
-import com.dbychkov.words.dagger.component.ActivityComponent;
 import com.dbychkov.words.presentation.ViewEditFlashcardsActivityPresenter;
-import com.dbychkov.words.util.SpeechService;
 import com.dbychkov.words.view.ViewEditFlashcardsView;
 import com.dbychkov.words.widgets.RecyclerViewWithEmptyView;
 import com.squareup.picasso.Picasso;
@@ -57,8 +55,7 @@ import butterknife.OnClick;
 import rx.functions.Action1;
 
 public abstract class AbstractFlashcardsActivity extends AbstractExpandingActivity
-        implements AppBarLayout.OnOffsetChangedListener, ViewEditFlashcardsView
-    {
+        implements AppBarLayout.OnOffsetChangedListener, ViewEditFlashcardsView {
 
     public static final String EXTRA_LESSON_ID = "lessonId";
     public static final String EXTRA_LESSON_NAME = "lessonName";
@@ -67,8 +64,6 @@ public abstract class AbstractFlashcardsActivity extends AbstractExpandingActivi
 
     boolean editableList = false;
 
-    @Inject
-    SpeechService speechService;
 
     @Inject
     FlashcardRepository flashcardRepository;
@@ -130,10 +125,6 @@ public abstract class AbstractFlashcardsActivity extends AbstractExpandingActivi
         viewEditFlashcardsActivityPresenter.destroy();
     }
 
-    @Override
-    public void injectActivity(ActivityComponent component) {
-        component.inject(this);
-    }
 
 //    public static void startActivity(Lesson lesson, View view, Context context,
 //                                     Class<? extends Activity> activityClass, boolean editableLesson) {

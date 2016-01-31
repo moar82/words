@@ -52,7 +52,9 @@ public interface ActivityComponent {
 
     void inject(StudyFlashcardsActivity studyFlashcardsActivity);
 
-    void inject(AbstractFlashcardsActivity abstractFlashcardsActivity);
+    void inject(EditFlashcardsActivity abstractFlashcardsActivity);
+
+    void inject(ViewFlashcardsActivity abstractFlashcardsActivity);
 
     void inject(ViewFlashcardsAdapter viewFlashcardsAdapter);
 
