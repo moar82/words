@@ -23,7 +23,8 @@ import android.view.ViewGroup;
 
 import com.dbychkov.domain.Flashcard;
 import com.dbychkov.words.R;
-import com.dbychkov.words.presentation.ViewEditFlashcardsActivityPresenter;
+import com.dbychkov.words.presentation.EditFlashcardsActivityPresenter;
+import com.dbychkov.words.presentation.FlashcardsActivityPresenter;
 import com.dbychkov.words.widgets.EditableFlashcardView;
 import com.dbychkov.words.widgets.SwitchingEditText;
 
@@ -34,10 +35,10 @@ import javax.inject.Inject;
  */
 public class EditFlashcardsAdapter extends BaseListAdapter<Flashcard, EditableFlashcardView> {
 
-    private  ViewEditFlashcardsActivityPresenter presenter;
+    private EditFlashcardsActivityPresenter presenter;
 
     @Inject
-    public EditFlashcardsAdapter(Context context, ViewEditFlashcardsActivityPresenter presenter) {
+    public EditFlashcardsAdapter(Context context, EditFlashcardsActivityPresenter presenter) {
         super(context);
         this.presenter = presenter;
     }

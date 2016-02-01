@@ -18,91 +18,58 @@ package com.dbychkov.words.presentation;
 
 import com.dbychkov.domain.Flashcard;
 import com.dbychkov.domain.repository.FlashcardRepository;
+import com.dbychkov.words.activity.FlashcardsView;
 import com.dbychkov.words.thread.PostExecutionThread;
 import com.dbychkov.words.thread.ThreadExecutor;
 import com.dbychkov.words.util.SpeechService;
-import com.dbychkov.words.view.ViewEditFlashcardsView;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import rx.android.schedulers.AndroidSchedulers;
 
-public class ViewEditFlashcardsActivityPresenter extends AbstractPresenter {
+/**
+ * Base presenter for all
+ */
+public abstract class FlashcardsActivityPresenter extends AbstractPresenter {
 
-    private FlashcardRepository flashcardRepository;
-    private ViewEditFlashcardsView viewEditFlashcardsView;
+    protected FlashcardRepository flashcardRepository;
     private Long lessonId;
-    private Boolean editable;
     private SpeechService speechService;
 
-    public ViewEditFlashcardsActivityPresenter(ThreadExecutor threadExecutor,
-                                               PostExecutionThread postExecutionThread, FlashcardRepository flashcardRepository,
+    public FlashcardsActivityPresenter(ThreadExecutor threadExecutor,
+            PostExecutionThread postExecutionThread, FlashcardRepository flashcardRepository,
             SpeechService speechService) {
         super(threadExecutor, postExecutionThread);
         this.flashcardRepository = flashcardRepository;
         this.speechService = speechService;
     }
 
-    public void setView(ViewEditFlashcardsView viewEditFlashcardsView) {
-        this.viewEditFlashcardsView = viewEditFlashcardsView;
-    }
-
-    public void initialize(Long lessonId, Boolean editable) {
+    public void initialize(Long lessonId) {
         this.lessonId = lessonId;
-        this.editable = editable;
-        initialize(editable);
+        initialize();
     }
 
-    private void initialize(final Boolean editable) {
+    public void initialize() {
         execute(flashcardRepository.getFlashcardsFromLesson(lessonId), new DefaultSubscriber<List<Flashcard>>() {
-
             @Override
             public void onNext(List<Flashcard> flashcards) {
-                ViewEditFlashcardsActivityPresenter.this.showFlashCards(flashcards, editable);
-                ViewEditFlashcardsActivityPresenter.this.showProgress(getProgressForWordList(flashcards));
+                FlashcardsActivityPresenter.this.showFlashCards(flashcards);
+                FlashcardsActivityPresenter.this.showProgress(getProgressForWordList(flashcards));
             }
         });
     }
 
-    public void removeFlashcard(final Flashcard flashcard, final int position) {
-        execute(flashcardRepository.removeFlashcard(flashcard.getId()), new DefaultSubscriber<Void>() {
+    private FlashcardsView flashcardsView;
 
-            @Override
-            public void onNext(Void v) {
-                viewEditFlashcardsView.renderRemovedFlashcard(flashcard, position);
-            }
-        });
+    public void setView(FlashcardsView flashcardsView) {
+        this.flashcardsView = flashcardsView;
     }
 
-
-
-    private void showProgress(Integer progress){
-        viewEditFlashcardsView.renderProgress(progress);
+    public void showProgress(Integer progress){
+        flashcardsView.renderProgress(progress);
     }
 
-    private void showFlashCards(List<Flashcard> flashcards, Boolean editable) {
-        if (editable) {
-            showEditableFlashcards(flashcards);
-        } else {
-            showReadOnlyFlashcards(flashcards);
-        }
-        setupFab(editable);
-    }
-
-    private void showReadOnlyFlashcards(List<Flashcard> flashcards) {
-        viewEditFlashcardsView.renderReadOnlyFlashcards(flashcards);
-    }
-
-
-    private void showEditableFlashcards(List<Flashcard> flashcards) {
-        viewEditFlashcardsView.renderEditableFlashcards(flashcards);
-    }
-
-    private void setupFab(Boolean editable){
-        viewEditFlashcardsView.setupFab(editable);
-    }
+    abstract void showFlashCards(List<Flashcard> flashcards);
 
     public void clearProgressClicked() {
         flashcardRepository.clearProgressForLesson(lessonId)
@@ -113,13 +80,13 @@ public class ViewEditFlashcardsActivityPresenter extends AbstractPresenter {
                     @Override
                     public void onCompleted() {
                         super.onCompleted();
-                        initialize(editable);
+                        initialize();
                     }
                 });
 
     }
 
-    private Integer getProgressForWordList(List<Flashcard> flashcardList) {
+    protected Integer getProgressForWordList(List<Flashcard> flashcardList) {
         int wordsLearnt = 0;
         for (Flashcard flashcard : flashcardList) {
             wordsLearnt += flashcard.getStatus();
@@ -136,7 +103,4 @@ public class ViewEditFlashcardsActivityPresenter extends AbstractPresenter {
             speechService.speak(word);
     }
 
-    public void onFlashcardRemoveClicked(Flashcard flashcard, int position) {
-        viewEditFlashcardsView.renderOnRemoveSnackBar(flashcard, position);
-    }
 }

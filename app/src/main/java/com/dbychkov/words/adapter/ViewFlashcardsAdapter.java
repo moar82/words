@@ -23,7 +23,8 @@ import android.view.ViewGroup;
 
 import com.dbychkov.domain.Flashcard;
 import com.dbychkov.words.R;
-import com.dbychkov.words.presentation.ViewEditFlashcardsActivityPresenter;
+import com.dbychkov.words.presentation.FlashcardsActivityPresenter;
+import com.dbychkov.words.presentation.ViewFlashcardsActivityPresenter;
 import com.dbychkov.words.widgets.FlashcardView;
 
 import javax.inject.Inject;
@@ -33,10 +34,10 @@ import javax.inject.Inject;
  */
 public class ViewFlashcardsAdapter extends BaseListAdapter<Flashcard, FlashcardView> {
 
-    private ViewEditFlashcardsActivityPresenter presenter;
+    private ViewFlashcardsActivityPresenter presenter;
 
     @Inject
-    public ViewFlashcardsAdapter(Context context, ViewEditFlashcardsActivityPresenter presenter) {
+    public ViewFlashcardsAdapter(Context context, ViewFlashcardsActivityPresenter presenter) {
         super(context);
         this.presenter = presenter;
     }

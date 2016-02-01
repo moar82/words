@@ -18,6 +18,7 @@ package com.dbychkov.words.dagger.component;
 
 import android.app.Activity;
 
+import com.dbychkov.domain.repository.FlashcardRepository;
 import com.dbychkov.words.activity.*;
 import com.dbychkov.words.adapter.ViewFlashcardsAdapter;
 import com.dbychkov.words.dagger.PerActivity;
@@ -28,11 +29,12 @@ import com.dbychkov.words.fragment.CardContainerFragment;
 import com.dbychkov.words.fragment.CardFragment;
 import com.dbychkov.words.fragment.UserLessonsTabFragment;
 
-import com.dbychkov.words.presentation.BookmarkedLessonsTabFragmentPresenter;
-import com.dbychkov.words.presentation.BundledLessonsTabFragmentPresenter;
-import com.dbychkov.words.presentation.UserLessonsTabFragmentPresenter;
-import com.dbychkov.words.presentation.ViewEditFlashcardsActivityPresenter;
+import com.dbychkov.words.presentation.*;
+import com.dbychkov.words.thread.PostExecutionThread;
+import com.dbychkov.words.thread.ThreadExecutor;
+import com.dbychkov.words.util.SpeechService;
 import dagger.Component;
+import dagger.Provides;
 
 @PerActivity
 @Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
@@ -52,9 +54,9 @@ public interface ActivityComponent {
 
     void inject(StudyFlashcardsActivity studyFlashcardsActivity);
 
-    void inject(EditFlashcardsActivity abstractFlashcardsActivity);
+    void inject(EditFlashcardsActivity editFlashcardsActivity);
 
-    void inject(ViewFlashcardsActivity abstractFlashcardsActivity);
+    void inject(ViewFlashcardsActivity viewFlashcardsActivity);
 
     void inject(ViewFlashcardsAdapter viewFlashcardsAdapter);
 
@@ -68,5 +70,7 @@ public interface ActivityComponent {
 
     BookmarkedLessonsTabFragmentPresenter bookmarkedLessonsTabFragmentPresenter();
 
-    ViewEditFlashcardsActivityPresenter viewEditFlashcardsActivityPresenter();
+    ViewFlashcardsActivityPresenter viewFlashcardsActivityPresenter();
+
+    EditFlashcardsActivityPresenter editFlashcardsActivityPresenter();
 }

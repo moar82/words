@@ -102,7 +102,7 @@ public class StudyFlashcardsActivity extends BaseActivity implements StudyFlashc
     }
 
     private void initExtra(){
-        lessonId = getIntent().getLongExtra(AbstractFlashcardsActivity.EXTRA_LESSON_ID, -1L);
+        lessonId = getIntent().getLongExtra(FlashcardsActivity.EXTRA_LESSON_ID, -1L);
     }
 
     private void initPresenter(){

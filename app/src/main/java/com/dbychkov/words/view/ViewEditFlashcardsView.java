@@ -32,5 +32,5 @@ public interface ViewEditFlashcardsView {
 
     void renderRemovedFlashcard(Flashcard flashcard, int position);
 
-    void renderOnRemoveSnackBar(final Flashcard flashcard, final int position);
+    void renderOnRemoveSnackBar(Flashcard flashcard, final int position);
 }

@@ -52,9 +52,16 @@ public class ActivityModule {
 
     @Provides
     @PerActivity
-    ViewEditFlashcardsActivityPresenter viewEditFlashcardsActivityPresenter(ThreadExecutor threadExecutor,
+    ViewFlashcardsActivityPresenter viewFlashcardsActivityPresenter(ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread, FlashcardRepository flashcardRepository, SpeechService speechService){
-        return new ViewEditFlashcardsActivityPresenter(threadExecutor, postExecutionThread, flashcardRepository, speechService);
+        return new ViewFlashcardsActivityPresenter(threadExecutor, postExecutionThread, flashcardRepository, speechService);
+    }
+
+    @Provides
+    @PerActivity
+    EditFlashcardsActivityPresenter editFlashcardsActivityPresenter(ThreadExecutor threadExecutor,
+            PostExecutionThread postExecutionThread, FlashcardRepository flashcardRepository, SpeechService speechService){
+        return new EditFlashcardsActivityPresenter(threadExecutor, postExecutionThread, flashcardRepository, speechService);
     }
 
 }
