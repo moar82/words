@@ -16,13 +16,13 @@
 
 package com.dbychkov.words.view;
 
-public interface SplashView {
+public interface SplashView extends View {
 
     void renderFancyAnimation();
-
-    void renderProgress(int progress);
 
     void showLoading();
 
     void renderSplashScreenEnded();
+
+    void renderImportError();
 }

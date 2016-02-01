@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * View, capable of rendering flashcards
  */
-public interface StudyFlashcardsView {
+public interface StudyFlashcardsView extends View {
 
     void renderFlashcards(List<Flashcard> flashcards);
 

@@ -10,6 +10,9 @@ import com.dbychkov.words.util.SpeechService;
 import javax.inject.Inject;
 import java.util.List;
 
+/**
+ * Presenter
+ */
 public class ViewFlashcardsActivityPresenter extends FlashcardsActivityPresenter {
 
     private ViewFlashcardsView viewFlashcardsView;
@@ -20,7 +23,6 @@ public class ViewFlashcardsActivityPresenter extends FlashcardsActivityPresenter
             SpeechService speechService) {
         super(threadExecutor, postExecutionThread, flashcardRepository, speechService);
     }
-
 
     public void setView(ViewFlashcardsView viewFlashcardsView) {
         super.setView(viewFlashcardsView);

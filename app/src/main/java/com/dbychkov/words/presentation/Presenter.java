@@ -16,11 +16,23 @@
 
 package com.dbychkov.words.presentation;
 
+/**
+ * Presenter in MVP pattern
+ */
 public interface Presenter {
 
+    /**
+     * Resume lifecycle method, should be called in corresponding Activity/Fragment lifecycle method
+     */
     void resume();
 
+    /**
+     * Pause lifecycle method, should be called in corresponding Activity/Fragment lifecycle method
+     */
     void pause();
 
+    /**
+     * Destroy lifecycle method, should be called in corresponding Activity/Fragment lifecycle method
+     */
     void destroy();
 }

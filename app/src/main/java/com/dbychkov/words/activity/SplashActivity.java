@@ -22,7 +22,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import android.widget.Toast;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.dbychkov.words.R;
 import com.dbychkov.words.dagger.component.ActivityComponent;
@@ -33,9 +35,6 @@ import com.dbychkov.words.util.LogHelper;
 import com.dbychkov.words.view.SplashView;
 
 import javax.inject.Inject;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Splash screen activity. Flashcards database is imported during first launch.
@@ -64,6 +63,10 @@ public class SplashActivity extends BaseActivity implements SplashView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
+        initPresenter();
+    }
+
+    private void initPresenter(){
         splashActivityPresenter.setView(this);
         splashActivityPresenter.initialize();
     }
@@ -75,7 +78,6 @@ public class SplashActivity extends BaseActivity implements SplashView {
 
     @Override
     public void showLoading() {
-        importProgressBar.setVisibility(View.VISIBLE);
         importingTextView.setVisibility(View.VISIBLE);
     }
 
@@ -86,16 +88,16 @@ public class SplashActivity extends BaseActivity implements SplashView {
     }
 
     @Override
+    public void renderImportError() {
+        Toast.makeText(this, "Error while importing lessons", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void renderFancyAnimation() {
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
         RelativeLayout rootLayout = (RelativeLayout) findViewById(R.id.root);
         rootLayout.clearAnimation();
         rootLayout.startAnimation(anim);
-    }
-
-    @Override
-    public void renderProgress(int progress) {
-        importProgressBar.setProgress(progress);
     }
 
 }

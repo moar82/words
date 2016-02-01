@@ -18,7 +18,7 @@ package com.dbychkov.words.view;
 /**
  * View, capable of showing progressbar/error
  */
-public interface LoadView {
+public interface LoadView extends View {
 
     void showLoading();
 

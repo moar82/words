@@ -18,22 +18,22 @@ package com.dbychkov.words.presentation;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
-
 import com.dbychkov.words.data.LessonsImporter;
 import com.dbychkov.words.thread.PostExecutionThread;
 import com.dbychkov.words.thread.ThreadExecutor;
 import com.dbychkov.words.view.SplashView;
-
-import javax.inject.Inject;
-
 import rx.Observable;
 import rx.Subscriber;
 
+import javax.inject.Inject;
+
+/**
+ * Presenter for {@link com.dbychkov.words.activity.SplashActivity}
+ */
 public class SplashActivityPresenter extends AbstractPresenter {
 
     private static final String FIRST_LAUNCH_PREFERENCE_KEY = "first_launch_4";
     private static final int SPLASH_DISPLAY_LENGTH_MILLIS = 2000;
-
 
     private SplashView splashView;
     private LessonsImporter lessonsImporter;
@@ -41,8 +41,8 @@ public class SplashActivityPresenter extends AbstractPresenter {
 
     @Inject
     public SplashActivityPresenter(ThreadExecutor threadExecutor,
-                                   PostExecutionThread postExecutionThread,
-                                   LessonsImporter lessonImporter, Context context) {
+            PostExecutionThread postExecutionThread,
+            LessonsImporter lessonImporter, Context context) {
         super(threadExecutor, postExecutionThread);
         this.lessonsImporter = lessonImporter;
         this.context = context;
@@ -58,11 +58,21 @@ public class SplashActivityPresenter extends AbstractPresenter {
                 .getBoolean(FIRST_LAUNCH_PREFERENCE_KEY, true);
     }
 
+    private void setNotFirstLaunch(){
+        PreferenceManager
+                .getDefaultSharedPreferences(context)
+                .edit()
+                .putBoolean(FIRST_LAUNCH_PREFERENCE_KEY, false)
+                .commit();
+    }
+
     public void initialize() {
         final boolean firstLaunch = isFirstLaunch();
-        if (firstLaunch)
-        splashView.showLoading();
 
+        // Show "loading" only during lesson import
+        if (firstLaunch) {
+            splashView.showLoading();
+        }
 
         execute(Observable.create(new Observable.OnSubscribe<Void>() {
             @Override
@@ -70,10 +80,7 @@ public class SplashActivityPresenter extends AbstractPresenter {
                 if (firstLaunch) {
                     lessonsImporter.importLessons();
                 } else {
-                    try {
-                        Thread.sleep(SPLASH_DISPLAY_LENGTH_MILLIS);
-                    } catch (Exception e) {
-                    }
+                    sleep();
                 }
                 subscriber.onNext(null);
                 subscriber.onCompleted();
@@ -81,32 +88,26 @@ public class SplashActivityPresenter extends AbstractPresenter {
         }), new DefaultSubscriber<Void>() {
 
             @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
             public void onError(Throwable e) {
-
+                splashView.renderImportError();
             }
 
             @Override
             public void onNext(Void v) {
-
-                PreferenceManager
-                        .getDefaultSharedPreferences(
-                                context
-                        )
-                        .edit()
-                        .putBoolean(FIRST_LAUNCH_PREFERENCE_KEY, false)
-                        .commit();
-
+                setNotFirstLaunch();
                 splashView.renderSplashScreenEnded();
-
-
             }
         });
+
+        // Fade in animation
         splashView.renderFancyAnimation();
+    }
+
+    private void sleep(){
+        try {
+            Thread.sleep(SPLASH_DISPLAY_LENGTH_MILLIS);
+        } catch (Exception e) {
+        }
     }
 
 }

@@ -16,7 +16,7 @@
 
 package com.dbychkov.words.view;
 
-public interface LessonCatalogView {
+public interface LessonCatalogView extends View{
 
     void renderRateScreen();
 

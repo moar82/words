@@ -20,7 +20,7 @@ import com.dbychkov.domain.Flashcard;
 
 import java.util.List;
 
-public interface ViewEditFlashcardsView {
+public interface ViewEditFlashcardsView extends View {
 
     void renderReadOnlyFlashcards(List<Flashcard> flashcardList);
 
