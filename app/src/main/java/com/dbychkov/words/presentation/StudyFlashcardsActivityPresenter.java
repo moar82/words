@@ -81,31 +81,45 @@ public class StudyFlashcardsActivityPresenter extends PresenterBase {
         execute(flashcardRepository.updateFlashcard(currentFlashcard), new DefaultSubscriber<List<Flashcard>>() {
             @Override
             public void onNext(List<Flashcard> flashcards) {
-                if (++currentPosition >= unlearntFlashcards.size()) {
+                if (isLastFlashcard()) {
                     showLessonEndedDialog();
                 } else {
-                    studyFlashcardsView.showFlashcard(currentPosition);
+                    showNextFlashcardImmediately();
                 }
             }
         });
+    }
+
+    private boolean isLastFlashcard(){
+        return currentPosition + 1 >= unlearntFlashcards.size();
     }
 
     /**
      * Show back of flashcard and proceed to the next flashcard
      */
     public void dontKnowWordButtonPressed() {
-        if (studyFlashcardsView.showCardBack(currentPosition)) {
-            if (currentPosition + 1 >= unlearntFlashcards.size()) {
-                showLessonEndedDialogWithDelay();
-            } else {
-                showNextFlashcardWithADelay();
-            }
+        boolean flashcardWasFlipped = studyFlashcardsView.showCardBack(currentPosition);
+        boolean lastFlashcard = isLastFlashcard();
+        if (flashcardWasFlipped) {
+            showLessonEnded(lastFlashcard);
         } else {
-            if (currentPosition + 1 >= unlearntFlashcards.size()) {
-                showLessonEndedDialog();
-            } else {
-                showNextFlashcardImmediately();
-            }
+            showLessonEndedDialog(lastFlashcard);
+        }
+    }
+
+    private void showLessonEnded(boolean delayRequired){
+        if (delayRequired) {
+            showLessonEndedDialogWithDelay();
+        } else {
+            showNextFlashcardWithADelay();
+        }
+    }
+
+    private void showLessonEndedDialog(boolean delayRequired){
+        if (delayRequired) {
+            showLessonEndedDialog();
+        } else {
+            showNextFlashcardImmediately();
         }
     }
 

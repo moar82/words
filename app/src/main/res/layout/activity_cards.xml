@@ -118,6 +118,7 @@
         android:layout_marginRight="20dp"
         android:src="@drawable/ic_add_white_18dp"
         app:elevation="6dp"
+        android:visibility="gone"
         app:fabSize="normal"
         app:layout_behavior="com.dbychkov.words.behavior.ScrollOffBottomBehavior"
         app:pressedTranslationZ="12dp" />

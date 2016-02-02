@@ -116,6 +116,7 @@ public class EditFlashcardsActivity extends FlashcardsActivity implements EditFl
 
     public void setupFab() {
         FloatingActionButton fab =(FloatingActionButton) findViewById(R.id.fab);
+        fab.show();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

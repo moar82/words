@@ -138,9 +138,9 @@ public class LessonCatalogActivity extends BaseActivity implements ViewPager.OnP
     @Override
     public void onPageSelected(int position) {
         if (position == 2) {
-            floatingActionButton.setVisibility(View.VISIBLE);
+            floatingActionButton.show();
         } else {
-            floatingActionButton.setVisibility(View.GONE);
+            floatingActionButton.hide();
         }
     }
 
