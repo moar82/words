@@ -1,4 +1,4 @@
-package com.dbychkov.words.activity;
+package com.dbychkov.words.view;
 
 /**
  * View capable of rendering list of flashcards and lesson progress

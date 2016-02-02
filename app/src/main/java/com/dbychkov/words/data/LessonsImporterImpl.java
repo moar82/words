@@ -17,7 +17,6 @@
 package com.dbychkov.words.data;
 
 import android.content.Context;
-
 import com.dbychkov.domain.Flashcard;
 import com.dbychkov.domain.Lesson;
 import com.dbychkov.domain.repository.FlashcardRepository;
@@ -25,21 +24,26 @@ import com.dbychkov.domain.repository.LessonRepository;
 import com.dbychkov.words.util.AssetUtils;
 import com.google.gson.Gson;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
+/**
+ * Importer service. Provides initial initialization of database from json file
+ */
 @Singleton
 public class LessonsImporterImpl implements LessonsImporter {
+
+    public static final String LESSONS_JSON = "lessons.json";
 
     private final FlashcardRepository flashcardRepository;
     private final LessonRepository lessonRepository;
     private final Context context;
 
     @Inject
-    public LessonsImporterImpl(FlashcardRepository flashcardRepository, LessonRepository lessonRepository, Context context) {
+    public LessonsImporterImpl(FlashcardRepository flashcardRepository, LessonRepository lessonRepository,
+            Context context) {
         this.flashcardRepository = flashcardRepository;
         this.lessonRepository = lessonRepository;
         this.context = context;
@@ -52,7 +56,7 @@ public class LessonsImporterImpl implements LessonsImporter {
         final Gson gson = new Gson();
 
         RootInFile rootInFile = gson
-                .fromJson(AssetUtils.readAssetAsString(context, "lessons.json"), RootInFile.class);
+                .fromJson(AssetUtils.readAssetAsString(context, LESSONS_JSON), RootInFile.class);
         for (LessonInFile lessonInFile : rootInFile.lessons) {
 
             Lesson lessonEntity = new Lesson();
@@ -62,7 +66,7 @@ public class LessonsImporterImpl implements LessonsImporter {
             lessonEntity.setImagePath(lessonInFile.image);
             lessonsForBulkInsert.add(lessonEntity);
 
-            for (String entry : AssetUtils.readAssetAsStringList(context, lessonInFile.flashcards)){
+            for (String entry : AssetUtils.readAssetAsStringList(context, lessonInFile.flashcards)) {
                 String[] wordDefinition = entry.split(",");
 
                 Flashcard flashcardEntry = new Flashcard();

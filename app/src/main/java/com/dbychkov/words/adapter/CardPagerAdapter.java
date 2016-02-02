@@ -50,5 +50,4 @@ public class CardPagerAdapter extends FragmentPagerAdapter {
         return flashcards.size();
     }
 
-
 }

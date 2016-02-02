@@ -1,7 +1,6 @@
 package com.dbychkov.words.dagger.module;
 
 import android.content.Context;
-
 import com.dbychkov.data.greendao.DaoSession;
 import com.dbychkov.data.greendao.DataServiceFactory;
 import com.dbychkov.data.repository.FlashcardDataRepository;
@@ -18,17 +17,11 @@ import com.dbychkov.words.thread.JobExecutor;
 import com.dbychkov.words.thread.PostExecutionThread;
 import com.dbychkov.words.thread.PostExecutionUIThread;
 import com.dbychkov.words.thread.ThreadExecutor;
-import com.dbychkov.words.util.MarketService;
-import com.dbychkov.words.util.MarketServiceImpl;
-import com.dbychkov.words.util.ShareService;
-import com.dbychkov.words.util.ShareServiceImpl;
-import com.dbychkov.words.util.SpeechService;
-import com.dbychkov.words.util.SpeechServiceImpl;
-
-import javax.inject.Singleton;
-
+import com.dbychkov.words.util.*;
 import dagger.Module;
 import dagger.Provides;
+
+import javax.inject.Singleton;
 
 @Module
 public class ApplicationModule {

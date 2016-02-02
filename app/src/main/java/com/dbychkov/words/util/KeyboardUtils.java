@@ -22,6 +22,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+/**
+ * Utility class for keyboard manipulations
+ */
 public class KeyboardUtils {
 
     public static final String TAG = KeyboardUtils.class.getName();

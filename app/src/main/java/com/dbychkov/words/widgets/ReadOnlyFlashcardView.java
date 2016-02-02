@@ -23,54 +23,58 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.dbychkov.words.R;
 
-public class FlashcardView extends CardView {
+/**
+ * Dedicated view for a card with word and definition from flashcard
+ */
+public class ReadOnlyFlashcardView extends CardView {
 
+    @Bind(R.id.word)
     public TextView wordTextView;
+
+    @Bind(R.id.definition)
     public TextView definitionTextView;
+
+    @Bind(R.id.speaker_icon)
     public ImageView speakerIconImageView;
+
+    @Bind(R.id.learnt_icon)
     public ImageView learntIconImageView;
 
-    public FlashcardView(Context context) {
+    public ReadOnlyFlashcardView(Context context) {
         super(context);
         initView();
     }
 
-    public FlashcardView(Context context, AttributeSet attrs) {
+    public ReadOnlyFlashcardView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
     }
 
-    public FlashcardView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ReadOnlyFlashcardView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView();
     }
 
     private void initView() {
-
         LayoutInflater inflater = (LayoutInflater) getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View inflatedView = inflater.inflate(R.layout.view_view_flashcards, this, true);
-
-        wordTextView = (TextView) inflatedView.findViewById(R.id.word);
-        definitionTextView = (TextView) inflatedView.findViewById(R.id.definition);
-        speakerIconImageView = (ImageView) inflatedView.findViewById(R.id.speaker_icon);
-        learntIconImageView = (ImageView) inflatedView.findViewById(R.id.learnt_icon);
-        learntIconImageView.setColorFilter(getContext().getResources().getColor(R.color.colorAccent));
-        speakerIconImageView.setColorFilter(getContext().getResources().getColor(R.color.grey));
+        ButterKnife.bind(this, inflatedView);
     }
 
-    public void setFlashcardWord(String word){
+    public void setFlashcardWord(String word) {
         wordTextView.setText(word);
     }
 
-    public void setFlashcardDefinition(String definition){
+    public void setFlashcardDefinition(String definition) {
         definitionTextView.setText(definition);
     }
 
-    public void setLearnt(boolean learnt){
+    public void setLearnt(boolean learnt) {
         if (learnt) {
             learntIconImageView.setVisibility(View.VISIBLE);
         } else {
@@ -78,11 +82,11 @@ public class FlashcardView extends CardView {
         }
     }
 
-    public void setSpeakerIconClickListener(OnClickListener o){
+    public void setSpeakerIconClickListener(OnClickListener o) {
         speakerIconImageView.setOnClickListener(o);
     }
 
-    public String getWord(){
+    public String getWord() {
         return wordTextView.getText().toString();
     }
 }

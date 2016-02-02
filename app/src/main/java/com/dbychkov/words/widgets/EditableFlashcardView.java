@@ -24,16 +24,32 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.dbychkov.words.R;
 
+/**
+ * Dedicated view for a card with editable word and definition from flashcard
+ */
 public class EditableFlashcardView extends CardView {
 
     private View inflatedView;
-    private SwitchingEditText wordText;
-    private SwitchingEditText wordDefinition;
-    private Button removeButton;
-    public ImageView speakerIconImageView;
-    public ImageView learntIconImageView;
+
+    @Bind(R.id.word_text)
+    SwitchingEditText wordText;
+
+    @Bind(R.id.definition_text)
+    SwitchingEditText wordDefinition;
+
+
+    @Bind(R.id.remove_button)
+    Button removeButton;
+
+    @Bind(R.id.speaker_icon)
+    ImageView speakerIconImageView;
+
+    @Bind(R.id.learnt_icon)
+    ImageView learntIconImageView;
 
     public EditableFlashcardView(Context context) {
         super(context);
@@ -51,21 +67,10 @@ public class EditableFlashcardView extends CardView {
     }
 
     private void initView() {
-
-
         LayoutInflater inflater = (LayoutInflater) getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflatedView = inflater.inflate(R.layout.view_edit_words, this, true);
-
-
-        wordText = (SwitchingEditText) inflatedView.findViewById(R.id.word_text);
-        wordDefinition = (SwitchingEditText) inflatedView.findViewById(R.id.definition_text);
-        removeButton = (Button) inflatedView.findViewById(R.id.remove_button);
-
-        speakerIconImageView = (ImageView) inflatedView.findViewById(R.id.speaker_icon);
-        learntIconImageView = (ImageView) inflatedView.findViewById(R.id.learnt_icon);
-        learntIconImageView.setColorFilter(getContext().getResources().getColor(R.color.colorAccent));
-        speakerIconImageView.setColorFilter(getContext().getResources().getColor(R.color.grey));
+        ButterKnife.bind(this, inflatedView);
     }
 
     public void setWord(String word) {

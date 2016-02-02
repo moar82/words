@@ -31,13 +31,14 @@ import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.dbychkov.domain.repository.FlashcardRepository;
 import com.dbychkov.words.R;
 import com.dbychkov.words.navigator.Navigator;
+import com.dbychkov.words.view.FlashcardsView;
 import com.dbychkov.words.widgets.RecyclerViewWithEmptyView;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
 /**
- *
+ * Flashcards activity
  */
 public abstract class FlashcardsActivity extends AbstractExpandingActivity
         implements AppBarLayout.OnOffsetChangedListener, FlashcardsView {

@@ -31,11 +31,15 @@ import com.dbychkov.words.adapter.EditFlashcardsAdapter;
 import com.dbychkov.words.dagger.component.ActivityComponent;
 import com.dbychkov.words.presentation.EditFlashcardsActivityPresenter;
 import com.dbychkov.words.util.SpeechService;
+import com.dbychkov.words.view.EditFlashcardsView;
 import rx.functions.Action1;
 
 import javax.inject.Inject;
 import java.util.List;
 
+/**
+ * Edit flashcards activity
+ */
 public class EditFlashcardsActivity extends FlashcardsActivity implements EditFlashcardsView {
 
     private LinearLayoutManager linearLayoutManager;
@@ -45,6 +49,9 @@ public class EditFlashcardsActivity extends FlashcardsActivity implements EditFl
 
     @Inject
     EditFlashcardsActivityPresenter editFlashcardsActivityPresenter;
+
+    @Inject
+    public SpeechService speechService;
 
     @Override
     public void onResume() {
@@ -68,9 +75,6 @@ public class EditFlashcardsActivity extends FlashcardsActivity implements EditFl
     public void injectActivity(ActivityComponent component) {
         component.inject(this);
     }
-
-    @Inject
-    public SpeechService speechService;
 
     public void renderFlashcards(List<Flashcard> flashcardList) {
         editFlashcardsAdapter.setItems(flashcardList);
@@ -111,33 +115,11 @@ public class EditFlashcardsActivity extends FlashcardsActivity implements EditFl
     }
 
     public void setupFab() {
-        FloatingActionButton fab = null;
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab =(FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Flashcard flashcard = new Flashcard();
-                flashcard.setLessonId(lessonId);
-                flashcard.setWord("Flashcard");
-                flashcard.setDefinition("Definition");
-                flashcardRepository.addFlashcard(flashcard).subscribe(new Action1<Flashcard>() {
-                    @Override
-                    public void call(final Flashcard insertedFlashcard) {
-                        if (linearLayoutManager.findFirstCompletelyVisibleItemPosition() > 0) {
-                            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                                public void onScrollStateChanged(RecyclerView rv, int state) {
-                                    if (state == RecyclerView.SCROLL_STATE_IDLE) {
-                                        addToTop(insertedFlashcard);
-                                        rv.removeOnScrollListener(this);
-                                    }
-                                }
-                            });
-                            recyclerView.smoothScrollToPosition(0);
-                        } else {
-                            addToTop(insertedFlashcard);
-                        }
-                    }
-                });
+                editFlashcardsActivityPresenter.createFlashcardsClicked();
             }
         });
     }
@@ -166,6 +148,23 @@ public class EditFlashcardsActivity extends FlashcardsActivity implements EditFl
                     }
                 })
                 .show();
+    }
+
+    @Override
+    public void renderCreatedFlashcard(final Flashcard insertedFlashcard) {
+        if (linearLayoutManager.findFirstCompletelyVisibleItemPosition() > 0) {
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                public void onScrollStateChanged(RecyclerView rv, int state) {
+                    if (state == RecyclerView.SCROLL_STATE_IDLE) {
+                        addToTop(insertedFlashcard);
+                        rv.removeOnScrollListener(this);
+                    }
+                }
+            });
+            recyclerView.smoothScrollToPosition(0);
+        } else {
+            addToTop(insertedFlashcard);
+        }
     }
 
     @Override

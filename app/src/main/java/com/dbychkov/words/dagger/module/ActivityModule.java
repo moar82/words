@@ -39,29 +39,35 @@ public class ActivityModule {
     @Provides
     @PerActivity
     BundledLessonsTabFragmentPresenter bundledLessonsTabFragmentPresenter(ThreadExecutor threadExecutor,
-                        PostExecutionThread postExecutionThread, LessonRepository lessonRepository, RxEventBus rxEventBus){
-        return new BundledLessonsTabFragmentPresenter(threadExecutor, postExecutionThread, lessonRepository, rxEventBus);
+            PostExecutionThread postExecutionThread, LessonRepository lessonRepository, RxEventBus rxEventBus) {
+        return new BundledLessonsTabFragmentPresenter(threadExecutor, postExecutionThread, lessonRepository,
+                rxEventBus);
     }
 
     @Provides
     @PerActivity
     BookmarkedLessonsTabFragmentPresenter bookmarkedLessonsTabFragmentPresenter(ThreadExecutor threadExecutor,
-            PostExecutionThread postExecutionThread, LessonRepository lessonRepository, RxEventBus rxEventBus){
-        return new BookmarkedLessonsTabFragmentPresenter(threadExecutor, postExecutionThread, lessonRepository, rxEventBus);
+            PostExecutionThread postExecutionThread, LessonRepository lessonRepository, RxEventBus rxEventBus) {
+        return new BookmarkedLessonsTabFragmentPresenter(threadExecutor, postExecutionThread, lessonRepository,
+                rxEventBus);
     }
 
     @Provides
     @PerActivity
     ViewFlashcardsActivityPresenter viewFlashcardsActivityPresenter(ThreadExecutor threadExecutor,
-            PostExecutionThread postExecutionThread, FlashcardRepository flashcardRepository, SpeechService speechService){
-        return new ViewFlashcardsActivityPresenter(threadExecutor, postExecutionThread, flashcardRepository, speechService);
+            PostExecutionThread postExecutionThread, FlashcardRepository flashcardRepository,
+            SpeechService speechService) {
+        return new ViewFlashcardsActivityPresenter(threadExecutor, postExecutionThread, flashcardRepository,
+                speechService);
     }
 
     @Provides
     @PerActivity
     EditFlashcardsActivityPresenter editFlashcardsActivityPresenter(ThreadExecutor threadExecutor,
-            PostExecutionThread postExecutionThread, FlashcardRepository flashcardRepository, SpeechService speechService){
-        return new EditFlashcardsActivityPresenter(threadExecutor, postExecutionThread, flashcardRepository, speechService);
+            PostExecutionThread postExecutionThread, FlashcardRepository flashcardRepository,
+            SpeechService speechService) {
+        return new EditFlashcardsActivityPresenter(threadExecutor, postExecutionThread, flashcardRepository,
+                speechService);
     }
 
 }

@@ -25,6 +25,9 @@ import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
+/**
+ * Fab behavior
+ */
 public class ScrollOffBottomBehavior extends CoordinatorLayout.Behavior<FloatingActionButton> {
 
     public static final int TRANSLATION_MULTIPLIER = 2;

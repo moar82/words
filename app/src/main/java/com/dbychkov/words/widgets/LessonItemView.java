@@ -27,15 +27,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.dbychkov.words.R;
 
+/**
+ * Dedicated view which represents lesson
+ */
 public class LessonItemView extends CardView {
 
     private View inflatedView;
+
+    public AnimatorSet set;
 
     @Bind(R.id.lesson_name)
     TextView lessonNameTextView;
@@ -105,14 +108,13 @@ public class LessonItemView extends CardView {
         lessonImageView.setOnClickListener(listener);
     }
 
-    public ImageView getLessonImageView(){
+    public ImageView getLessonImageView() {
         return lessonImageView;
     }
 
-    public void restartAnimation(){
+    public void restartAnimation() {
         set.cancel();
         set.start();
     }
 
-    public AnimatorSet set;
 }

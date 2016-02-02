@@ -2,7 +2,7 @@ package com.dbychkov.words.presentation;
 
 import com.dbychkov.domain.Flashcard;
 import com.dbychkov.domain.repository.FlashcardRepository;
-import com.dbychkov.words.activity.ViewFlashcardsView;
+import com.dbychkov.words.view.ViewFlashcardsView;
 import com.dbychkov.words.thread.PostExecutionThread;
 import com.dbychkov.words.thread.ThreadExecutor;
 import com.dbychkov.words.util.SpeechService;

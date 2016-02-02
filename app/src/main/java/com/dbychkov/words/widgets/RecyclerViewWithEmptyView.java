@@ -22,6 +22,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 
+/**
+ * RecyclerView which shows placeholder text when no elements are present in the list
+ */
 public class RecyclerViewWithEmptyView extends RecyclerView {
 
     private static final long ON_REMOVED_ANIMATION_DURATION = 300;

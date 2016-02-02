@@ -20,6 +20,9 @@ import android.widget.ViewSwitcher;
 import com.dbychkov.words.R;
 import com.dbychkov.words.util.KeyboardUtils;
 
+/**
+ * View for saving textual information
+ */
 public class SwitchingEditText extends ViewSwitcher implements View.OnClickListener {
 
     private static final int DEFAULT_ANIMATION_DURATION = 200;

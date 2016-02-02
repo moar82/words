@@ -23,6 +23,9 @@ import com.dbychkov.words.dagger.component.DaggerApplicationComponent;
 import com.dbychkov.words.dagger.module.ApplicationModule;
 import com.dbychkov.words.util.LogHelper;
 
+/**
+ * Class for maintaining global application state
+ */
 public class App extends Application {
 
     private static final String TAG = LogHelper.makeLogTag(App.class);

@@ -24,6 +24,9 @@ import android.net.Uri;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * Service, which helps user to tell others about the app with the help of "Share" intent
+ */
 @Singleton
 public class ShareServiceImpl implements ShareService {
 

@@ -16,7 +16,10 @@
 
 package com.dbychkov.words.view;
 
-public interface LessonCatalogView extends View{
+/**
+ * View capable of navigating to the app page in Google Play store, rendering "share" screen, rendering "about" screen
+ */
+public interface LessonCatalogView extends View {
 
     void renderRateScreen();
 

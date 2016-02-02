@@ -17,24 +17,13 @@
 package com.dbychkov.words.dagger.component;
 
 import android.app.Activity;
-
-import com.dbychkov.domain.repository.FlashcardRepository;
 import com.dbychkov.words.activity.*;
 import com.dbychkov.words.adapter.ViewFlashcardsAdapter;
 import com.dbychkov.words.dagger.PerActivity;
 import com.dbychkov.words.dagger.module.ActivityModule;
-import com.dbychkov.words.fragment.BookmarkedLessonsTabFragment;
-import com.dbychkov.words.fragment.BundledLessonsTabFragment;
-import com.dbychkov.words.fragment.CardContainerFragment;
-import com.dbychkov.words.fragment.CardFragment;
-import com.dbychkov.words.fragment.UserLessonsTabFragment;
-
+import com.dbychkov.words.fragment.*;
 import com.dbychkov.words.presentation.*;
-import com.dbychkov.words.thread.PostExecutionThread;
-import com.dbychkov.words.thread.ThreadExecutor;
-import com.dbychkov.words.util.SpeechService;
 import dagger.Component;
-import dagger.Provides;
 
 @PerActivity
 @Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)

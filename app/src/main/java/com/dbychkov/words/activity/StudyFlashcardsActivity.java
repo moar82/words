@@ -16,20 +16,18 @@
 
 package com.dbychkov.words.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
-
 import android.widget.RelativeLayout;
+import butterknife.*;
 import com.dbychkov.domain.Flashcard;
 import com.dbychkov.words.R;
 import com.dbychkov.words.adapter.CardPagerAdapter;
@@ -40,15 +38,8 @@ import com.dbychkov.words.presentation.StudyFlashcardsActivityPresenter;
 import com.dbychkov.words.view.StudyFlashcardsView;
 import com.dbychkov.words.widgets.ViewPagerCustomDuration;
 
-import java.util.List;
-
 import javax.inject.Inject;
-
-import butterknife.Bind;
-import butterknife.BindColor;
-import butterknife.BindString;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import java.util.List;
 
 /**
  * Study session activity
@@ -58,7 +49,7 @@ public class StudyFlashcardsActivity extends BaseActivity implements StudyFlashc
     public static final String EXTRA_LESSON_ID = "lessonId";
 
     @Inject
-    StudyFlashcardsActivityPresenter studyFlashcardsActivityPresenter;
+    StudyFlashcardsActivityPresenter presenter;
 
     @Bind(R.id.knowButton)
     ImageView knowButton;
@@ -98,7 +89,9 @@ public class StudyFlashcardsActivity extends BaseActivity implements StudyFlashc
 
     private long lessonId;
 
-    public static Intent createIntent(Context context, Long lessonId){
+    private CardPagerAdapter adapter;
+
+    public static Intent createIntent(Context context, Long lessonId) {
         Intent intent = new Intent(context, StudyFlashcardsActivity.class);
         intent.putExtra(EXTRA_LESSON_ID, lessonId);
         return intent;
@@ -115,13 +108,13 @@ public class StudyFlashcardsActivity extends BaseActivity implements StudyFlashc
         initPresenter();
     }
 
-    private void initExtra(){
+    private void initExtra() {
         lessonId = getIntent().getLongExtra(FlashcardsActivity.EXTRA_LESSON_ID, -1L);
     }
 
-    private void initPresenter(){
-        studyFlashcardsActivityPresenter.setView(this);
-        studyFlashcardsActivityPresenter.initialize(lessonId);
+    private void initPresenter() {
+        presenter.setView(this);
+        presenter.initialize(lessonId);
     }
 
     @Override
@@ -152,11 +145,11 @@ public class StudyFlashcardsActivity extends BaseActivity implements StudyFlashc
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        case android.R.id.home:
+            onBackPressed();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
         }
     }
 
@@ -186,8 +179,6 @@ public class StudyFlashcardsActivity extends BaseActivity implements StudyFlashc
                 .show();
     }
 
-    private CardPagerAdapter adapter;
-
     @Override
     public void renderFlashcards(List<Flashcard> wordsFromLesson) {
         adapter = new CardPagerAdapter(getFragmentManager(), wordsFromLesson);
@@ -198,12 +189,12 @@ public class StudyFlashcardsActivity extends BaseActivity implements StudyFlashc
 
     public Fragment findFragmentByPosition(int position) {
         return getFragmentManager().findFragmentByTag("android:switcher:" + viewPager.getId() + ":"
-                        + adapter.getItemId(position));
+                + adapter.getItemId(position));
     }
 
     @Override
-    public boolean showCardBack(int position){
-        CardContainerFragment cardContainerFragment = ((CardContainerFragment)findFragmentByPosition(position));
+    public boolean showCardBack(int position) {
+        CardContainerFragment cardContainerFragment = ((CardContainerFragment) findFragmentByPosition(position));
         if (!cardContainerFragment.isFlipped()) {
             cardContainerFragment.flipCard();
             return true;
@@ -213,12 +204,12 @@ public class StudyFlashcardsActivity extends BaseActivity implements StudyFlashc
 
     @OnClick(R.id.knowButton)
     public void onKnowButtonClicked() {
-        studyFlashcardsActivityPresenter.knowWordButtonPressed();
+        presenter.knowWordButtonPressed();
     }
 
     @OnClick(R.id.dontKnowButton)
     public void onDontKnowButtonClicked() {
-        studyFlashcardsActivityPresenter.dontKnowWordButtonPressed();
+        presenter.dontKnowWordButtonPressed();
     }
 
     @Override

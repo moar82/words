@@ -26,10 +26,14 @@ import com.dbychkov.domain.Lesson;
 import com.dbychkov.words.adapter.ViewFlashcardsAdapter;
 import com.dbychkov.words.dagger.component.ActivityComponent;
 import com.dbychkov.words.presentation.ViewFlashcardsActivityPresenter;
+import com.dbychkov.words.view.ViewFlashcardsView;
 
 import javax.inject.Inject;
 import java.util.List;
 
+/**
+ * Activity with a list of flashcards
+ */
 public class ViewFlashcardsActivity extends FlashcardsActivity implements ViewFlashcardsView {
 
     @Inject

@@ -24,6 +24,9 @@ import android.net.Uri;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * Service, which navigates user to the app location in Google Play store
+ */
 @Singleton
 public class MarketServiceImpl implements MarketService{
 

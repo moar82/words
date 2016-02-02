@@ -23,16 +23,15 @@ import android.view.ViewGroup;
 
 import com.dbychkov.domain.Flashcard;
 import com.dbychkov.words.R;
-import com.dbychkov.words.presentation.FlashcardsActivityPresenter;
 import com.dbychkov.words.presentation.ViewFlashcardsActivityPresenter;
-import com.dbychkov.words.widgets.FlashcardView;
+import com.dbychkov.words.widgets.ReadOnlyFlashcardView;
 
 import javax.inject.Inject;
 
 /**
  * Adapter for rendering list of flashcards
  */
-public class ViewFlashcardsAdapter extends BaseListAdapter<Flashcard, FlashcardView> {
+public class ViewFlashcardsAdapter extends BaseListAdapter<Flashcard, ReadOnlyFlashcardView> {
 
     private ViewFlashcardsActivityPresenter presenter;
 
@@ -43,13 +42,13 @@ public class ViewFlashcardsAdapter extends BaseListAdapter<Flashcard, FlashcardV
     }
 
     @Override
-    protected FlashcardView createView(Context context, ViewGroup viewGroup, int viewType) {
-        return (FlashcardView) LayoutInflater.from(context)
+    protected ReadOnlyFlashcardView createView(Context context, ViewGroup viewGroup, int viewType) {
+        return (ReadOnlyFlashcardView) LayoutInflater.from(context)
                 .inflate(R.layout.adapter_item_learn_words, viewGroup, false);
     }
 
     @Override
-    protected void bind(final Flashcard flashcard, FlashcardView view, ViewHolder<FlashcardView> viewHolder) {
+    protected void bind(final Flashcard flashcard, ReadOnlyFlashcardView view, ViewHolder<ReadOnlyFlashcardView> viewHolder) {
         view.setFlashcardWord(flashcard.getWord());
         view.setFlashcardDefinition(flashcard.getDefinition());
         view.setLearnt(flashcard.isLearnt());

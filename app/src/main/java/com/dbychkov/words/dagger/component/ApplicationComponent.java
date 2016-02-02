@@ -17,7 +17,6 @@
 package com.dbychkov.words.dagger.component;
 
 import android.content.Context;
-
 import com.dbychkov.domain.repository.FlashcardRepository;
 import com.dbychkov.domain.repository.LessonRepository;
 import com.dbychkov.words.activity.BaseActivity;
@@ -30,7 +29,6 @@ import com.dbychkov.words.thread.ThreadExecutor;
 import com.dbychkov.words.util.MarketService;
 import com.dbychkov.words.util.ShareService;
 import com.dbychkov.words.util.SpeechService;
-
 import dagger.Component;
 
 import javax.inject.Singleton;
@@ -42,6 +40,7 @@ public interface ApplicationComponent {
     void inject(BaseActivity baseActivity);
 
     ThreadExecutor threadExecutor();
+
     PostExecutionThread postExecutionThread();
 
     Context getContext();

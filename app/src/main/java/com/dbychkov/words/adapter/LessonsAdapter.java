@@ -32,6 +32,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Adapter for lessons
+ */
 public abstract class LessonsAdapter extends BaseListAdapter<Lesson, LessonItemView> {
 
     private static final boolean DEFAULT_ANIMATION_ENABLED = true;

@@ -24,6 +24,9 @@ import java.util.Locale;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * Text to speech service
+ */
 @Singleton
 public class SpeechServiceImpl implements SpeechService{
 

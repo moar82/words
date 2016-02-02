@@ -26,6 +26,9 @@ import android.widget.Scroller;
 
 import java.lang.reflect.Field;
 
+/**
+ * View pager with custom scroll speed
+ */
 public class ViewPagerCustomDuration extends ViewPager {
 
     private ScrollerCustomDuration mScroller = null;

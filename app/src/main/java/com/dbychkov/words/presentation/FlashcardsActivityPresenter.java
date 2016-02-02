@@ -18,11 +18,10 @@ package com.dbychkov.words.presentation;
 
 import com.dbychkov.domain.Flashcard;
 import com.dbychkov.domain.repository.FlashcardRepository;
-import com.dbychkov.words.activity.FlashcardsView;
+import com.dbychkov.words.view.FlashcardsView;
 import com.dbychkov.words.thread.PostExecutionThread;
 import com.dbychkov.words.thread.ThreadExecutor;
 import com.dbychkov.words.util.SpeechService;
-import rx.android.schedulers.AndroidSchedulers;
 
 import java.util.List;
 
@@ -32,7 +31,7 @@ import java.util.List;
 public abstract class FlashcardsActivityPresenter extends PresenterBase {
 
     protected FlashcardRepository flashcardRepository;
-    private Long lessonId;
+    protected Long lessonId;
     private SpeechService speechService;
     private FlashcardsView flashcardsView;
 
@@ -69,7 +68,7 @@ public abstract class FlashcardsActivityPresenter extends PresenterBase {
     abstract void showFlashCards(List<Flashcard> flashcards);
 
     public void clearProgressClicked() {
-        execute(flashcardRepository.clearProgressForLesson(lessonId),new DefaultSubscriber<Void>() {
+        execute(flashcardRepository.clearProgressForLesson(lessonId), new DefaultSubscriber<Void>() {
             @Override
             public void onCompleted() {
                 super.onCompleted();

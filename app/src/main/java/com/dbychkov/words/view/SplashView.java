@@ -16,6 +16,9 @@
 
 package com.dbychkov.words.view;
 
+/**
+ * View capable of rendering all splash screen related stuff
+ */
 public interface SplashView extends View {
 
     void renderFancyAnimation();

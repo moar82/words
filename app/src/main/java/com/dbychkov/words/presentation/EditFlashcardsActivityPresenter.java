@@ -2,10 +2,11 @@ package com.dbychkov.words.presentation;
 
 import com.dbychkov.domain.Flashcard;
 import com.dbychkov.domain.repository.FlashcardRepository;
-import com.dbychkov.words.activity.EditFlashcardsView;
+import com.dbychkov.words.view.EditFlashcardsView;
 import com.dbychkov.words.thread.PostExecutionThread;
 import com.dbychkov.words.thread.ThreadExecutor;
 import com.dbychkov.words.util.SpeechService;
+import rx.functions.Action1;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -57,5 +58,22 @@ public class EditFlashcardsActivityPresenter extends FlashcardsActivityPresenter
 
     public void onFlashcardRemoveClicked(Flashcard flashcard, int position) {
         editFlashcardsView.renderFlashcardRemovalSnackBar(flashcard, position);
+    }
+
+    public void createFlashcardsClicked(){
+        execute(flashcardRepository.addFlashcard(createNewFlashcard()), new DefaultSubscriber<Flashcard>() {
+            @Override
+            public void onNext(Flashcard flashcard) {
+                editFlashcardsView.renderCreatedFlashcard(flashcard);
+            }
+        });
+    }
+
+    private Flashcard createNewFlashcard(){
+        Flashcard flashcard = new Flashcard();
+        flashcard.setLessonId(lessonId);
+        flashcard.setWord("Flashcard");
+        flashcard.setDefinition("Definition");
+        return flashcard;
     }
 }

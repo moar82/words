@@ -24,13 +24,17 @@ import rx.subjects.Subject;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * Simple reactive implementation of event bus
+ */
 @Singleton
 public class RxEventBusImpl implements RxEventBus {
 
     private final Subject<Object, Object> eventBus = new SerializedSubject<>(PublishSubject.create());
 
     @Inject
-    public RxEventBusImpl(){}
+    public RxEventBusImpl() {
+    }
 
     public void send(Object o) {
         eventBus.onNext(o);

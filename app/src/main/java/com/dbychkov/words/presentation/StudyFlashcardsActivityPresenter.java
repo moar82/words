@@ -94,22 +94,30 @@ public class StudyFlashcardsActivityPresenter extends PresenterBase {
      * Show back of flashcard and proceed to the next flashcard
      */
     public void dontKnowWordButtonPressed() {
-        if (studyFlashcardsView.showCardBack(currentPosition)){
-            showNextFlashcardWithADelay();
+        if (studyFlashcardsView.showCardBack(currentPosition)) {
+            if (currentPosition + 1 >= unlearntFlashcards.size()) {
+                showLessonEndedDialogWithDelay();
+            } else {
+                showNextFlashcardWithADelay();
+            }
         } else {
-            showNextFlashcardImmediately();
+            if (currentPosition + 1 >= unlearntFlashcards.size()) {
+                showLessonEndedDialog();
+            } else {
+                showNextFlashcardImmediately();
+            }
         }
     }
 
-    private void showNextFlashcardImmediately(){
+    private void showNextFlashcardImmediately() {
         studyFlashcardsView.showFlashcard(++currentPosition);
     }
 
-    private void showNextFlashcardWithADelay(){
+    private void showNextFlashcardWithADelay() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                studyFlashcardsView.showFlashcard(++currentPosition);
+                showNextFlashcardImmediately();
             }
         }, DELAY_MILLIS);
     }
@@ -121,6 +129,15 @@ public class StudyFlashcardsActivityPresenter extends PresenterBase {
 
     private void showLessonEndedDialog() {
         studyFlashcardsView.showLessonEndedDialog();
+    }
+
+    private void showLessonEndedDialogWithDelay(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showLessonEndedDialog();
+            }
+        }, DELAY_MILLIS);
     }
 
     private void showAllWordsAreLearntDialog() {

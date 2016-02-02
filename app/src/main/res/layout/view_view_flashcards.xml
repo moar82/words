@@ -14,7 +14,6 @@
         android:textStyle="bold"
         android:textColor="@color/colorTernaryText"
         android:textSize="@dimen/text_size_medium"
-        android:text="Text dfg dsf gds fgdsfgdsfg dsf gdsfg"
         android:layout_toLeftOf = "@id/speaker_icon"
         android:lines="1"/>
 
@@ -29,7 +28,6 @@
         android:paddingRight="16dp"
         android:textColor="@color/colorTernaryText"
         android:textSize="@dimen/text_size_small"
-        android:text="Text dfg dsfdfsh dsf gdsfg dfsg dsf gddfg dsjf gidsfogidhjsfogdjs fodshf gkldfjs ghdkjfg hdklsfj ghs fgdsfgdsfg dsf gdsfg"
         android:layout_toLeftOf = "@id/speaker_icon"
         android:lines="3"/>
 
@@ -41,7 +39,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/ic_volume_up_black_24dp" />
+        android:src="@drawable/ic_volume_up_black_24dp"
+        android:tint="@color/colorTernaryText"/>
 
     <ImageView
         android:id="@+id/learnt_icon"
@@ -50,6 +49,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:src="@drawable/ic_done_white_24dp"
+        android:tint="@color/colorAccent"
         android:visibility="gone"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"/>

@@ -13,7 +13,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/ic_volume_up_black_24dp" />
+        android:src="@drawable/ic_volume_up_white_24dp"
+        android:tint="@color/colorTernaryText"/>
 
     <ImageView
         android:id="@+id/learnt_icon"
@@ -22,7 +23,7 @@
         android:layout_alignParentRight="true"
         android:src="@drawable/ic_done_white_24dp"
         android:visibility="visible"
-        android:tint="@color/black"
+        android:tint="@color/colorAccent"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:layout_above="@+id/separator"/>
