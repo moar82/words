@@ -19,6 +19,7 @@ package com.dbychkov.words.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,7 +33,6 @@ import com.dbychkov.words.dagger.component.ActivityComponent;
 import com.dbychkov.words.presentation.EditFlashcardsActivityPresenter;
 import com.dbychkov.words.util.SpeechService;
 import com.dbychkov.words.view.EditFlashcardsView;
-import rx.functions.Action1;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -42,6 +42,7 @@ import java.util.List;
  */
 public class EditFlashcardsActivity extends FlashcardsActivity implements EditFlashcardsView {
 
+    public static final int DELAY_MILLIS = 800;
     private LinearLayoutManager linearLayoutManager;
 
     @Inject
@@ -115,14 +116,19 @@ public class EditFlashcardsActivity extends FlashcardsActivity implements EditFl
     }
 
     public void setupFab() {
-        FloatingActionButton fab =(FloatingActionButton) findViewById(R.id.fab);
-        fab.show();
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editFlashcardsActivityPresenter.createFlashcardsClicked();
             }
         });
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                fab.show();
+            }
+        }, DELAY_MILLIS);
     }
 
     private void addToTop(Flashcard flashcard) {
