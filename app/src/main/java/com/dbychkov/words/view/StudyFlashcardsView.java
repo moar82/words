@@ -29,7 +29,7 @@ public interface StudyFlashcardsView extends View {
 
     void showFlashcard(int flashcardNumber);
 
-    void flipCard(int flashcardNumber);
+    boolean showCardBack(int flashcardNumber);
 
     void showLessonEndedDialog();
 

@@ -24,7 +24,7 @@ import com.dbychkov.words.thread.PostExecutionThread;
 import com.dbychkov.words.thread.ThreadExecutor;
 
 /**
- * Presenter for lessons bundled with the application
+ * Presenter for {@link com.dbychkov.words.fragment.BundledLessonsTabFragment}
  */
 public class BundledLessonsTabFragmentPresenter extends LessonsPresenter {
 

@@ -22,13 +22,15 @@ import com.dbychkov.words.view.LessonCatalogView;
 
 import javax.inject.Inject;
 
+/**
+ * Presenter for {@link com.dbychkov.words.activity.LessonCatalogActivity}
+ */
 public class LessonCatalogActivityPresenter extends PresenterBase {
 
     private LessonCatalogView lessonCatalogView;
 
     @Inject
-    public LessonCatalogActivityPresenter(ThreadExecutor threadExecutor,
-                                           PostExecutionThread postExecutionThread) {
+    public LessonCatalogActivityPresenter(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
     }
 
@@ -39,15 +41,15 @@ public class LessonCatalogActivityPresenter extends PresenterBase {
     public void initialize() {
     }
 
-    public void rateButtonClicked(){
+    public void rateButtonClicked() {
         lessonCatalogView.renderRateScreen();
     }
 
-    public void shareButtonClicked(){
+    public void shareButtonClicked() {
         lessonCatalogView.renderShareScreen();
     }
 
-    public void aboutButtonClicked(){
+    public void aboutButtonClicked() {
         lessonCatalogView.renderAboutScreen();
     }
 }

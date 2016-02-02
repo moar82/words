@@ -64,6 +64,10 @@ public class CardContainerFragment extends BaseFragment implements View.OnClickL
         return rootView;
     }
 
+    public boolean isFlipped(){
+        return cardFlipped;
+    }
+
     public void flipCard() {
         Fragment newFragment;
         if (cardFlipped) {

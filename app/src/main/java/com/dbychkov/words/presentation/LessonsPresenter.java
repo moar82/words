@@ -20,19 +20,22 @@ import com.dbychkov.domain.Lesson;
 import com.dbychkov.words.bus.RxEventBus;
 import com.dbychkov.words.thread.PostExecutionThread;
 import com.dbychkov.words.thread.ThreadExecutor;
-
 import com.dbychkov.words.view.RenderLessonsView;
 import rx.Observable;
 
 import java.util.List;
 
+/**
+ * Abstract presenter for a list of lessons
+ */
 public abstract class LessonsPresenter extends PresenterBase {
 
     protected RenderLessonsView renderLessonsView;
     protected Observable<List<Lesson>> lessonsObservable;
     protected RxEventBus rxEventBus;
 
-    public LessonsPresenter(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread, Observable<List<Lesson>> lessonsObservable, RxEventBus rxEventBus) {
+    public LessonsPresenter(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread,
+            Observable<List<Lesson>> lessonsObservable, RxEventBus rxEventBus) {
         super(threadExecutor, postExecutionThread);
         this.lessonsObservable = lessonsObservable;
         this.rxEventBus = rxEventBus;
@@ -46,7 +49,7 @@ public abstract class LessonsPresenter extends PresenterBase {
         reloadLessonList();
     }
 
-    protected void reloadLessonList(){
+    protected void reloadLessonList() {
         showLoading();
         execute(lessonsObservable, new DefaultSubscriber<List<Lesson>>() {
 
@@ -77,7 +80,7 @@ public abstract class LessonsPresenter extends PresenterBase {
     }
 
     private void showError() {
-        renderLessonsView.showError("");
+        renderLessonsView.showError("Error");
     }
 
     private void showLessonsList(List<Lesson> lessons) {

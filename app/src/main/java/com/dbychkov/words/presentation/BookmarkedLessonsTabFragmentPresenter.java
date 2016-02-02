@@ -24,16 +24,14 @@ import com.dbychkov.words.thread.PostExecutionThread;
 import com.dbychkov.words.thread.ThreadExecutor;
 
 /**
- * Presenter for bookmarked lessons
+ * Presenter for {@link com.dbychkov.words.fragment.BookmarkedLessonsTabFragment}
  */
 public class BookmarkedLessonsTabFragmentPresenter extends LessonsPresenter {
 
     private LessonRepository lessonRepository;
 
-    public BookmarkedLessonsTabFragmentPresenter(ThreadExecutor threadExecutor,
-            PostExecutionThread postExecutionThread,
-            LessonRepository lessonRepository,
-            RxEventBus rxEventBus) {
+    public BookmarkedLessonsTabFragmentPresenter(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread,
+            LessonRepository lessonRepository, RxEventBus rxEventBus) {
         super(threadExecutor, postExecutionThread, lessonRepository.getBookmarkedLessons(), rxEventBus);
         this.lessonRepository = lessonRepository;
         registerBookmarkedStateChangedEventListener();

@@ -10,6 +10,9 @@ import com.dbychkov.words.util.SpeechService;
 import javax.inject.Inject;
 import java.util.List;
 
+/**
+ * Presenter for {@link com.dbychkov.words.activity.EditFlashcardsActivity}
+ */
 public class EditFlashcardsActivityPresenter extends FlashcardsActivityPresenter {
 
     private EditFlashcardsView editFlashcardsView;
@@ -26,6 +29,7 @@ public class EditFlashcardsActivityPresenter extends FlashcardsActivityPresenter
         this.editFlashcardsView = editFlashcardsView;
     }
 
+    @Override
     public void showFlashCards(List<Flashcard> flashcards) {
         editFlashcardsView.renderFlashcards(flashcards);
     }
@@ -36,18 +40,19 @@ public class EditFlashcardsActivityPresenter extends FlashcardsActivityPresenter
             @Override
             public void onNext(Void v) {
                 editFlashcardsView.renderFlashcardRemoved(flashcard, position);
-
-                execute(flashcardRepository.getFlashcardsFromLesson(flashcard.getLessonId()),
-                        new DefaultSubscriber<List<Flashcard>>() {
-                            @Override
-                            public void onNext(List<Flashcard> flashcards) {
-                                showFlashCards(flashcards);
-                                showProgress(getProgressForWordList(flashcards));
-                            }
-                        });
-
+                updateProgress(flashcard);
             }
         });
+    }
+
+    private void updateProgress(final Flashcard flashcard){
+        execute(flashcardRepository.getFlashcardsFromLesson(flashcard.getLessonId()),
+                new DefaultSubscriber<List<Flashcard>>() {
+                    @Override
+                    public void onNext(List<Flashcard> flashcards) {
+                        showProgress(getProgressForWordList(flashcards));
+                    }
+                });
     }
 
     public void onFlashcardRemoveClicked(Flashcard flashcard, int position) {

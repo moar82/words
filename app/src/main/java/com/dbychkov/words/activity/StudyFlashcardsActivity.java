@@ -202,8 +202,13 @@ public class StudyFlashcardsActivity extends BaseActivity implements StudyFlashc
     }
 
     @Override
-    public void flipCard(int position){
-        ((CardContainerFragment)findFragmentByPosition(position)).flipCard();
+    public boolean showCardBack(int position){
+        CardContainerFragment cardContainerFragment = ((CardContainerFragment)findFragmentByPosition(position));
+        if (!cardContainerFragment.isFlipped()) {
+            cardContainerFragment.flipCard();
+            return true;
+        }
+        return false;
     }
 
     @OnClick(R.id.knowButton)

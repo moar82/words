@@ -18,13 +18,14 @@ package com.dbychkov.words.presentation;
 
 import com.dbychkov.words.thread.PostExecutionThread;
 import com.dbychkov.words.thread.ThreadExecutor;
-
 import rx.Observable;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
-
+/**
+ * Base presenter for all presenters
+ */
 public abstract class PresenterBase implements Presenter {
 
     protected CompositeSubscription compositeSubscription = new CompositeSubscription();

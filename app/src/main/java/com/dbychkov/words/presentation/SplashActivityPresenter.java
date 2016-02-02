@@ -40,8 +40,7 @@ public class SplashActivityPresenter extends PresenterBase {
     private Context context;
 
     @Inject
-    public SplashActivityPresenter(ThreadExecutor threadExecutor,
-            PostExecutionThread postExecutionThread,
+    public SplashActivityPresenter(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread,
             LessonsImporter lessonImporter, Context context) {
         super(threadExecutor, postExecutionThread);
         this.lessonsImporter = lessonImporter;

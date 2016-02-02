@@ -19,20 +19,19 @@ package com.dbychkov.words.presentation;
 import android.os.Handler;
 import com.dbychkov.domain.Flashcard;
 import com.dbychkov.domain.repository.FlashcardRepository;
-import com.dbychkov.words.R;
-import com.dbychkov.words.adapter.UserLessonsAdapter;
 import com.dbychkov.words.thread.PostExecutionThread;
 import com.dbychkov.words.thread.ThreadExecutor;
 import com.dbychkov.words.view.StudyFlashcardsView;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Presenter for {@link com.dbychkov.words.activity.StudyFlashcardsActivity}
  */
 public class StudyFlashcardsActivityPresenter extends PresenterBase {
+
+    public static final int DELAY_MILLIS = 1000;
 
     private FlashcardRepository flashcardRepository;
     private StudyFlashcardsView studyFlashcardsView;
@@ -57,21 +56,25 @@ public class StudyFlashcardsActivityPresenter extends PresenterBase {
     }
 
     private void initWords() {
-        execute(flashcardRepository.getUnlearntFlashcardsFromLesson(lessonId), new DefaultSubscriber<List<Flashcard>>() {
+        execute(flashcardRepository.getUnlearntFlashcardsFromLesson(lessonId),
+                new DefaultSubscriber<List<Flashcard>>() {
 
-            @Override
-            public void onNext(List<Flashcard> unlearntFlashcards) {
-                StudyFlashcardsActivityPresenter.this.currentPosition = 0;
-                StudyFlashcardsActivityPresenter.this.unlearntFlashcards = unlearntFlashcards;
-                if (unlearntFlashcards.isEmpty()) {
-                    showAllWordsAreLearntDialog();
-                } else {
-                    showFlashcards(unlearntFlashcards);
-                }
-            }
-        });
+                    @Override
+                    public void onNext(List<Flashcard> unlearntFlashcards) {
+                        StudyFlashcardsActivityPresenter.this.currentPosition = 0;
+                        StudyFlashcardsActivityPresenter.this.unlearntFlashcards = unlearntFlashcards;
+                        if (unlearntFlashcards.isEmpty()) {
+                            showAllWordsAreLearntDialog();
+                        } else {
+                            showFlashcards(unlearntFlashcards);
+                        }
+                    }
+                });
     }
 
+    /**
+     * Update "learnt" status of current flashcard and proceed to the next one
+     */
     public void knowWordButtonPressed() {
         Flashcard currentFlashcard = unlearntFlashcards.get(currentPosition);
         currentFlashcard.setStatus(1);
@@ -87,14 +90,28 @@ public class StudyFlashcardsActivityPresenter extends PresenterBase {
         });
     }
 
+    /**
+     * Show back of flashcard and proceed to the next flashcard
+     */
     public void dontKnowWordButtonPressed() {
-        studyFlashcardsView.flipCard(currentPosition);
+        if (studyFlashcardsView.showCardBack(currentPosition)){
+            showNextFlashcardWithADelay();
+        } else {
+            showNextFlashcardImmediately();
+        }
+    }
+
+    private void showNextFlashcardImmediately(){
+        studyFlashcardsView.showFlashcard(++currentPosition);
+    }
+
+    private void showNextFlashcardWithADelay(){
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 studyFlashcardsView.showFlashcard(++currentPosition);
             }
-        }, 1000);
+        }, DELAY_MILLIS);
     }
 
     private void showFlashcards(List<Flashcard> flashcards) {

@@ -22,23 +22,22 @@ import com.dbychkov.words.activity.FlashcardsView;
 import com.dbychkov.words.thread.PostExecutionThread;
 import com.dbychkov.words.thread.ThreadExecutor;
 import com.dbychkov.words.util.SpeechService;
+import rx.android.schedulers.AndroidSchedulers;
 
 import java.util.List;
 
-import rx.android.schedulers.AndroidSchedulers;
-
 /**
- * Base presenter for all
+ * Base presenter for rendering list of flashcards for particular lesson
  */
 public abstract class FlashcardsActivityPresenter extends PresenterBase {
 
     protected FlashcardRepository flashcardRepository;
     private Long lessonId;
     private SpeechService speechService;
+    private FlashcardsView flashcardsView;
 
-    public FlashcardsActivityPresenter(ThreadExecutor threadExecutor,
-            PostExecutionThread postExecutionThread, FlashcardRepository flashcardRepository,
-            SpeechService speechService) {
+    public FlashcardsActivityPresenter(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread,
+            FlashcardRepository flashcardRepository, SpeechService speechService) {
         super(threadExecutor, postExecutionThread);
         this.flashcardRepository = flashcardRepository;
         this.speechService = speechService;
@@ -59,31 +58,24 @@ public abstract class FlashcardsActivityPresenter extends PresenterBase {
         });
     }
 
-    private FlashcardsView flashcardsView;
-
     public void setView(FlashcardsView flashcardsView) {
         this.flashcardsView = flashcardsView;
     }
 
-    public void showProgress(Integer progress){
+    public void showProgress(Integer progress) {
         flashcardsView.renderProgress(progress);
     }
 
     abstract void showFlashCards(List<Flashcard> flashcards);
 
     public void clearProgressClicked() {
-        flashcardRepository.clearProgressForLesson(lessonId)
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DefaultSubscriber<Void>() {
-
-                    @Override
-                    public void onCompleted() {
-                        super.onCompleted();
-                        initialize();
-                    }
-                });
-
+        execute(flashcardRepository.clearProgressForLesson(lessonId),new DefaultSubscriber<Void>() {
+            @Override
+            public void onCompleted() {
+                super.onCompleted();
+                initialize();
+            }
+        });
     }
 
     protected Integer getProgressForWordList(List<Flashcard> flashcardList) {
@@ -100,7 +92,7 @@ public abstract class FlashcardsActivityPresenter extends PresenterBase {
     }
 
     public void onSpeakIconClicked(String word) {
-            speechService.speak(word);
+        speechService.speak(word);
     }
 
 }
