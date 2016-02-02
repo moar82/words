@@ -19,10 +19,12 @@ package com.dbychkov.words.fragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.widget.Toast;
-
 import com.dbychkov.words.activity.BaseActivity;
 import com.dbychkov.words.dagger.component.ActivityComponent;
 
+/**
+ * Base fragment
+ */
 public abstract class BaseFragment extends Fragment {
 
     @Override
@@ -31,7 +33,11 @@ public abstract class BaseFragment extends Fragment {
         injectActivity(getActivityComponent());
     }
 
-    public void showMessage(String message) {
+    public void showLongMessage(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    public void showShortMessage(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 

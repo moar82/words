@@ -36,8 +36,10 @@ import javax.inject.Inject;
  */
 public class BundledLessonsTabFragment extends LessonsTabFragment implements RenderLessonsView {
 
-    @Inject BundledLessonsTabFragmentPresenter bundledLessonsTabFragmentPresenter;
-    @Inject BundledLessonsAdapter bundledLessonsAdapter;
+    @Inject BundledLessonsTabFragmentPresenter presenter;
+
+    @Inject BundledLessonsAdapter adapter;
+
     @BindString(R.string.noBundledLessons) String emptyMessage;
 
     public static Fragment newInstance() {
@@ -52,17 +54,17 @@ public class BundledLessonsTabFragment extends LessonsTabFragment implements Ren
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        bundledLessonsTabFragmentPresenter.setView(this);
+        presenter.setView(this);
     }
 
     @Override
     public LessonsPresenter getLessonsPresenter() {
-        return bundledLessonsTabFragmentPresenter;
+        return presenter;
     }
 
     @Override
     public LessonsAdapter getLessonsAdapter() {
-        return bundledLessonsAdapter;
+        return adapter;
     }
 
     @Override
@@ -82,7 +84,8 @@ public class BundledLessonsTabFragment extends LessonsTabFragment implements Ren
 
     @Override
     public void renderLessonItemBookmarked(int position, boolean bookmarked) {
-        ((LessonItemView)recyclerView.getLayoutManager().findViewByPosition(position)).setBookmarked(bookmarked);
+        LessonItemView view = (LessonItemView) recyclerView.getLayoutManager().findViewByPosition(position);
+        view.setBookmarked(bookmarked);
     }
 
 }

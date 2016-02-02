@@ -21,7 +21,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.dbychkov.domain.Flashcard;
 import com.dbychkov.words.R;
 import com.dbychkov.words.dagger.component.ActivityComponent;
@@ -70,7 +69,7 @@ public class CardFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_card, container, false);
         initWord();
         return rootView;

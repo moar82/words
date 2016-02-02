@@ -23,7 +23,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import butterknife.BindString;
 import com.dbychkov.domain.Lesson;
 import com.dbychkov.words.R;
 import com.dbychkov.words.adapter.LessonsAdapter;
@@ -36,18 +36,21 @@ import com.dbychkov.words.view.RenderLessonsView;
 
 import javax.inject.Inject;
 
-import butterknife.BindString;
-
+/**
+ * Tab with lessons created by user
+ */
 public class UserLessonsTabFragment extends LessonsTabFragment implements View.OnClickListener, RenderLessonsView {
+
+    public static final int DELAY_MILLIS = 400;
 
     @Inject
     Navigator navigator;
 
     @Inject
-    UserLessonsTabFragmentPresenter userLessonsTabFragmentPresenter;
+    UserLessonsTabFragmentPresenter presenter;
 
     @Inject
-    UserLessonsAdapter userLessonsAdapter;
+    UserLessonsAdapter adapter;
 
     @BindString(R.string.user_lesson_name)
     String userLessonName;
@@ -55,10 +58,12 @@ public class UserLessonsTabFragment extends LessonsTabFragment implements View.O
     @BindString(R.string.noUserLessons)
     String emptyMessage;
 
+    private FloatingActionButton fab;
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        userLessonsTabFragmentPresenter.setView(this);
+        presenter.setView(this);
     }
 
     @Override
@@ -66,20 +71,18 @@ public class UserLessonsTabFragment extends LessonsTabFragment implements View.O
         component.inject(this);
     }
 
-    private FloatingActionButton fab;
-
     public static Fragment newInstance() {
         return new UserLessonsTabFragment();
     }
 
     @Override
     public LessonsAdapter getLessonsAdapter() {
-        return userLessonsAdapter;
+        return adapter;
     }
 
     @Override
     public LessonsPresenter getLessonsPresenter() {
-        return userLessonsTabFragmentPresenter;
+        return presenter;
     }
 
     @Override
@@ -89,7 +92,7 @@ public class UserLessonsTabFragment extends LessonsTabFragment implements View.O
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         setupFab();
         return view;
@@ -103,29 +106,30 @@ public class UserLessonsTabFragment extends LessonsTabFragment implements View.O
 
     @Override
     public void onClick(View view) {
-
         if (view.getId() == R.id.fab) {
-            userLessonsTabFragmentPresenter.createNewLessonButtonClicked();
+            presenter.createNewLessonButtonClicked();
         }
     }
 
     @Override
     public void renderCreatedLesson(Lesson lesson) {
-        userLessonsAdapter.addFirst(lesson);
+        adapter.addFirst(lesson);
         gridLayoutManager.scrollToPosition(0);
+        // Wait for lesson creation animation to complete, then open newly created lesson
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                navigator.navigateToEditFlashcardsActivity(getActivity(), getLessonsAdapter().getFirstItem(),
-                        ((UserLessonsAdapter) getLessonsAdapter()).getFirstView());
+                Lesson justCreatedLesson = getLessonsAdapter().getFirstItem();
+                View sourceView = ((UserLessonsAdapter) getLessonsAdapter()).getFirstView();
+                navigator.navigateToEditFlashcardsActivity(getActivity(), justCreatedLesson, sourceView);
                 getActivity().overridePendingTransition(R.anim.appear, 0);
             }
-        }, 400);
+        }, DELAY_MILLIS);
     }
 
     @Override
     public void renderLessonItemRemoved(int position) {
-        userLessonsAdapter.removeItem(position);
+        adapter.removeItem(position);
     }
 
     @Override

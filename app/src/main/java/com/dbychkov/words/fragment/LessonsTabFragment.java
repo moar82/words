@@ -25,20 +25,18 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import butterknife.Bind;
+import butterknife.BindString;
+import butterknife.ButterKnife;
 import com.dbychkov.domain.Lesson;
 import com.dbychkov.words.R;
 import com.dbychkov.words.adapter.LessonsAdapter;
 import com.dbychkov.words.presentation.LessonsPresenter;
 import com.dbychkov.words.view.RenderLessonsView;
 import com.dbychkov.words.widgets.RecyclerViewWithEmptyView;
+import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
 import java.util.List;
-
-import butterknife.Bind;
-import butterknife.BindString;
-import butterknife.ButterKnife;
-import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
 /**
  * Abstract fragment with lesson list
@@ -74,8 +72,11 @@ public abstract class LessonsTabFragment extends BaseFragment implements RenderL
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         initRecyclerViewWithAdapter();
+        initPresenter();
+    }
+
+    private void initPresenter() {
         getLessonsPresenter().setView(this);
         getLessonsPresenter().initialize();
     }
@@ -131,7 +132,7 @@ public abstract class LessonsTabFragment extends BaseFragment implements RenderL
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         inflatedView = inflater.inflate(R.layout.fragment_lessons, container, false);
         ButterKnife.bind(this, inflatedView);
         return inflatedView;

@@ -16,17 +16,18 @@
 
 package com.dbychkov.words.fragment;
 
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.dbychkov.domain.Flashcard;
 import com.dbychkov.words.R;
 import com.dbychkov.words.dagger.component.ActivityComponent;
 
+/**
+ * Flashcard container
+ */
 public class CardContainerFragment extends BaseFragment implements View.OnClickListener {
 
     private static final String ENTRY_ARGUMENT = "entry";
@@ -54,7 +55,7 @@ public class CardContainerFragment extends BaseFragment implements View.OnClickL
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_card_container, container, false);
         rootView.setOnClickListener(this);
         getChildFragmentManager()
@@ -64,7 +65,7 @@ public class CardContainerFragment extends BaseFragment implements View.OnClickL
         return rootView;
     }
 
-    public boolean isFlipped(){
+    public boolean isFlipped() {
         return cardFlipped;
     }
 

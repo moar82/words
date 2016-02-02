@@ -18,9 +18,7 @@ package com.dbychkov.words.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
-
 import butterknife.BindString;
-
 import com.dbychkov.domain.Lesson;
 import com.dbychkov.words.R;
 import com.dbychkov.words.adapter.BookmarkedLessonsAdapter;
@@ -33,16 +31,17 @@ import com.dbychkov.words.view.RenderLessonsView;
 import javax.inject.Inject;
 
 /**
- * Fragment responsible for rendering lesson list which have been bookmarked
+ * Tab with bookmarked lessons
  */
 public class BookmarkedLessonsTabFragment extends LessonsTabFragment implements RenderLessonsView {
 
-    @BindString( R.string.noBookmarkedLessons) String emptyMessage;
+    @BindString(R.string.noBookmarkedLessons) String emptyMessage;
 
     @Inject
-    BookmarkedLessonsTabFragmentPresenter bookmarkedLessonsTabFragmentPresenter;
+    BookmarkedLessonsTabFragmentPresenter presenter;
+
     @Inject
-    BookmarkedLessonsAdapter bookmarkedLessonsAdapter;
+    BookmarkedLessonsAdapter adapter;
 
     public static Fragment newInstance() {
         return new BookmarkedLessonsTabFragment();
@@ -51,7 +50,7 @@ public class BookmarkedLessonsTabFragment extends LessonsTabFragment implements 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        bookmarkedLessonsTabFragmentPresenter.setView(this);
+        presenter.setView(this);
     }
 
     @Override
@@ -61,12 +60,12 @@ public class BookmarkedLessonsTabFragment extends LessonsTabFragment implements 
 
     @Override
     public LessonsAdapter getLessonsAdapter() {
-        return bookmarkedLessonsAdapter;
+        return adapter;
     }
 
     @Override
     public LessonsPresenter getLessonsPresenter() {
-        return bookmarkedLessonsTabFragmentPresenter;
+        return presenter;
     }
 
     @Override
@@ -76,7 +75,7 @@ public class BookmarkedLessonsTabFragment extends LessonsTabFragment implements 
 
     @Override
     public void renderCreatedLesson(Lesson lesson) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Lesson creation is not supported for \"Bookmarked lessons\" tab");
     }
 
     @Override
@@ -86,6 +85,6 @@ public class BookmarkedLessonsTabFragment extends LessonsTabFragment implements 
 
     @Override
     public void renderLessonItemBookmarked(int position, boolean bookmarked) {
-        bookmarkedLessonsAdapter.removeItem(position);
+        adapter.removeItem(position);
     }
 }
