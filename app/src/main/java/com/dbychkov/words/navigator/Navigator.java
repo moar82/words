@@ -16,14 +16,21 @@
 
 package com.dbychkov.words.navigator;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-
+import android.view.View;
+import com.dbychkov.domain.Lesson;
+import com.dbychkov.words.activity.EditFlashcardsActivity;
 import com.dbychkov.words.activity.LessonCatalogActivity;
+import com.dbychkov.words.activity.StudyFlashcardsActivity;
+import com.dbychkov.words.activity.ViewFlashcardsActivity;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * Helper class which knows to navigate between activities
+ */
 @Singleton
 public class Navigator {
 
@@ -31,9 +38,36 @@ public class Navigator {
     public void Navigator() {
     }
 
-    public void startMainActivity(Activity activity) {
-        Intent intent = new Intent(activity, LessonCatalogActivity.class);
-        activity.startActivity(intent);
-
+    /**
+     * Navigate to main activity with a list of lessons
+     */
+    public void navigateToMainActivity(Context context) {
+        Intent intent = new Intent(context, LessonCatalogActivity.class);
+        context.startActivity(intent);
     }
+
+    /**
+     * Navigate to edit flashcards activity. {@code view} dimensions is a starting point for reveal effect.
+     */
+    public void navigateToEditFlashcardsActivity(Context context, Lesson lesson, View view) {
+        Intent intent = EditFlashcardsActivity.createIntent(context, lesson, view);
+        context.startActivity(intent);
+    }
+
+    /**
+     * Navigate to view flashcards activity. {@code view} dimensions is a starting point for reveal effect.
+     */
+    public void navigateToViewFlashcardsActivity(Context context, Lesson lesson, View view) {
+        Intent intent = ViewFlashcardsActivity.createIntent(context, lesson, view);
+        context.startActivity(intent);
+    }
+
+    /**
+     * Navigate to study flashcards activity
+     */
+    public void navigateToStudyFlashcardsActivity(Context context, Long lessonId) {
+        Intent intent = StudyFlashcardsActivity.createIntent(context, lessonId);
+        context.startActivity(intent);
+    }
+
 }

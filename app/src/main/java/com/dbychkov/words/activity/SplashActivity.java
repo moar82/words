@@ -83,7 +83,7 @@ public class SplashActivity extends BaseActivity implements SplashView {
 
     @Override
     public void renderSplashScreenEnded() {
-        navigator.startMainActivity(this);
+        navigator.navigateToMainActivity(this);
         this.finish();
     }
 

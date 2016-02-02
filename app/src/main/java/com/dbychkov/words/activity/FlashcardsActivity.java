@@ -16,31 +16,25 @@
 
 package com.dbychkov.words.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.NestedScrollView;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.dbychkov.domain.repository.FlashcardRepository;
 import com.dbychkov.words.R;
+import com.dbychkov.words.navigator.Navigator;
 import com.dbychkov.words.widgets.RecyclerViewWithEmptyView;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  *
@@ -52,6 +46,9 @@ public abstract class FlashcardsActivity extends AbstractExpandingActivity
     public static final String EXTRA_LESSON_NAME = "lessonName";
     public static final String EXTRA_LESSON_IMAGE_PATH = "imagePath";
     public static final String EXTRA_EDITABLE_LESSON = "isLessonEditable";
+
+    @Inject
+    Navigator navigator;
 
     @Inject
     FlashcardRepository flashcardRepository;
@@ -100,11 +97,11 @@ public abstract class FlashcardsActivity extends AbstractExpandingActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.clear:
-                clearProgressClicked();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        case R.id.clear:
+            clearProgressClicked();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
         }
     }
 
@@ -122,11 +119,7 @@ public abstract class FlashcardsActivity extends AbstractExpandingActivity
 
     @OnClick(R.id.test_cards_button)
     void proceedToExercises() {
-        Intent intent = new Intent(FlashcardsActivity.this, StudyFlashcardsActivity.class);
-        intent.putExtra(EXTRA_LESSON_ID, lessonId);
-        intent.putExtra(EXTRA_LESSON_IMAGE_PATH, lessonImagePath);
-        intent.putExtra(EXTRA_LESSON_NAME, lessonName);
-        startActivity(intent);
+        navigator.navigateToStudyFlashcardsActivity(this, lessonId);
         overridePendingTransition(R.anim.slide_in_right_100, R.anim.slide_out_left_100);
     }
 
@@ -172,8 +165,6 @@ public abstract class FlashcardsActivity extends AbstractExpandingActivity
         layoutParams.height = (int) (testCardsButtonHeight * (1 - progressPercentage));
         testCardsButton.setLayoutParams(layoutParams);
     }
-
-
 
 }
 

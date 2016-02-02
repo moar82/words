@@ -22,7 +22,7 @@ import com.dbychkov.words.view.LessonCatalogView;
 
 import javax.inject.Inject;
 
-public class LessonCatalogActivityPresenter extends AbstractPresenter{
+public class LessonCatalogActivityPresenter extends PresenterBase {
 
     private LessonCatalogView lessonCatalogView;
 

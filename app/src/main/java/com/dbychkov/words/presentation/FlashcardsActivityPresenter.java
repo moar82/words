@@ -30,7 +30,7 @@ import rx.android.schedulers.AndroidSchedulers;
 /**
  * Base presenter for all
  */
-public abstract class FlashcardsActivityPresenter extends AbstractPresenter {
+public abstract class FlashcardsActivityPresenter extends PresenterBase {
 
     protected FlashcardRepository flashcardRepository;
     private Long lessonId;

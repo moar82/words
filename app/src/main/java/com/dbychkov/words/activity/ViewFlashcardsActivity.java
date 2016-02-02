@@ -16,16 +16,13 @@
 
 package com.dbychkov.words.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-
 import com.dbychkov.domain.Flashcard;
 import com.dbychkov.domain.Lesson;
-import com.dbychkov.words.R;
 import com.dbychkov.words.adapter.ViewFlashcardsAdapter;
 import com.dbychkov.words.dagger.component.ActivityComponent;
 import com.dbychkov.words.presentation.ViewFlashcardsActivityPresenter;
@@ -81,7 +78,7 @@ public class ViewFlashcardsActivity extends FlashcardsActivity implements ViewFl
         recyclerView.setAdapter(viewFlashcardsAdapter);
     }
 
-    public static void startActivity(Lesson lesson, View view, Context context) {
+    public static Intent createIntent(Context context, Lesson lesson, View view) {
         Intent intent = new Intent(context, ViewFlashcardsActivity.class);
         intent.putExtra(EXTRA_LESSON_ID, lesson.getId());
         intent.putExtra(EXTRA_LESSON_IMAGE_PATH, lesson.getImagePath());
@@ -93,14 +90,13 @@ public class ViewFlashcardsActivity extends FlashcardsActivity implements ViewFl
         intent.putExtra(EXTRA_PROPERTY_LEFT, screenLocation[0]);
         intent.putExtra(EXTRA_PROPERTY_WIDTH, view.getWidth());
         intent.putExtra(EXTRA_PROPERTY_HEIGHT, view.getHeight());
-        context.startActivity(intent);
-        ((Activity) context).overridePendingTransition(R.anim.appear, 0);
+        return intent;
     }
 
     private void initRecyclerView() {
-            recyclerView.setEmptyView(nestedScrollView);
-            textView.setText("No cards");
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setEmptyView(nestedScrollView);
+        textView.setText("No cards");
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override

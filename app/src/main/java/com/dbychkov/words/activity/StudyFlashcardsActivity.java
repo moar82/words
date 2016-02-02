@@ -16,8 +16,11 @@
 
 package com.dbychkov.words.activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -48,6 +51,8 @@ import butterknife.OnClick;
  * Study session activity
  */
 public class StudyFlashcardsActivity extends BaseActivity implements StudyFlashcardsView {
+
+    public static final String EXTRA_LESSON_ID = "lessonId";
 
     @Inject
     StudyFlashcardsActivityPresenter studyFlashcardsActivityPresenter;
@@ -89,6 +94,12 @@ public class StudyFlashcardsActivity extends BaseActivity implements StudyFlashc
     RelativeLayout relativeLayout;
 
     private long lessonId;
+
+    public static Intent createIntent(Context context, Long lessonId){
+        Intent intent = new Intent(context, StudyFlashcardsActivity.class);
+        intent.putExtra(EXTRA_LESSON_ID, lessonId);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

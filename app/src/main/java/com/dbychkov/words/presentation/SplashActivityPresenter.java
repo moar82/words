@@ -30,7 +30,7 @@ import javax.inject.Inject;
 /**
  * Presenter for {@link com.dbychkov.words.activity.SplashActivity}
  */
-public class SplashActivityPresenter extends AbstractPresenter {
+public class SplashActivityPresenter extends PresenterBase {
 
     private static final String FIRST_LAUNCH_PREFERENCE_KEY = "first_launch_4";
     private static final int SPLASH_DISPLAY_LENGTH_MILLIS = 2000;

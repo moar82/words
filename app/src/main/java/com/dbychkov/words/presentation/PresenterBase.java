@@ -25,14 +25,14 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 
-public abstract class AbstractPresenter implements Presenter {
+public abstract class PresenterBase implements Presenter {
 
     protected CompositeSubscription compositeSubscription = new CompositeSubscription();
 
     private ThreadExecutor threadExecutor;
     private PostExecutionThread postExecutionThread;
 
-    protected AbstractPresenter(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+    protected PresenterBase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         this.threadExecutor = threadExecutor;
         this.postExecutionThread = postExecutionThread;
     }

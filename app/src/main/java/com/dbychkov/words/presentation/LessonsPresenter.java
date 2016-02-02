@@ -22,12 +22,11 @@ import com.dbychkov.words.thread.PostExecutionThread;
 import com.dbychkov.words.thread.ThreadExecutor;
 
 import com.dbychkov.words.view.RenderLessonsView;
-import com.dbychkov.words.view.View;
 import rx.Observable;
 
 import java.util.List;
 
-public abstract class LessonsPresenter extends AbstractPresenter {
+public abstract class LessonsPresenter extends PresenterBase {
 
     protected RenderLessonsView renderLessonsView;
     protected Observable<List<Lesson>> lessonsObservable;

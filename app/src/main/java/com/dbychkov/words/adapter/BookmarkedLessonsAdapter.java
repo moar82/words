@@ -19,6 +19,7 @@ package com.dbychkov.words.adapter;
 import android.app.Activity;
 import android.view.View;
 import com.dbychkov.domain.Lesson;
+import com.dbychkov.words.navigator.Navigator;
 import com.dbychkov.words.presentation.BookmarkedLessonsTabFragmentPresenter;
 import com.dbychkov.words.widgets.LessonItemView;
 
@@ -32,8 +33,9 @@ public class BookmarkedLessonsAdapter extends LessonsAdapter {
     private BookmarkedLessonsTabFragmentPresenter presenter;
 
     @Inject
-    public BookmarkedLessonsAdapter(Activity activity, BookmarkedLessonsTabFragmentPresenter presenter) {
-        super(activity);
+    public BookmarkedLessonsAdapter(Activity activity, BookmarkedLessonsTabFragmentPresenter presenter,
+            Navigator navigator) {
+        super(activity, navigator);
         this.presenter = presenter;
     }
 

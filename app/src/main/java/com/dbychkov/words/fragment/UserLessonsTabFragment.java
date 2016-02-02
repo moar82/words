@@ -26,10 +26,10 @@ import android.view.ViewGroup;
 
 import com.dbychkov.domain.Lesson;
 import com.dbychkov.words.R;
-import com.dbychkov.words.activity.EditFlashcardsActivity;
 import com.dbychkov.words.adapter.LessonsAdapter;
 import com.dbychkov.words.adapter.UserLessonsAdapter;
 import com.dbychkov.words.dagger.component.ActivityComponent;
+import com.dbychkov.words.navigator.Navigator;
 import com.dbychkov.words.presentation.LessonsPresenter;
 import com.dbychkov.words.presentation.UserLessonsTabFragmentPresenter;
 import com.dbychkov.words.view.RenderLessonsView;
@@ -41,11 +41,17 @@ import butterknife.BindString;
 public class UserLessonsTabFragment extends LessonsTabFragment implements View.OnClickListener, RenderLessonsView {
 
     @Inject
+    Navigator navigator;
+
+    @Inject
     UserLessonsTabFragmentPresenter userLessonsTabFragmentPresenter;
+
     @Inject
     UserLessonsAdapter userLessonsAdapter;
+
     @BindString(R.string.user_lesson_name)
     String userLessonName;
+
     @BindString(R.string.noUserLessons)
     String emptyMessage;
 
@@ -110,7 +116,9 @@ public class UserLessonsTabFragment extends LessonsTabFragment implements View.O
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                EditFlashcardsActivity.startActivity(getLessonsAdapter().getFirstItem(),  ((UserLessonsAdapter) getLessonsAdapter()).getFirstView(), getActivity());
+                navigator.navigateToEditFlashcardsActivity(getActivity(), getLessonsAdapter().getFirstItem(),
+                        ((UserLessonsAdapter) getLessonsAdapter()).getFirstView());
+                getActivity().overridePendingTransition(R.anim.appear, 0);
             }
         }, 400);
     }
@@ -122,6 +130,6 @@ public class UserLessonsTabFragment extends LessonsTabFragment implements View.O
 
     @Override
     public void renderLessonItemBookmarked(int position, boolean bookmarked) {
-
+        throw new UnsupportedOperationException("Bookmarking not supported for user lessons");
     }
 }

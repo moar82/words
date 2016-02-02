@@ -16,6 +16,7 @@
 
 package com.dbychkov.words.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import android.view.ViewGroup;
 import com.dbychkov.domain.Lesson;
 import com.dbychkov.words.R;
 import com.dbychkov.words.activity.ViewFlashcardsActivity;
+import com.dbychkov.words.navigator.Navigator;
 import com.dbychkov.words.widgets.LessonItemView;
 import com.squareup.picasso.Picasso;
 
@@ -36,9 +38,11 @@ public abstract class LessonsAdapter extends BaseListAdapter<Lesson, LessonItemV
 
     protected List<Lesson> lessons = new ArrayList<>();
     private boolean animationEnabled = DEFAULT_ANIMATION_ENABLED;
+    protected Navigator navigator;
 
-    public LessonsAdapter(Context context) {
+    public LessonsAdapter(Context context, Navigator navigator) {
         super(context);
+        this.navigator = navigator;
     }
 
     public void enableAnimation() {
@@ -75,7 +79,8 @@ public abstract class LessonsAdapter extends BaseListAdapter<Lesson, LessonItemV
     }
 
     public void onLessonClicked(Lesson lesson, LessonItemView lessonItemView) {
-        ViewFlashcardsActivity.startActivity(lesson, lessonItemView, context);
+        navigator.navigateToViewFlashcardsActivity(context, lesson, lessonItemView);
+        ((Activity) context).overridePendingTransition(R.anim.appear, 0);
     }
 
 }

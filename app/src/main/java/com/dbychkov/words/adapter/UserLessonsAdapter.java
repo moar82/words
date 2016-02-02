@@ -19,7 +19,9 @@ package com.dbychkov.words.adapter;
 import android.app.Activity;
 import android.view.View;
 import com.dbychkov.domain.Lesson;
+import com.dbychkov.words.R;
 import com.dbychkov.words.activity.EditFlashcardsActivity;
+import com.dbychkov.words.navigator.Navigator;
 import com.dbychkov.words.presentation.UserLessonsTabFragmentPresenter;
 import com.dbychkov.words.widgets.LessonItemView;
 
@@ -35,8 +37,8 @@ public class UserLessonsAdapter extends LessonsAdapter {
     private UserLessonsTabFragmentPresenter presenter;
 
     @Inject
-    public UserLessonsAdapter(Activity activity, UserLessonsTabFragmentPresenter presenter) {
-        super(activity);
+    public UserLessonsAdapter(Activity activity, UserLessonsTabFragmentPresenter presenter, Navigator navigator) {
+        super(activity, navigator);
         this.presenter = presenter;
     }
 
@@ -61,6 +63,7 @@ public class UserLessonsAdapter extends LessonsAdapter {
 
     @Override
     public void onLessonClicked(Lesson lesson, LessonItemView lessonItemView) {
-        EditFlashcardsActivity.startActivity(lesson, lessonItemView, context);
+        navigator.navigateToEditFlashcardsActivity(context, lesson, lessonItemView);
+        ((Activity) context).overridePendingTransition(R.anim.appear, 0);
     }
 }

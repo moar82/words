@@ -26,7 +26,7 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudyFlashcardsActivityPresenter extends AbstractPresenter {
+public class StudyFlashcardsActivityPresenter extends PresenterBase {
 
     private FlashcardRepository flashcardRepository;
     private StudyFlashcardsView studyFlashcardsView;

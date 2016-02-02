@@ -19,6 +19,7 @@ package com.dbychkov.words.adapter;
 import android.app.Activity;
 import android.view.View;
 import com.dbychkov.domain.Lesson;
+import com.dbychkov.words.navigator.Navigator;
 import com.dbychkov.words.presentation.BundledLessonsTabFragmentPresenter;
 import com.dbychkov.words.widgets.LessonItemView;
 
@@ -32,8 +33,8 @@ public class BundledLessonsAdapter extends LessonsAdapter {
     private BundledLessonsTabFragmentPresenter presenter;
 
     @Inject
-    public BundledLessonsAdapter(Activity activity, BundledLessonsTabFragmentPresenter presenter) {
-        super(activity);
+    public BundledLessonsAdapter(Activity activity, BundledLessonsTabFragmentPresenter presenter, Navigator navigator) {
+        super(activity, navigator);
         this.presenter = presenter;
     }
 
