@@ -25,45 +25,26 @@ import com.dbychkov.words.thread.ThreadExecutor;
 import java.util.Random;
 
 /**
- * Presenter for custom lessons created by users
+ * Presenter for {@link com.dbychkov.words.fragment.UserLessonsTabFragment}
  */
 public class UserLessonsTabFragmentPresenter extends LessonsPresenter {
 
     private LessonRepository lessonRepository;
 
-    public UserLessonsTabFragmentPresenter(ThreadExecutor threadExecutor,
-            PostExecutionThread postExecutionThread, LessonRepository lessonRepository, RxEventBus rxEventBus) {
+    public UserLessonsTabFragmentPresenter(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread,
+            LessonRepository lessonRepository, RxEventBus rxEventBus) {
         super(threadExecutor, postExecutionThread, lessonRepository.getUserLessons(), rxEventBus);
         this.lessonRepository = lessonRepository;
     }
 
     public void createNewLessonButtonClicked() {
-        final Lesson lesson = new Lesson();
-        lesson.setLessonName("User lesson");
-        lesson.setUserLesson(true);
-        lesson.setImagePath(getRandomImage());
-        execute(lessonRepository.addLesson(lesson), new DefaultSubscriber<Lesson>() {
-
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
+        execute(lessonRepository.addLesson(createUserLesson()), new DefaultSubscriber<Lesson>() {
 
             @Override
             public void onNext(Lesson lesson) {
                 renderLessonsView.renderCreatedLesson(lesson);
             }
         });
-    }
-
-    public static String getRandomImage() {
-        int unit = new Random().nextInt(20) + 1;
-        return "random/random_" + unit + ".png";
     }
 
     public void lessonItemClicked(Long lessonId, final int position) {
@@ -74,6 +55,25 @@ public class UserLessonsTabFragmentPresenter extends LessonsPresenter {
                 renderLessonsView.renderLessonItemRemoved(position);
             }
         });
-
     }
+
+    /**
+     * Create user lesson
+     */
+    private Lesson createUserLesson(){
+        final Lesson lesson = new Lesson();
+        lesson.setLessonName("User lesson");
+        lesson.setUserLesson(true);
+        lesson.setImagePath(getRandomImage());
+        return lesson;
+    }
+
+    /**
+     * Pick random image from assets
+     */
+    private String getRandomImage() {
+        int unit = new Random().nextInt(20) + 1;
+        return String.format("random/random_%s.png", unit);
+    }
+
 }

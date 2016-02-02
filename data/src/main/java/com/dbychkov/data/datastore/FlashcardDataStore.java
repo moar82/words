@@ -39,4 +39,6 @@ public interface FlashcardDataStore {
     Observable<List<FlashcardEntity>> getFlashcardsFromLesson(Long lessonId);
 
     Observable<Void> clearProgressForLesson(Long lessonEntityId);
+
+    Observable<List<FlashcardEntity>> getUnlearntFlashcardsFromLesson(Long lessonId);
 }

@@ -107,6 +107,16 @@ public class FlashcardDataRepository implements FlashcardRepository {
     }
 
     @Override
+    public Observable<List<Flashcard>> getUnlearntFlashcardsFromLesson(Long lessonId) {
+        return dataStore().getUnlearntFlashcardsFromLesson(lessonId).map(new Func1<List<FlashcardEntity>, List<Flashcard>>() {
+            @Override
+            public List<Flashcard> call(List<FlashcardEntity> flashcardEntityList) {
+                return flashcardEntityDataMapper.mapEntityListToPojoList(flashcardEntityList);
+            }
+        });
+    }
+
+    @Override
     public Observable<Void> clearProgressForLesson(Long lessonId) {
         return dataStore().clearProgressForLesson(lessonId);
     }

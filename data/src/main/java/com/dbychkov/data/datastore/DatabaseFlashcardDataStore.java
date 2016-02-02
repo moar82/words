@@ -142,4 +142,21 @@ public class DatabaseFlashcardDataStore implements FlashcardDataStore {
             }
         });
     }
+
+    @Override
+    public Observable<List<FlashcardEntity>> getUnlearntFlashcardsFromLesson(final Long lessonEntityId) {
+        return Observable.create(new Observable.OnSubscribe<List<FlashcardEntity>>() {
+            @Override
+            public void call(Subscriber<? super List<FlashcardEntity>> subscriber) {
+                subscriber.onNext(
+                        flashcardEntityDao
+                                .queryBuilder()
+                                .where(FlashcardEntityDao.Properties.LessonId.eq(lessonEntityId))
+                                .where(FlashcardEntityDao.Properties.Status.eq(0))
+                                .list()
+                );
+                subscriber.onCompleted();
+            }
+        });
+    }
 }

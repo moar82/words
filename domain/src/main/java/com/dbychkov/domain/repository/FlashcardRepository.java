@@ -63,6 +63,11 @@ public interface FlashcardRepository {
     Observable<List<Flashcard>> getFlashcardsFromLesson(Long lessonId);
 
     /**
+     * Get an {@link Observable} which will emit a List of unlearnt {@link Flashcard} objects for lesson with particular id
+     */
+    Observable<List<Flashcard>> getUnlearntFlashcardsFromLesson(Long lessonId);
+
+    /**
      * Get an {@link Observable} which will notify the removal of progress for all {@link Flashcard} objects of particular lesson
      */
     Observable<Void> clearProgressForLesson(Long lessonId);

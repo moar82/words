@@ -18,10 +18,12 @@ package com.dbychkov.words.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -33,6 +35,7 @@ import com.dbychkov.words.R;
 import com.dbychkov.words.adapter.CardPagerAdapter;
 import com.dbychkov.words.anim.ZoomOutPageTransformer;
 import com.dbychkov.words.dagger.component.ActivityComponent;
+import com.dbychkov.words.fragment.CardContainerFragment;
 import com.dbychkov.words.presentation.StudyFlashcardsActivityPresenter;
 import com.dbychkov.words.view.StudyFlashcardsView;
 import com.dbychkov.words.widgets.ViewPagerCustomDuration;
@@ -183,12 +186,24 @@ public class StudyFlashcardsActivity extends BaseActivity implements StudyFlashc
                 .show();
     }
 
+    private CardPagerAdapter adapter;
+
     @Override
     public void renderFlashcards(List<Flashcard> wordsFromLesson) {
-        CardPagerAdapter adapter = new CardPagerAdapter(getFragmentManager(), wordsFromLesson);
+        adapter = new CardPagerAdapter(getFragmentManager(), wordsFromLesson);
         viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         viewPager.setAdapter(adapter);
         viewPager.setScrollDurationFactor(3);
+    }
+
+    public Fragment findFragmentByPosition(int position) {
+        return getFragmentManager().findFragmentByTag("android:switcher:" + viewPager.getId() + ":"
+                        + adapter.getItemId(position));
+    }
+
+    @Override
+    public void flipCard(int position){
+        ((CardContainerFragment)findFragmentByPosition(position)).flipCard();
     }
 
     @OnClick(R.id.knowButton)

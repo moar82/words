@@ -16,8 +16,11 @@
 
 package com.dbychkov.words.presentation;
 
+import android.os.Handler;
 import com.dbychkov.domain.Flashcard;
 import com.dbychkov.domain.repository.FlashcardRepository;
+import com.dbychkov.words.R;
+import com.dbychkov.words.adapter.UserLessonsAdapter;
 import com.dbychkov.words.thread.PostExecutionThread;
 import com.dbychkov.words.thread.ThreadExecutor;
 import com.dbychkov.words.view.StudyFlashcardsView;
@@ -26,6 +29,9 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Presenter for {@link com.dbychkov.words.activity.StudyFlashcardsActivity}
+ */
 public class StudyFlashcardsActivityPresenter extends PresenterBase {
 
     private FlashcardRepository flashcardRepository;
@@ -35,8 +41,8 @@ public class StudyFlashcardsActivityPresenter extends PresenterBase {
     private int currentPosition = 0;
 
     @Inject
-    public StudyFlashcardsActivityPresenter(ThreadExecutor threadExecutor,
-            PostExecutionThread postExecutionThread, FlashcardRepository flashcardRepository) {
+    public StudyFlashcardsActivityPresenter(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread,
+            FlashcardRepository flashcardRepository) {
         super(threadExecutor, postExecutionThread);
         this.flashcardRepository = flashcardRepository;
     }
@@ -51,47 +57,28 @@ public class StudyFlashcardsActivityPresenter extends PresenterBase {
     }
 
     private void initWords() {
-
-        execute(flashcardRepository.getFlashcardsFromLesson(lessonId), new DefaultSubscriber<List<Flashcard>>() {
-
-            @Override
-            public void onCompleted() {
-                StudyFlashcardsActivityPresenter.this.hideLoading();
-            }
+        execute(flashcardRepository.getUnlearntFlashcardsFromLesson(lessonId), new DefaultSubscriber<List<Flashcard>>() {
 
             @Override
-            public void onError(Throwable e) {
-                StudyFlashcardsActivityPresenter.this.hideLoading();
-                StudyFlashcardsActivityPresenter.this.showError();
-            }
-
-            @Override
-            public void onNext(List<Flashcard> flashcards) {
-                currentPosition = 0;
-                unlearntFlashcards = new ArrayList<>();
-                for (Flashcard flashcard : flashcards) {
-                    if (flashcard.getStatus() == 0) {
-                        unlearntFlashcards.add(flashcard);
-                    }
-                }
+            public void onNext(List<Flashcard> unlearntFlashcards) {
+                StudyFlashcardsActivityPresenter.this.currentPosition = 0;
+                StudyFlashcardsActivityPresenter.this.unlearntFlashcards = unlearntFlashcards;
                 if (unlearntFlashcards.isEmpty()) {
                     showAllWordsAreLearntDialog();
                 } else {
                     showFlashcards(unlearntFlashcards);
                 }
-
             }
         });
-
     }
 
-    public void knowWordButtonPressed(){
+    public void knowWordButtonPressed() {
         Flashcard currentFlashcard = unlearntFlashcards.get(currentPosition);
         currentFlashcard.setStatus(1);
         execute(flashcardRepository.updateFlashcard(currentFlashcard), new DefaultSubscriber<List<Flashcard>>() {
             @Override
             public void onNext(List<Flashcard> flashcards) {
-                if (++currentPosition >= unlearntFlashcards.size()){
+                if (++currentPosition >= unlearntFlashcards.size()) {
                     showLessonEndedDialog();
                 } else {
                     studyFlashcardsView.showFlashcard(currentPosition);
@@ -100,8 +87,14 @@ public class StudyFlashcardsActivityPresenter extends PresenterBase {
         });
     }
 
-    public void dontKnowWordButtonPressed(){
-        studyFlashcardsView.showFlashcard(++currentPosition);
+    public void dontKnowWordButtonPressed() {
+        studyFlashcardsView.flipCard(currentPosition);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                studyFlashcardsView.showFlashcard(++currentPosition);
+            }
+        }, 1000);
     }
 
     private void showFlashcards(List<Flashcard> flashcards) {
@@ -113,16 +106,8 @@ public class StudyFlashcardsActivityPresenter extends PresenterBase {
         studyFlashcardsView.showLessonEndedDialog();
     }
 
-    private void showAllWordsAreLearntDialog(){
+    private void showAllWordsAreLearntDialog() {
         studyFlashcardsView.showAllWordsLearntDialog();
-    }
-
-    private void hideLoading() {
-
-    }
-
-    private void showError() {
-
     }
 
 }

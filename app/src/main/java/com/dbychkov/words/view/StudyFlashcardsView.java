@@ -29,6 +29,8 @@ public interface StudyFlashcardsView extends View {
 
     void showFlashcard(int flashcardNumber);
 
+    void flipCard(int flashcardNumber);
+
     void showLessonEndedDialog();
 
     void showAllWordsLearntDialog();

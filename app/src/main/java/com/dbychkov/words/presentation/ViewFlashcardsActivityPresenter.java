@@ -11,16 +11,15 @@ import javax.inject.Inject;
 import java.util.List;
 
 /**
- * Presenter
+ * Presenter for {@link com.dbychkov.words.activity.ViewFlashcardsActivity}
  */
 public class ViewFlashcardsActivityPresenter extends FlashcardsActivityPresenter {
 
     private ViewFlashcardsView viewFlashcardsView;
 
     @Inject
-    public ViewFlashcardsActivityPresenter(ThreadExecutor threadExecutor,
-            PostExecutionThread postExecutionThread, FlashcardRepository flashcardRepository,
-            SpeechService speechService) {
+    public ViewFlashcardsActivityPresenter(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread,
+            FlashcardRepository flashcardRepository, SpeechService speechService) {
         super(threadExecutor, postExecutionThread, flashcardRepository, speechService);
     }
 
@@ -29,6 +28,7 @@ public class ViewFlashcardsActivityPresenter extends FlashcardsActivityPresenter
         this.viewFlashcardsView = viewFlashcardsView;
     }
 
+    @Override
     public void showFlashCards(List<Flashcard> flashcards) {
         viewFlashcardsView.renderFlashcards(flashcards);
     }

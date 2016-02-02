@@ -49,4 +49,6 @@ public class CardPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return flashcards.size();
     }
+
+
 }
