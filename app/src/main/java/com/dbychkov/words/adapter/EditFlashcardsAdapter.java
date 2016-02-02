@@ -24,9 +24,7 @@ import android.view.ViewGroup;
 import com.dbychkov.domain.Flashcard;
 import com.dbychkov.words.R;
 import com.dbychkov.words.presentation.EditFlashcardsActivityPresenter;
-import com.dbychkov.words.presentation.FlashcardsActivityPresenter;
 import com.dbychkov.words.widgets.EditableFlashcardView;
-import com.dbychkov.words.widgets.SwitchingEditText;
 
 import javax.inject.Inject;
 
@@ -52,22 +50,25 @@ public class EditFlashcardsAdapter extends BaseListAdapter<Flashcard, EditableFl
     @Override
     protected void bind(final Flashcard flashcard, EditableFlashcardView view, final ViewHolder<EditableFlashcardView> holder) {
         if (flashcard != null) {
-            view.setWord(flashcard.getWord());
-            view.setDefinition(flashcard.getDefinition());
-            view.setOnWordSavedListener(new SwitchingEditText.OnItemSavedListener() {
-                @Override
-                public void onItemSaved(String wordFromView) {
-                    flashcard.setWord(wordFromView);
-                    presenter.flashcardModified(flashcard);
-                }
-            });
-            view.setOnDefinitionSavedListener(new SwitchingEditText.OnItemSavedListener() {
-                @Override
-                public void onItemSaved(String definitionFromView) {
-                    flashcard.setDefinition(definitionFromView);
-                    presenter.flashcardModified(flashcard);
-                }
-            });
+            view.setFlashcardWord(flashcard.getWord());
+            view.setFlashcardDefinition(flashcard.getDefinition());
+
+
+//
+//            view.setOnWordSavedListener(new SwitchingEditText.OnItemSavedListener() {
+//                @Override
+//                public void onItemSaved(String wordFromView) {
+//                    flashcard.setWord(wordFromView);
+//                    presenter.flashcardModified(flashcard);
+//                }
+//            });
+//            view.setOnDefinitionSavedListener(new SwitchingEditText.OnItemSavedListener() {
+//                @Override
+//                public void onItemSaved(String definitionFromView) {
+//                    flashcard.setDefinition(definitionFromView);
+//                    presenter.flashcardModified(flashcard);
+//                }
+//            });
             view.setLearnt(flashcard.isLearnt());
             view.setSpeakerIconClickListener(new View.OnClickListener() {
                 @Override
@@ -80,6 +81,14 @@ public class EditFlashcardsAdapter extends BaseListAdapter<Flashcard, EditableFl
                 @Override
                 public void onClick(View v) {
                     presenter.onFlashcardRemoveClicked(flashcard, holder.getAdapterPosition());
+                }
+            });
+            view.setEditListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    presenter.onFlashcardEditClicked(flashcard, holder.getAdapterPosition());
+
                 }
             });
         }

@@ -65,6 +65,7 @@ public class EditFlashcardsActivityPresenter extends FlashcardsActivityPresenter
             @Override
             public void onNext(Flashcard flashcard) {
                 editFlashcardsView.renderCreatedFlashcard(flashcard);
+                updateProgress(flashcard);
             }
         });
     }
@@ -75,5 +76,9 @@ public class EditFlashcardsActivityPresenter extends FlashcardsActivityPresenter
         flashcard.setWord("Flashcard");
         flashcard.setDefinition("Definition");
         return flashcard;
+    }
+
+    public void onFlashcardEditClicked(Flashcard flashcard, int position) {
+        editFlashcardsView.renderEditFlashcardDialog(flashcard, position);
     }
 }

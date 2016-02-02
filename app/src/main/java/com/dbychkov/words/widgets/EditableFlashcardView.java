@@ -31,78 +31,44 @@ import com.dbychkov.words.R;
 /**
  * Dedicated view for a card with editable word and definition from flashcard
  */
-public class EditableFlashcardView extends CardView {
-
-    private View inflatedView;
-
-    @Bind(R.id.word_text)
-    SwitchingEditText wordText;
-
-    @Bind(R.id.definition_text)
-    SwitchingEditText wordDefinition;
-
+public class EditableFlashcardView extends ReadOnlyFlashcardView {
 
     @Bind(R.id.remove_button)
     Button removeButton;
 
-    @Bind(R.id.speaker_icon)
-    ImageView speakerIconImageView;
+    @Bind(R.id.edit_button)
+    Button editButton;
 
-    @Bind(R.id.learnt_icon)
-    ImageView learntIconImageView;
+    @Bind(R.id.separator)
+    View separator;
 
     public EditableFlashcardView(Context context) {
         super(context);
-        initView();
+        setControlsVisible();
     }
 
     public EditableFlashcardView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initView();
+        setControlsVisible();
     }
 
     public EditableFlashcardView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView();
-    }
-
-    private void initView() {
-        LayoutInflater inflater = (LayoutInflater) getContext()
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflatedView = inflater.inflate(R.layout.view_edit_words, this, true);
-        ButterKnife.bind(this, inflatedView);
-    }
-
-    public void setWord(String word) {
-        wordText.setElementText(word, "Flashcard");
-    }
-
-    public void setDefinition(String definition) {
-        wordDefinition.setElementText(definition, "Definition");
+        setControlsVisible();
     }
 
     public void setRemoveListener(OnClickListener listener) {
         removeButton.setOnClickListener(listener);
     }
 
-    public void setOnWordSavedListener(SwitchingEditText.OnItemSavedListener onWordSavedListener) {
-        ((SwitchingEditText)inflatedView.findViewById(R.id.word_text)).setListener(onWordSavedListener);
+    public void setEditListener(OnClickListener listener) {
+        editButton.setOnClickListener(listener);
     }
 
-    public void setOnDefinitionSavedListener(SwitchingEditText.OnItemSavedListener onDefinitionSavedListener) {
-        wordDefinition.setListener(onDefinitionSavedListener);
-    }
-
-    public void setLearnt(boolean learnt){
-        if (learnt) {
-            learntIconImageView.setVisibility(View.VISIBLE);
-        } else {
-            learntIconImageView.setVisibility(View.GONE);
-        }
-    }
-
-    public void setSpeakerIconClickListener(OnClickListener o){
-        speakerIconImageView.setOnClickListener(o);
+    private void setControlsVisible(){
+        removeButton.setVisibility(VISIBLE);
+        editButton.setVisibility(VISIBLE);
+        separator.setVisibility(VISIBLE);
     }
 }
 

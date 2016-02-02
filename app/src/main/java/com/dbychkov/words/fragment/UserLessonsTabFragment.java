@@ -34,6 +34,9 @@ import com.dbychkov.words.presentation.LessonsPresenter;
 import com.dbychkov.words.presentation.UserLessonsTabFragmentPresenter;
 import com.dbychkov.words.view.RenderLessonsView;
 
+import java.util.Collections;
+import java.util.List;
+
 import javax.inject.Inject;
 
 /**
@@ -135,5 +138,11 @@ public class UserLessonsTabFragment extends LessonsTabFragment implements View.O
     @Override
     public void renderLessonItemBookmarked(int position, boolean bookmarked) {
         throw new UnsupportedOperationException("Bookmarking not supported for user lessons");
+    }
+
+    @Override
+    public void renderLessonList(List<Lesson> lessonList) {
+        Collections.reverse(lessonList);
+        super.renderLessonList(lessonList);
     }
 }

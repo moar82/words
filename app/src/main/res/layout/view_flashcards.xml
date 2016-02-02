@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+
+    <ImageView
+        android:id="@+id/speaker_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_volume_up_black_24dp"
+        android:tint="@color/colorTernaryText"/>
+
+    <TextView
+        android:id="@+id/word"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="fill_horizontal"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorTernaryText"
+        android:textSize="@dimen/text_size_medium"
+        android:layout_toLeftOf = "@id/speaker_icon"
+        android:lines="1"/>
+
+    <TextView
+        android:id="@+id/definition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/word"
+        android:layout_gravity="fill_horizontal"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="@color/colorTernaryText"
+        android:textSize="@dimen/text_size_small"
+        android:layout_toLeftOf = "@id/speaker_icon"
+        android:lines="3"/>
+
+    <ImageView
+        android:id="@+id/learnt_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_done_white_24dp"
+        android:tint="@color/colorAccent"
+        android:visibility="gone"
+        android:layout_below = "@id/speaker_icon"
+        android:layout_marginRight="16dp"/>
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"
+        android:visibility="gone"
+        android:layout_below="@+id/definition"></View>
+
+    <Button
+        android:id="@+id/remove_button"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/separator"
+        android:gravity="right|center"
+        android:paddingRight="16dp"
+        android:visibility="gone"
+        android:text="@string/remove_button_text"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_small" />
+
+    <Button
+        android:id="@+id/edit_button"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/separator"
+        android:paddingRight="16dp"
+        android:visibility="gone"
+        android:text="@string/edit_button_text"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_small"
+        android:layout_toLeftOf = "@id/remove_button"/>
+
+
+</RelativeLayout>

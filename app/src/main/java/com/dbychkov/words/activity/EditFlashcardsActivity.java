@@ -16,7 +16,9 @@
 
 package com.dbychkov.words.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +27,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+
 import com.dbychkov.domain.Flashcard;
 import com.dbychkov.domain.Lesson;
 import com.dbychkov.words.R;
@@ -34,8 +39,10 @@ import com.dbychkov.words.presentation.EditFlashcardsActivityPresenter;
 import com.dbychkov.words.util.SpeechService;
 import com.dbychkov.words.view.EditFlashcardsView;
 
-import javax.inject.Inject;
+import java.util.Collections;
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Edit flashcards activity
@@ -78,6 +85,7 @@ public class EditFlashcardsActivity extends FlashcardsActivity implements EditFl
     }
 
     public void renderFlashcards(List<Flashcard> flashcardList) {
+        Collections.reverse(flashcardList);
         editFlashcardsAdapter.setItems(flashcardList);
         recyclerView.setAdapter(editFlashcardsAdapter);
     }
@@ -179,5 +187,34 @@ public class EditFlashcardsActivity extends FlashcardsActivity implements EditFl
         editFlashcardsAdapter.removeItem(position);
     }
 
+    @Override
+    public void renderEditFlashcardDialog(final Flashcard flashcard, final int position) {
+        final EditText word = new EditText(this);
+        final EditText definition = new EditText(this);
+        word.setText(flashcard.getWord());
+        definition.setText(flashcard.getDefinition());
+        LinearLayout ll = new LinearLayout(this);
+        ll.setOrientation(LinearLayout.VERTICAL);
+        ll.addView(word);
+        ll.addView(definition);
+        new AlertDialog.Builder(this)
+                .setTitle("Edit flashcard")
+                .setMessage("Edit flashcard word and definition")
+                .setView(ll)
+                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String wordText = word.getText().toString();
+                        String definitionText = definition.getText().toString();
+                        flashcard.setWord(wordText);
+                        flashcard.setDefinition(definitionText);
+                        editFlashcardsActivityPresenter.flashcardModified(flashcard);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                    }
+                })
+                .show();
+    }
 }
 

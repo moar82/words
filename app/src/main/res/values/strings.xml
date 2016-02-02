@@ -16,6 +16,7 @@
     <string name="dont_know_text">DON\'T KNOW</string>
     <string name="know_text">KNOW</string>
     <string name="remove_button_text">REMOVE</string>
+    <string name="edit_button_text">EDIT</string>
     <string name="word_available">AVAILABLE</string>
 
 <!-- TODO: Remove or change this placeholder text -->

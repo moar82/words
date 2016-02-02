@@ -59,10 +59,10 @@ public class ReadOnlyFlashcardView extends CardView {
         initView();
     }
 
-    private void initView() {
+    protected void initView() {
         LayoutInflater inflater = (LayoutInflater) getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View inflatedView = inflater.inflate(R.layout.view_view_flashcards, this, true);
+        View inflatedView = inflater.inflate(R.layout.view_flashcards, this, true);
         ButterKnife.bind(this, inflatedView);
     }
 

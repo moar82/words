@@ -44,6 +44,10 @@ public abstract class FlashcardsActivityPresenter extends PresenterBase {
 
     public void initialize(Long lessonId) {
         this.lessonId = lessonId;
+    }
+
+    @Override
+    public void resume() {
         initialize();
     }
 
@@ -87,7 +91,13 @@ public abstract class FlashcardsActivityPresenter extends PresenterBase {
     }
 
     public void flashcardModified(Flashcard flashcard) {
-        flashcardRepository.updateFlashcard(flashcard).subscribe();
+        execute(flashcardRepository.updateFlashcard(flashcard), new DefaultSubscriber<Void>() {
+            @Override
+            public void onCompleted() {
+                super.onCompleted();
+                initialize();
+            }
+        });
     }
 
     public void onSpeakIconClicked(String word) {

@@ -12,6 +12,8 @@ public interface EditFlashcardsView extends FlashcardsView {
 
     void renderFlashcardRemovalSnackBar(Flashcard flashcard, final int position);
 
+    void renderEditFlashcardDialog(Flashcard flashcard, final int position);
+
     void renderCreatedFlashcard(Flashcard insertedFlashcard);
 
 }
