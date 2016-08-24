@@ -1,3 +1,5 @@
+This app was refactored using EARMO (Energy-aware Refactoring approach for MObile apps)
+For More information visit http://swatlab.polymtl.ca/EARMO/
 # IELTS Vocabulary Flashcards [![Build Status](https://travis-ci.org/bychkovdmitrii/words.svg?branch=master)](https://travis-ci.org/bychkovdmitrii/words)
 
 <img src="/images/app_icon.png" height="400px"/>

@@ -17,6 +17,7 @@
 package com.dbychkov.words.activity;
 
 import android.os.Bundle;
+import android.os.Debug;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -59,14 +60,18 @@ public class SplashActivity extends BaseActivity implements SplashView {
     Navigator navigator;
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        Debug.stopMethodTracing();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
+        Debug.startMethodTracing("/mnt/sdcard/traces/appName", 500000000);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
-        initPresenter();
-    }
-
-    private void initPresenter(){
         splashActivityPresenter.setView(this);
         splashActivityPresenter.initialize();
     }

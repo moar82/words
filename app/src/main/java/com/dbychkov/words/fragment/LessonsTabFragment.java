@@ -73,10 +73,6 @@ public abstract class LessonsTabFragment extends BaseFragment implements RenderL
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initRecyclerViewWithAdapter();
-        initPresenter();
-    }
-
-    private void initPresenter() {
         getLessonsPresenter().setView(this);
         getLessonsPresenter().initialize();
     }

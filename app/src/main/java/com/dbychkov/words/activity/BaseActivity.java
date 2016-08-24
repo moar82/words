@@ -35,7 +35,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initActivityComponent();
+        this.activityComponent = DaggerActivityComponent
+                .builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(getActivityModule())
+                .build();
         injectActivity(getActivityComponent());
     }
 
@@ -49,14 +53,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public ActivityModule getActivityModule() {
         return new ActivityModule(this);
-    }
-
-    private void initActivityComponent() {
-        this.activityComponent = DaggerActivityComponent
-                .builder()
-                .applicationComponent(getApplicationComponent())
-                .activityModule(getActivityModule())
-                .build();
     }
 
     public abstract void injectActivity(ActivityComponent component);

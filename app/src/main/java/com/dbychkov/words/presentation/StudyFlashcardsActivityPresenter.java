@@ -34,7 +34,7 @@ public class StudyFlashcardsActivityPresenter extends PresenterBase {
     public static final int DELAY_MILLIS = 1000;
 
     private FlashcardRepository flashcardRepository;
-    private StudyFlashcardsView studyFlashcardsView;
+    public StudyFlashcardsView studyFlashcardsView;
     private Long lessonId;
     private List<Flashcard> unlearntFlashcards;
     private int currentPosition = 0;
@@ -46,27 +46,19 @@ public class StudyFlashcardsActivityPresenter extends PresenterBase {
         this.flashcardRepository = flashcardRepository;
     }
 
-    public void setView(StudyFlashcardsView studyFlashcardsView) {
-        this.studyFlashcardsView = studyFlashcardsView;
-    }
-
     public void initialize(Long lessonId) {
         this.lessonId = lessonId;
-        initWords();
-    }
-
-    private void initWords() {
-        execute(flashcardRepository.getUnlearntFlashcardsFromLesson(lessonId),
+        execute(flashcardRepository.getUnlearntFlashcardsFromLesson(this.lessonId),
                 new DefaultSubscriber<List<Flashcard>>() {
 
                     @Override
-                    public void onNext(List<Flashcard> unlearntFlashcards) {
+                    public void onNext(List<Flashcard> unlearntFlashcards1) {
                         StudyFlashcardsActivityPresenter.this.currentPosition = 0;
-                        StudyFlashcardsActivityPresenter.this.unlearntFlashcards = unlearntFlashcards;
-                        if (unlearntFlashcards.isEmpty()) {
+                        StudyFlashcardsActivityPresenter.this.unlearntFlashcards = unlearntFlashcards1;
+                        if (unlearntFlashcards1.isEmpty()) {
                             showAllWordsAreLearntDialog();
                         } else {
-                            showFlashcards(unlearntFlashcards);
+                            showFlashcards(unlearntFlashcards1);
                         }
                     }
                 });
@@ -81,7 +73,7 @@ public class StudyFlashcardsActivityPresenter extends PresenterBase {
         execute(flashcardRepository.updateFlashcard(currentFlashcard), new DefaultSubscriber<List<Flashcard>>() {
             @Override
             public void onNext(List<Flashcard> flashcards) {
-                if (isLastFlashcard()) {
+                if (currentPosition + 1 >= unlearntFlashcards.size()) {
                     showLessonEndedDialog();
                 } else {
                     showNextFlashcardImmediately();
@@ -90,16 +82,12 @@ public class StudyFlashcardsActivityPresenter extends PresenterBase {
         });
     }
 
-    private boolean isLastFlashcard(){
-        return currentPosition + 1 >= unlearntFlashcards.size();
-    }
-
     /**
      * Show back of flashcard and proceed to the next flashcard
      */
     public void dontKnowWordButtonPressed() {
         boolean flashcardWasFlipped = studyFlashcardsView.showCardBack(currentPosition);
-        boolean lastFlashcard = isLastFlashcard();
+        boolean lastFlashcard = currentPosition + 1 >= unlearntFlashcards.size();
         if (flashcardWasFlipped) {
             showLessonEnded(lastFlashcard);
         } else {

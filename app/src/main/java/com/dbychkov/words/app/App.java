@@ -41,16 +41,12 @@ public class App extends Application {
         super.onCreate();
         singleton = this;
         setUncaughtExceptionHandler();
-        initApplicationComponent();
-    }
-
-    private ApplicationComponent applicationComponent;
-
-    private void initApplicationComponent() {
         applicationComponent = DaggerApplicationComponent
                 .builder().applicationModule(new ApplicationModule(this))
                 .build();
     }
+
+    private ApplicationComponent applicationComponent;
 
     public ApplicationComponent getApplicationComponent() {
         return applicationComponent;

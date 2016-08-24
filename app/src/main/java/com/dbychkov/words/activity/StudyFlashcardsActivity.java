@@ -91,29 +91,22 @@ public class StudyFlashcardsActivity extends BaseActivity implements StudyFlashc
 
     private CardPagerAdapter adapter;
 
-    public static Intent createIntent(Context context, Long lessonId) {
-        Intent intent = new Intent(context, StudyFlashcardsActivity.class);
-        intent.putExtra(EXTRA_LESSON_ID, lessonId);
-        return intent;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_cards);
         ButterKnife.bind(this);
-        initExtra();
-        initToolbar();
-        initButtons();
-        initPresenter();
-    }
-
-    private void initExtra() {
         lessonId = getIntent().getLongExtra(FlashcardsActivity.EXTRA_LESSON_ID, -1L);
-    }
-
-    private void initPresenter() {
-        presenter.setView(this);
+        setSupportActionBar(toolbar);
+        try {
+            final ActionBar ab = getSupportActionBar();
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ab.setTitle(title);
+        } catch (Exception ex) {
+        }
+        knowButton.setColorFilter(knowButtonColor);
+        dontKnowButton.setColorFilter(dontKnowButtonColor);
+        setView(presenter);
         presenter.initialize(lessonId);
     }
 
@@ -126,21 +119,6 @@ public class StudyFlashcardsActivity extends BaseActivity implements StudyFlashc
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.slide_in_left_100, R.anim.slide_out_right_100);
-    }
-
-    private void initToolbar() {
-        setSupportActionBar(toolbar);
-        try {
-            final ActionBar ab = getSupportActionBar();
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            ab.setTitle(title);
-        } catch (Exception ex) {
-        }
-    }
-
-    private void initButtons() {
-        knowButton.setColorFilter(knowButtonColor);
-        dontKnowButton.setColorFilter(dontKnowButtonColor);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -217,5 +195,9 @@ public class StudyFlashcardsActivity extends BaseActivity implements StudyFlashc
         viewPager.setCurrentItem(flashCardNumber);
     }
 
+    @Override
+    public void setView(StudyFlashcardsActivityPresenter studyFlashcardsActivityPresenter) {
+        studyFlashcardsActivityPresenter.studyFlashcardsView = this;
+    }
 }
 

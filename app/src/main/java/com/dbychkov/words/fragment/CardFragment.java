@@ -71,16 +71,12 @@ public class CardFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_card, container, false);
-        initWord();
-        return rootView;
-    }
-
-    private void initWord() {
         if (front) {
             ((TextView) rootView.findViewById(R.id.front_text)).setText(englishWord);
         } else {
             ((TextView) rootView.findViewById(R.id.front_text)).setText(definition);
         }
+        return rootView;
     }
 
     @Override

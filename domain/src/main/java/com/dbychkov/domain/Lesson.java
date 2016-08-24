@@ -80,4 +80,5 @@ public class Lesson {
     public void setFlashcardList(List<Flashcard> flashcardList) {
         this.flashcardList = flashcardList;
     }
+
 }

@@ -17,8 +17,7 @@
 package com.dbychkov.words.presentation;
 
 import com.dbychkov.domain.repository.LessonRepository;
-import com.dbychkov.words.bus.CreateBookmarkEvent;
-import com.dbychkov.words.bus.RemoveBookmarkEvent;
+import com.dbychkov.words.activity.LessonCatalogActivity;
 import com.dbychkov.words.bus.RxEventBus;
 import com.dbychkov.words.thread.PostExecutionThread;
 import com.dbychkov.words.thread.ThreadExecutor;
@@ -42,7 +41,7 @@ public class BookmarkedLessonsTabFragmentPresenter extends LessonsPresenter {
 
             @Override
             public void onNext(Object event) {
-                if (event instanceof CreateBookmarkEvent) {
+                if (event instanceof LessonCatalogActivity) {
                     reloadLessonList();
                 }
             }
@@ -55,7 +54,7 @@ public class BookmarkedLessonsTabFragmentPresenter extends LessonsPresenter {
             @Override
             public void onNext(Boolean bookmarked) {
                 renderLessonsView.renderLessonItemBookmarked(position, bookmarked);
-                rxEventBus.send(new RemoveBookmarkEvent());
+                rxEventBus.send(new LessonCatalogActivity());
             }
         });
 

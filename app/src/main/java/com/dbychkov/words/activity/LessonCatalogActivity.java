@@ -23,7 +23,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.dbychkov.words.R;
 import com.dbychkov.words.adapter.LessonsPageAdapter;
@@ -80,28 +79,16 @@ public class LessonCatalogActivity extends BaseActivity implements ViewPager.OnP
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lesson_catalog);
         ButterKnife.bind(this);
-        initToolbar();
-        initTabs();
-        initTitle();
-        lessonCatalogActivityPresenter.setView(this);
-        lessonCatalogActivityPresenter.initialize();
-    }
-
-    private void initToolbar() {
         setSupportActionBar(toolbar);
-    }
-
-
-    private void initTabs() {
         viewPager.setAdapter(new LessonsPageAdapter(getFragmentManager()));
         viewPager.setOffscreenPageLimit(OFF_SCREEN_PAGE_LIMIT);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(this);
+        getSupportActionBar().setTitle(title);
+        lessonCatalogActivityPresenter.setView(this);
+        lessonCatalogActivityPresenter.initialize();
     }
 
-    private void initTitle() {
-        getSupportActionBar().setTitle(title);
-    }
 
     @Override
     public void injectActivity(ActivityComponent component) {

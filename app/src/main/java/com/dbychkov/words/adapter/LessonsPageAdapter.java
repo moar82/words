@@ -21,7 +21,6 @@ import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
 import com.dbychkov.words.fragment.BookmarkedLessonsTabFragment;
 import com.dbychkov.words.fragment.BundledLessonsTabFragment;
-import com.dbychkov.words.fragment.UserLessonsTabFragment;
 
 /**
  * Adapter responsible for switching between "bundled lessons", "bookmarked lessons", "user lessons" tabs
@@ -43,7 +42,7 @@ public class LessonsPageAdapter extends FragmentPagerAdapter {
         case 1:
             return BookmarkedLessonsTabFragment.newInstance();
         case 2:
-            return UserLessonsTabFragment.newInstance();
+            return UserLessonsAdapter.newInstance();
         }
         throw new RuntimeException("Invalid tab position: " + position);
     }

@@ -54,20 +54,30 @@ public class LessonItemView extends CardView {
 
     public LessonItemView(Context context) {
         super(context);
-        initView();
+        LayoutInflater inflater = (LayoutInflater) getContext()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflatedView = inflater.inflate(R.layout.view_lesson, this, true);
+        ButterKnife.bind(this, inflatedView);
+        removeIcon.setColorFilter(Color.WHITE);
+        set = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(),
+                R.animator.lesson_animation);
+        set.setTarget(this);
     }
 
     public LessonItemView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initView();
+        LayoutInflater inflater = (LayoutInflater) getContext()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflatedView = inflater.inflate(R.layout.view_lesson, this, true);
+        ButterKnife.bind(this, inflatedView);
+        removeIcon.setColorFilter(Color.WHITE);
+        set = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(),
+                R.animator.lesson_animation);
+        set.setTarget(this);
     }
 
     public LessonItemView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView();
-    }
-
-    private void initView() {
         LayoutInflater inflater = (LayoutInflater) getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflatedView = inflater.inflate(R.layout.view_lesson, this, true);

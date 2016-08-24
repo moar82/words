@@ -17,6 +17,7 @@
 package com.dbychkov.words.view;
 
 import com.dbychkov.domain.Flashcard;
+import com.dbychkov.words.presentation.StudyFlashcardsActivityPresenter;
 
 import java.util.List;
 
@@ -34,4 +35,6 @@ public interface StudyFlashcardsView extends View {
     void showLessonEndedDialog();
 
     void showAllWordsLearntDialog();
+
+    void setView(StudyFlashcardsActivityPresenter studyFlashcardsActivityPresenter);
 }

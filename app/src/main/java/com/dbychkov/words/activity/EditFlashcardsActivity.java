@@ -98,14 +98,12 @@ public class EditFlashcardsActivity extends FlashcardsActivity implements EditFl
     @Override
     public void onCreateExpandingActivity(Bundle savedInstanceState) {
         super.onCreateExpandingActivity(savedInstanceState);
-        initRecyclerView();
-        initPresenter();
-        setupFab();
-    }
-
-    private void initPresenter() {
+        recyclerView.setEmptyView(nestedScrollView);
+        textView.setText("No user cards");
+        recyclerView.setLayoutManager(linearLayoutManager = new LinearLayoutManager(this));
         editFlashcardsActivityPresenter.setView(this);
         editFlashcardsActivityPresenter.initialize(lessonId);
+        setupFab();
     }
 
     public static Intent createIntent(Context context, Lesson lesson, View view) {
@@ -139,17 +137,6 @@ public class EditFlashcardsActivity extends FlashcardsActivity implements EditFl
         }, DELAY_MILLIS);
     }
 
-    private void addToTop(Flashcard flashcard) {
-        editFlashcardsAdapter.addFirst(flashcard);
-        recyclerView.scrollToPosition(0);
-    }
-
-    private void initRecyclerView() {
-        recyclerView.setEmptyView(nestedScrollView);
-        textView.setText("No user cards");
-        recyclerView.setLayoutManager(linearLayoutManager = new LinearLayoutManager(this));
-    }
-
     @Override
     public void renderFlashcardRemovalSnackBar(final Flashcard flashcard, final int position) {
         Snackbar
@@ -171,14 +158,16 @@ public class EditFlashcardsActivity extends FlashcardsActivity implements EditFl
             recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 public void onScrollStateChanged(RecyclerView rv, int state) {
                     if (state == RecyclerView.SCROLL_STATE_IDLE) {
-                        addToTop(insertedFlashcard);
+                        editFlashcardsAdapter.addFirst(insertedFlashcard);
+                        recyclerView.scrollToPosition(0);
                         rv.removeOnScrollListener(this);
                     }
                 }
             });
             recyclerView.smoothScrollToPosition(0);
         } else {
-            addToTop(insertedFlashcard);
+            editFlashcardsAdapter.addFirst(insertedFlashcard);
+            recyclerView.scrollToPosition(0);
         }
     }
 

@@ -74,10 +74,6 @@ public class UserLessonsTabFragment extends LessonsTabFragment implements View.O
         component.inject(this);
     }
 
-    public static Fragment newInstance() {
-        return new UserLessonsTabFragment();
-    }
-
     @Override
     public LessonsAdapter getLessonsAdapter() {
         return adapter;

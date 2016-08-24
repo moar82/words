@@ -64,16 +64,9 @@ public class UserLessonsTabFragmentPresenter extends LessonsPresenter {
         final Lesson lesson = new Lesson();
         lesson.setLessonName("User lesson");
         lesson.setUserLesson(true);
-        lesson.setImagePath(getRandomImage());
-        return lesson;
-    }
-
-    /**
-     * Pick random image from assets
-     */
-    private String getRandomImage() {
         int unit = new Random().nextInt(20) + 1;
-        return String.format("random/random_%s.png", unit);
+        lesson.setImagePath(String.format("random/random_%s.png", unit));
+        return lesson;
     }
 
 }

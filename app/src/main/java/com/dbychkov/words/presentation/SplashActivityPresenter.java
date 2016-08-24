@@ -51,12 +51,6 @@ public class SplashActivityPresenter extends PresenterBase {
         this.splashView = splashView;
     }
 
-    private boolean isFirstLaunch() {
-        return PreferenceManager
-                .getDefaultSharedPreferences(context)
-                .getBoolean(FIRST_LAUNCH_PREFERENCE_KEY, true);
-    }
-
     private void setNotFirstLaunch(){
         PreferenceManager
                 .getDefaultSharedPreferences(context)
@@ -66,10 +60,13 @@ public class SplashActivityPresenter extends PresenterBase {
     }
 
     public void initialize() {
-        final boolean firstLaunch = isFirstLaunch();
+        final boolean firstLaunch = PreferenceManager
+                .getDefaultSharedPreferences(context)
+                .getBoolean(FIRST_LAUNCH_PREFERENCE_KEY, true);
 
         // Show "loading" only during lesson import
         if (firstLaunch) {
+            //splashView.showLoading();
             splashView.showLoading();
         }
 
@@ -89,17 +86,20 @@ public class SplashActivityPresenter extends PresenterBase {
             @Override
             public void onError(Throwable e) {
                 splashView.renderImportError();
+                //splashView.renderImportError();
             }
 
             @Override
             public void onNext(Void v) {
                 setNotFirstLaunch();
                 splashView.renderSplashScreenEnded();
+                //splashView.renderSplashScreenEnded();
             }
         });
 
         // Fade in animation
         splashView.renderFancyAnimation();
+        //splashView.renderFancyAnimation();
     }
 
     private void sleep(){

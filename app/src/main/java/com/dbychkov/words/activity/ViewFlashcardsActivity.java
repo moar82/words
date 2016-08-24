@@ -65,16 +65,14 @@ public class ViewFlashcardsActivity extends FlashcardsActivity implements ViewFl
         component.inject(this);
     }
 
-    private void initPresenter() {
-        viewFlashcardsActivityPresenter.setView(this);
-        viewFlashcardsActivityPresenter.initialize(lessonId);
-    }
-
     @Override
     public void onCreateExpandingActivity(Bundle savedInstanceState) {
         super.onCreateExpandingActivity(savedInstanceState);
-        initRecyclerView();
-        initPresenter();
+        recyclerView.setEmptyView(nestedScrollView);
+        textView.setText("No cards");
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        viewFlashcardsActivityPresenter.setView(this);
+        viewFlashcardsActivityPresenter.initialize(lessonId);
     }
 
     public void renderFlashcards(List<Flashcard> flashcardList) {
@@ -95,12 +93,6 @@ public class ViewFlashcardsActivity extends FlashcardsActivity implements ViewFl
         intent.putExtra(EXTRA_PROPERTY_WIDTH, view.getWidth());
         intent.putExtra(EXTRA_PROPERTY_HEIGHT, view.getHeight());
         return intent;
-    }
-
-    private void initRecyclerView() {
-        recyclerView.setEmptyView(nestedScrollView);
-        textView.setText("No cards");
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override

@@ -6,7 +6,6 @@ import com.dbychkov.words.view.EditFlashcardsView;
 import com.dbychkov.words.thread.PostExecutionThread;
 import com.dbychkov.words.thread.ThreadExecutor;
 import com.dbychkov.words.util.SpeechService;
-import rx.functions.Action1;
 
 import javax.inject.Inject;
 import java.util.List;

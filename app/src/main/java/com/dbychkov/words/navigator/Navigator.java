@@ -22,8 +22,8 @@ import android.view.View;
 import com.dbychkov.domain.Lesson;
 import com.dbychkov.words.activity.EditFlashcardsActivity;
 import com.dbychkov.words.activity.LessonCatalogActivity;
-import com.dbychkov.words.activity.StudyFlashcardsActivity;
 import com.dbychkov.words.activity.ViewFlashcardsActivity;
+import com.dbychkov.words.widgets.ViewPagerCustomDuration;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -66,7 +66,7 @@ public class Navigator {
      * Navigate to study flashcards activity
      */
     public void navigateToStudyFlashcardsActivity(Context context, Long lessonId) {
-        Intent intent = StudyFlashcardsActivity.createIntent(context, lessonId);
+        Intent intent = ViewPagerCustomDuration.createIntent(context, lessonId);
         context.startActivity(intent);
     }
 

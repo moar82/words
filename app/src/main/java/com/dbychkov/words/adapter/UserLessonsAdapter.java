@@ -17,10 +17,12 @@
 package com.dbychkov.words.adapter;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.view.View;
 import com.dbychkov.domain.Lesson;
 import com.dbychkov.words.R;
 import com.dbychkov.words.activity.EditFlashcardsActivity;
+import com.dbychkov.words.fragment.UserLessonsTabFragment;
 import com.dbychkov.words.navigator.Navigator;
 import com.dbychkov.words.presentation.UserLessonsTabFragmentPresenter;
 import com.dbychkov.words.widgets.LessonItemView;
@@ -40,6 +42,10 @@ public class UserLessonsAdapter extends LessonsAdapter {
     public UserLessonsAdapter(Activity activity, UserLessonsTabFragmentPresenter presenter, Navigator navigator) {
         super(activity, navigator);
         this.presenter = presenter;
+    }
+
+    public static Fragment newInstance() {
+        return new UserLessonsTabFragment();
     }
 
     @Override

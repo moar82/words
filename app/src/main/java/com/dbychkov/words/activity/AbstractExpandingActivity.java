@@ -65,15 +65,19 @@ public abstract class AbstractExpandingActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         onCreateExpandingActivity(savedInstanceState);
-        initRootViewBackground();
-        initToolbar();
-        initExtra();
-        initAnimation(savedInstanceState);
-    }
-
-    private void initRootViewBackground() {
         rootLayout = getRootLayout();
         rootLayout.setBackground(new ColorDrawable(getResources().getColor(R.color.grey)));
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        try {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        } catch (Exception ex) {
+        }
+        originalViewTop = getIntent().getIntExtra(EXTRA_PROPERTY_TOP, 0);
+        originalViewLeft = getIntent().getIntExtra(EXTRA_PROPERTY_LEFT, 0);
+        originalViewWidth = getIntent().getIntExtra(EXTRA_PROPERTY_WIDTH, 0);
+        originalViewHeight = getIntent().getIntExtra(EXTRA_PROPERTY_HEIGHT, 0);
+        initAnimation(savedInstanceState);
     }
 
     private void initAnimation(Bundle savedInstanceState) {
@@ -84,7 +88,15 @@ public abstract class AbstractExpandingActivity extends BaseActivity {
                 @Override
                 public boolean onPreDraw() {
                     rootLayout.getViewTreeObserver().removeOnPreDrawListener(this);
-                    initDeltas();
+                    deltaLeft = originalViewLeft;
+                    Rect rectangle = new Rect();
+                    Window window = getWindow();
+                    window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
+                    int statusBarTop = rectangle.top;
+                    int contentViewTop = window.findViewById(Window.ID_ANDROID_CONTENT).getTop();
+                    deltaTop = originalViewTop - Math.abs(statusBarTop - contentViewTop);
+                    widthScale = (float) originalViewWidth / getWidthForScale();
+                    heightScale = (float) originalViewHeight / getHeightForScale();
                     runEnterAnimation();
                     return true;
                 }
@@ -92,43 +104,16 @@ public abstract class AbstractExpandingActivity extends BaseActivity {
         }
     }
 
-    private void initDeltas() {
-        deltaLeft = originalViewLeft;
-        deltaTop = originalViewTop - getStatusBarHeight();
-        widthScale = (float) originalViewWidth / getWidthForScale();
-        heightScale = (float) originalViewHeight / getHeightForScale();
-    }
-
     public int getHeightForScale() {
-        return getDisplayMetrics().heightPixels;
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        return displaymetrics.heightPixels;
     }
 
     public int getWidthForScale() {
-        return getDisplayMetrics().widthPixels;
-    }
-
-    private DisplayMetrics getDisplayMetrics() {
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        return displaymetrics;
-    }
-
-    private void initToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        try {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        } catch (Exception ex) {
-        }
-    }
-
-    private int getStatusBarHeight() {
-        Rect rectangle = new Rect();
-        Window window = getWindow();
-        window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
-        int statusBarTop = rectangle.top;
-        int contentViewTop = window.findViewById(Window.ID_ANDROID_CONTENT).getTop();
-        return Math.abs(statusBarTop - contentViewTop);
+        return displaymetrics.widthPixels;
     }
 
     private void runEnterAnimation() {
@@ -192,13 +177,6 @@ public abstract class AbstractExpandingActivity extends BaseActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    private void initExtra() {
-        originalViewTop = getIntent().getIntExtra(EXTRA_PROPERTY_TOP, 0);
-        originalViewLeft = getIntent().getIntExtra(EXTRA_PROPERTY_LEFT, 0);
-        originalViewWidth = getIntent().getIntExtra(EXTRA_PROPERTY_WIDTH, 0);
-        originalViewHeight = getIntent().getIntExtra(EXTRA_PROPERTY_HEIGHT, 0);
     }
 
     @Override

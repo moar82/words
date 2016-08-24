@@ -17,8 +17,8 @@
 package com.dbychkov.words.presentation;
 
 import com.dbychkov.domain.repository.LessonRepository;
-import com.dbychkov.words.bus.CreateBookmarkEvent;
-import com.dbychkov.words.bus.RemoveBookmarkEvent;
+
+import com.dbychkov.words.activity.LessonCatalogActivity;
 import com.dbychkov.words.bus.RxEventBus;
 import com.dbychkov.words.thread.PostExecutionThread;
 import com.dbychkov.words.thread.ThreadExecutor;
@@ -42,7 +42,7 @@ public class BundledLessonsTabFragmentPresenter extends LessonsPresenter {
 
             @Override
             public void onNext(Object event) {
-                if (event instanceof RemoveBookmarkEvent) {
+                if (event instanceof LessonCatalogActivity) {
                     reloadLessonList();
                 }
             }
@@ -56,7 +56,7 @@ public class BundledLessonsTabFragmentPresenter extends LessonsPresenter {
             public void onNext(Boolean bookmarked) {
                 renderLessonsView.renderLessonItemBookmarked(position, bookmarked);
                 // Send event to adjacent tabs
-                rxEventBus.send(new CreateBookmarkEvent());
+                rxEventBus.send(new LessonCatalogActivity());
             }
         });
 

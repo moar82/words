@@ -18,11 +18,14 @@ package com.dbychkov.words.widgets;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
+
+import com.dbychkov.words.activity.StudyFlashcardsActivity;
 
 import java.lang.reflect.Field;
 
@@ -41,6 +44,12 @@ public class ViewPagerCustomDuration extends ViewPager {
     public ViewPagerCustomDuration(Context context, AttributeSet attrs) {
         super(context, attrs);
         postInitViewPager();
+    }
+
+    public static Intent createIntent(Context context, Long lessonId) {
+        Intent intent = new Intent(context, StudyFlashcardsActivity.class);
+        intent.putExtra(StudyFlashcardsActivity.EXTRA_LESSON_ID, lessonId);
+        return intent;
     }
 
     private void postInitViewPager() {
